@@ -1,0 +1,19 @@
+class USER_DATA{
+  final USER_NAME;
+  final USER_EMAIL;
+  final USER_PASSWORD;
+
+  USER_DATA(this.USER_NAME,this.USER_EMAIL,this.USER_PASSWORD);
+
+  fromJson(Map<dynamic, dynamic> json)
+      : USER_NAME = json['USER_NAME'] as String,
+        USER_EMAIL = json['USER_EMAIL'] as String,
+        USER_PASSWORD = json['USER_PASSWORD'] as String,
+        ;
+
+  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+    'USER_NAME': USER_NAME,
+    'USER_EMAIL': USER_EMAIL,
+    'USER_PASSWORD': USER_PASSWORD
+  };
+}
