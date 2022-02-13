@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_beat/SignUpPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -106,7 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: //_incrementCounter,
+            () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SignUpPage()),
+          );
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
