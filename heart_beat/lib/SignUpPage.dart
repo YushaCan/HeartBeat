@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:heart_beat/MainMenu.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -104,6 +105,22 @@ class SignUp extends StatelessWidget {
               ),
             ),
           ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 32),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 5, 115, 218),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 75, vertical: 20),
+                      textStyle: TextStyle()),
+                  child: Text('Sign Up'),
+                  onPressed: () {
+                    // When tapped, passed to the Main Menu Page. It needs an animation between two pages.
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainMenuPage()),
+                    );
+                  })),
         ]);
   }
 }
