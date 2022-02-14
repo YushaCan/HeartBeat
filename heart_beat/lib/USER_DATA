@@ -5,10 +5,10 @@ class USER_DATA{
 
   USER_DATA(this.USER_NAME,this.USER_EMAIL,this.USER_PASSWORD);
 
-  fromJson(Map<dynamic, dynamic> json)
+  USER_DATA.fromJson(Map<dynamic, dynamic> json)
       : USER_NAME = json['USER_NAME'] as String,
         USER_EMAIL = json['USER_EMAIL'] as String,
-        USER_PASSWORD = json['USER_PASSWORD'] as String,
+        USER_PASSWORD = json['USER_PASSWORD'] as String
         ;
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
