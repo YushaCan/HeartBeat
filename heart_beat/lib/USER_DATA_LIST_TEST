@@ -1,18 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:heart_beat/MainMenu.dart';
+import 'USER_DATA_DAO';
+import 'USER_DATA';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/cupertino.dart';
+import 'SignUpPage.dart';
+import 'MainMenu.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '',
-      home: Scaffold(
-        appBar: AppBar(),
-        body: SignUp(),
+class UserDataListState extends State<UserDataList>{
+
+TextEditingController _userPasswordController = TextEditingController();
+TextEditingController _userEmailController = TextEditingController();
+TextEditingController _userNameController = TextEditingController();
+
+@override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('RayChat'),
       ),
+      body: SignUp(),
     );
   }
+
+bool _canSendUserData() => _userNameController.text.length > 0 && _userPasswordController.text.length > 0 && _userEmailController.text.length > 0;
+
+void _sendUserData() {
+  if (_canSendUserData()) {
+    final userData = USER_DATA(_userNameController.text,_userEmailController.text,_userPasswordController.text);
+    widget.userdataDAO.saveUserData(userData);
+    _userNameController.clear();
+    _userEmailController.clear();
+    _userPasswordController.clear();
+    setState(() {});
+  }
+}
+
+}
+
+class UserDataList extends StatefulWidget{
+  UserDataList({Key? key}): super(key: key);
+
+  final userdataDAO = USER_DATA_DAO();
+
+  @override
+  UserDataListState createState()=> UserDataListState();
 }
 
 class SignUp extends StatefulWidget {
@@ -23,6 +54,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  TextEditingController _userPasswordController = TextEditingController();
+  TextEditingController _userEmailController = TextEditingController();
+  TextEditingController _userNameController = TextEditingController();
   bool seePassword = true;
   bool lockIcon = true;
   String passwordText = "";
@@ -32,9 +67,6 @@ class _SignUpState extends State<SignUp> {
       seePassword = !seePassword;
     });
   }
-
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +94,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             const Text(
-              ' Beat sign',
+              ' Beat',
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -78,74 +110,25 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
       ]),
-      const Padding(
+       Padding(
         padding: EdgeInsets.symmetric(horizontal: 45, vertical: 8),
         child: TextField(
+          controller: _userEmailController, //bu email
           decoration: InputDecoration(
-            //icon: Icon(Icons.person),
+            icon: Icon(Icons.person),
             border: OutlineInputBorder(),
-            hintText: 'Username',
+            hintText: 'Email',
           ),
         ),
       ),
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 45, vertical: 8),
         child: TextFormField(
+          controller: _userPasswordController,//bu password
           decoration: InputDecoration(
-            //icon: Icon(Icons.email),
-            border: OutlineInputBorder(),
-            hintText: 'E-Mail',
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 45, vertical: 8),
-        child: TextFormField(
-          obscureText: seePassword,
-          controller: passwordController,
-          onEditingComplete: () {
-            passwordText = passwordController.text;
-          },
-          decoration: InputDecoration(
-            suffixIcon: IconButton(
-              onPressed: () {
-                Toggle();
-                lockIcon = !lockIcon;
-                // TO CONTROL PASSWORD WITH CONFIRMED PASSWORD
-                // passwordText = passwordController.text;
-                //confirmedPasswordText = confirmPasswordController.text;
-              },
-              icon: lockIcon ? Icon(Icons.lock) : Icon(Icons.lock_open),
-            ),
+            icon: Icon(Icons.email),
             border: OutlineInputBorder(),
             hintText: 'Password',
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 45, vertical: 8),
-        child: TextFormField(
-          obscureText: true,
-          controller: confirmPasswordController,
-          onEditingComplete: () {
-            confirmedPasswordText = confirmPasswordController.text;
-            if (passwordText != confirmedPasswordText) {
-              //print("Passwords DOESN'T MATCH!");
-            } else {
-              //print("Password is Correct!");
-            }
-          },
-          validator: (value) {
-            if (passwordText != confirmedPasswordText) {
-              return 'Passwords does not match';
-            } else {
-              return null;
-            }
-          },
-          decoration: InputDecoration(
-            //icon: Icon(Icons.lock),
-            border: OutlineInputBorder(),
-            hintText: 'Confirm Password',
           ),
         ),
       ),
@@ -159,7 +142,7 @@ class _SignUpState extends State<SignUp> {
                   textStyle: TextStyle(
                     fontSize: 20,
                   )),
-              child: Text('Sign Up'),
+              child: Text('Login'),
               onPressed: () {
                 // When tapped, if everything is right, passed to the Main Menu Page. It needs an animation between two pages.
                 Navigator.push(
