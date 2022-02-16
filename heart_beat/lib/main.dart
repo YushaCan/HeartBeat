@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_beat/SignUpPage.dart';
 import 'package:heart_beat/USER_DATA_LIST_TEST';
 
 void main() {
@@ -103,6 +104,15 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserDataList()),
+                );
+              },
+              child: Text("SignInPage"),
+            )
           ],
         ),
       ),
@@ -110,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => UserDataList()),
+            MaterialPageRoute(builder: (context) => SignUpPage()),
           );
         },
         tooltip: 'Increment',
