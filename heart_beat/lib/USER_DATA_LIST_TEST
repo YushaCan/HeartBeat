@@ -5,6 +5,8 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'SignUpPage.dart';
 import 'MainMenu.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserDataListState extends State<UserDataList>{
 
@@ -150,6 +152,45 @@ class _SignUpState extends State<SignUp> {
                   MaterialPageRoute(builder: (context) => MainMenuPage()),
                 );
               })),
+    // Sign Up Button
+    Padding(
+    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+    child: ElevatedButton(
+    style: ElevatedButton.styleFrom(
+    primary: Color.fromARGB(255, 5, 115, 218),
+    padding: EdgeInsets.symmetric(horizontal: 70, vertical: 10),
+    textStyle: TextStyle(
+    fontSize: 20,
+    )),
+    child: Text('Sign In With Google'),
+    onPressed: () {
+      signup(context);
+    })),
     ]);
+  }
+
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future<void> signup(BuildContext context) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
+
+      // Getting users credential
+      UserCredential result = await auth.signInWithCredential(authCredential);
+      User? user = result.user;
+
+      if (result != null) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MainMenuPage()));
+      } // if result not null we simply call the MaterialpageRoute,
+      // for go to the HomePage screen
+    }
   }
 }

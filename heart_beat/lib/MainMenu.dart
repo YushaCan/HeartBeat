@@ -20,6 +20,8 @@ class MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MaterialApp(
+        title: 'Main Menu',
+        home: Text("Main Menu"));
   }
 }

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'USER_DATA';
 
 class USER_DATA_DAO{
+
   final DatabaseReference _userdataRef = FirebaseDatabase.instance.reference().child('USER_DATA');
 
   void saveUserData(USER_DATA user) {
