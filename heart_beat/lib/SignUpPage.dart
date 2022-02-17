@@ -8,7 +8,7 @@ class SignUpPage extends StatelessWidget {
     return MaterialApp(
       title: '',
       home: Scaffold(
-        appBar: AppBar(),
+        //appBar: AppBar(),
         body: SignUp(),
       ),
     );
@@ -48,7 +48,7 @@ class _SignUpState extends State<SignUp> {
             const Text(
               '',
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 100,
               ),
             ),
           ]),
