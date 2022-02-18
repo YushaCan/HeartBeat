@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class MainMenuPage extends StatelessWidget {
   const MainMenuPage({Key? key}) : super(key: key);
@@ -53,22 +54,45 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   double sliderValue = 0;
-  // Each level's experience points
+  // Each level's experience points & numbers
   double levelExp = 100;
+  int currentLevel = 9;
+  late int nextLevel = currentLevel + 1;
+  //////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         // Level Progression Bar
-        Slider(
-            value: sliderValue,
-            min: 0,
-            max: levelExp,
-            onChanged: (value) {
-              setState(() {
-                sliderValue = value;
-              });
-            }),
+        SizedBox(
+            width: 400,
+            height: 70,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new LinearPercentIndicator(
+                  width: 300,
+                  animation: true,
+                  animationDuration: 1500,
+                  lineHeight: 25,
+                  leading: new Text(
+                    currentLevel.toString(),
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  trailing: new Text(
+                    nextLevel.toString(),
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  percent: 0.7,
+                  linearStrokeCap: LinearStrokeCap.butt,
+                  progressColor: Colors.yellow,
+                )
+              ],
+            )),
       ],
     );
   }
