@@ -1,5 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:heart_beat/MainMenu.dart';
+import 'package:heart_beat/MainPages/MainMenu.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -27,16 +28,31 @@ class _SignUpState extends State<SignUp> {
   bool confirmedPassword = false;
   bool submit = false;
   bool lockIcon = true;
+
   String passwordText = "";
   String confirmedPasswordText = "";
+  String email = "";
+
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
   void Toggle() {
     setState(() {
       seePassword = !seePassword;
     });
   }
 
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+Future<void> _createUser() async {
+    try{
+      print("user:  $email");
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email.trim(), password: passwordText);
+      print("user:  $userCredential");
+    } on FirebaseAuthException catch (e){
+      print("error: $e");
+    }catch(e){
+      print("error: $e");
+    }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +110,9 @@ class _SignUpState extends State<SignUp> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 45, vertical: 8),
             child: TextFormField(
+              onChanged: (value){
+                email = value;
+              },
               decoration: InputDecoration(
                 //icon: Icon(Icons.email),
                 border: OutlineInputBorder(),
@@ -173,6 +192,7 @@ class _SignUpState extends State<SignUp> {
                   child: Text('Sign Up'),
                   onPressed: () {
                     // When tapped, if everything is right, passed to the Main Menu Page. It needs an animation between two pages.
+                    _createUser();
                     if (confirmedPassword) {
                       Navigator.push(
                         context,
