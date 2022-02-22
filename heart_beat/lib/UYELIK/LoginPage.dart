@@ -186,30 +186,59 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 150, vertical: 8),
+              child: Row(
+                children: <Widget>[
+                  Text("Remember me!",
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                    ),
+                    textAlign: TextAlign.right,),
+                ],
+              ),
+            ),
             // Sign Up Button
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                padding: EdgeInsets.symmetric(horizontal: 110, vertical: 10),
                 child: Row(
                   children: <Widget>[
-                    IconButton(
-                      icon: Image.asset('assets/images/sign-in-with-google-icon-3.jpg'),
-                      iconSize: 150,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 5, 115, 218),
+                          padding: EdgeInsets.symmetric(horizontal: 70, vertical: 10),
+                          textStyle: TextStyle(fontSize: 20,)),
+                      child: Text('Login'),
                       onPressed: () {
-                        signup(context);},
-                    ),ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            primary: Color.fromARGB(255, 5, 115, 218),
-            padding: EdgeInsets.symmetric(horizontal: 70, vertical: 10),
-            textStyle: TextStyle(
-              fontSize: 20,
-            )),
-        child: Text('Login'),
-        onPressed: () {
-          _loginUser();
-          // When tapped, if everything is right, passed to the Main Menu Page. It needs an animation between two pages.
-        }),
+                        _loginUser();
+                        // When tapped, if everything is right, passed to the Main Menu Page. It needs an animation between two pages.
+                      }),
                   ],
                 ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+              child: Wrap(
+                children: <Widget>[
+                  Text("Don't have an account? Sign Up!",
+                    style: TextStyle(
+                    color: Colors.blueAccent,
+                  ),),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 170, vertical: 5),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Image.asset('assets/images/1534129544.png'),
+                    iconSize: 50,
+                    onPressed: () {
+                      signup(context);},
+                  ),
+                ],
+              ),
             ),
             // Sign Up Button
           ],

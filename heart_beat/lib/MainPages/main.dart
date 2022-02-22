@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_beat/StepCounter/test2.dart';
 import 'package:heart_beat/UYELIK/SignUpPage.dart';
 import 'package:heart_beat/MainPages/SplashScreen.dart';
 import 'package:heart_beat/UYELIK/LoginPage.dart';
@@ -116,6 +117,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: Text("SignInPage"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Steps()),
+                );
+              },
+              child: Text("MySteppage"),
             )
           ],
         ),
