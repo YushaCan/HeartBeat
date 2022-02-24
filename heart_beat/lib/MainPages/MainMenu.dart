@@ -12,6 +12,7 @@ class MainMenuPage extends StatelessWidget {
         title: 'Heart Beat',
         home: Scaffold(
           appBar: AppBar(
+            backgroundColor: Color.fromRGBO(0, 129, 235, 92),
             // For Friends List on AppBar
             leading: IconButton(
               // Open Friends list
@@ -61,39 +62,285 @@ class _MainMenuState extends State<MainMenu> {
   //////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        // Level Progression Bar
-        SizedBox(
-            width: 400,
-            height: 70,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new LinearPercentIndicator(
-                  width: 300,
-                  animation: true,
-                  animationDuration: 1500,
-                  lineHeight: 25,
-                  leading: new Text(
-                    currentLevel.toString(),
-                    style: TextStyle(
-                      fontSize: 20,
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          // Level Progression Bar
+          SizedBox(
+              width: 400,
+              height: 70,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // Level Bar Codes
+                  new LinearPercentIndicator(
+                    width: 300,
+                    animation: true,
+                    animationDuration: 1500,
+                    lineHeight: 25,
+                    leading: new Text(
+                      currentLevel.toString(),
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  trailing: new Text(
-                    nextLevel.toString(),
-                    style: TextStyle(
-                      fontSize: 20,
+                    trailing: new Text(
+                      nextLevel.toString(),
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
+                    percent: 0.7,
+                    linearStrokeCap: LinearStrokeCap.butt,
+                    progressColor: Colors.yellow,
+                  )
+                ],
+              )),
+          // First Row
+          Row(
+            children: <Widget>[
+              // TRAININ BUTTON
+              SizedBox(
+                height: 120,
+                width: 120,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 6,
+                    top: 20,
                   ),
-                  percent: 0.7,
-                  linearStrokeCap: LinearStrokeCap.butt,
-                  progressColor: Colors.yellow,
-                )
-              ],
-            )),
-      ],
+                  // For Training Page
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(0, 129, 235, 0.639)),
+                    ),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 75,
+                    ),
+                    onPressed: () {
+                      print("TRAINING PAGE OPENED");
+                    },
+                  ),
+                ),
+              ),
+              // PEDOMETER BUTTON
+              SizedBox(
+                height: 120,
+                width: 120,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 6,
+                    top: 20,
+                  ),
+                  // For Pedometer Page
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(0, 129, 235, 0.639)),
+                    ),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 75,
+                    ),
+                    onPressed: () {
+                      print("PEDOMETER PAGE OPENED");
+                    },
+                  ),
+                ),
+              ),
+              // BMI (Body Mass Index) BUTTON
+              SizedBox(
+                height: 120,
+                width: 120,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 5,
+                    top: 20,
+                    right: 5,
+                  ),
+                  // For BMI
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(0, 129, 235, 0.639)),
+                    ),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 75,
+                    ),
+                    onPressed: () {
+                      print("BMI PAGE OPENED");
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // Second Row
+          Row(
+            children: <Widget>[
+              // TRAININ BUTTON
+              SizedBox(
+                height: 130,
+                width: 120,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 6,
+                    top: 30,
+                  ),
+                  // For Training Page
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(0, 129, 235, 0.639)),
+                    ),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 75,
+                    ),
+                    onPressed: () {
+                      print("WATER PAGE OPENED");
+                    },
+                  ),
+                ),
+              ),
+              // PEDOMETER BUTTON
+              SizedBox(
+                height: 130,
+                width: 120,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 6,
+                    top: 30,
+                  ),
+                  // For Pedometer Page
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(0, 129, 235, 0.639)),
+                    ),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 75,
+                    ),
+                    onPressed: () {
+                      print("FOOD PAGE OPENED");
+                    },
+                  ),
+                ),
+              ),
+              // BMI (Body Mass Index) BUTTON
+              SizedBox(
+                height: 130,
+                width: 120,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 5,
+                    top: 30,
+                    right: 5,
+                  ),
+                  // For BMI
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(0, 129, 235, 0.639)),
+                    ),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 75,
+                    ),
+                    onPressed: () {
+                      print("HEART RATE PAGE OPENED");
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // Third Row
+          Row(
+            children: <Widget>[
+              // TRAININ BUTTON
+              SizedBox(
+                height: 130,
+                width: 120,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 6,
+                    top: 30,
+                  ),
+                  // For Training Page
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(0, 129, 235, 0.639)),
+                    ),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 75,
+                    ),
+                    onPressed: () {
+                      print("LEADER BOARD PAGE OPENED");
+                    },
+                  ),
+                ),
+              ),
+              // PEDOMETER BUTTON
+              SizedBox(
+                height: 130,
+                width: 120,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 6,
+                    top: 30,
+                  ),
+                  // For Pedometer Page
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(0, 129, 235, 0.639)),
+                    ),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 75,
+                    ),
+                    onPressed: () {
+                      print("CHALLENGE PAGE OPENED");
+                    },
+                  ),
+                ),
+              ),
+              // BMI (Body Mass Index) BUTTON
+              SizedBox(
+                height: 130,
+                width: 120,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 5,
+                    top: 30,
+                    right: 5,
+                  ),
+                  // For BMI
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(0, 129, 235, 0.639)),
+                    ),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 75,
+                    ),
+                    onPressed: () {
+                      print("FAQ PAGE OPENED");
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
