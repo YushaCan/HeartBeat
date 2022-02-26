@@ -2,6 +2,9 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:math' as math;
+import 'package:line_icons/line_icons.dart';
 
 class MainMenuPage extends StatelessWidget {
   const MainMenuPage({Key? key}) : super(key: key);
@@ -114,9 +117,12 @@ class _MainMenuState extends State<MainMenu> {
                       backgroundColor: MaterialStateProperty.all<Color>(
                           Color.fromRGBO(0, 129, 235, 0.639)),
                     ),
-                    child: Icon(
-                      Icons.fitness_center,
-                      size: 75,
+                    child: Transform.rotate(
+                      angle: math.pi / 4,
+                      child: Icon(
+                        LineIcons.dumbbell,
+                        size: 85,
+                      ),
                     ),
                     onPressed: () {
                       print("TRAINING PAGE OPENED");
@@ -139,9 +145,15 @@ class _MainMenuState extends State<MainMenu> {
                       backgroundColor: MaterialStateProperty.all<Color>(
                           Color.fromRGBO(0, 129, 235, 0.639)),
                     ),
-                    child: Icon(
-                      Icons.fitness_center,
-                      size: 75,
+                    child: Align(
+                      alignment: Alignment(0.0, 0.0),
+                      child: Transform.rotate(
+                        angle: 0,
+                        child: Icon(
+                          LineIcons.shoePrints,
+                          size: 70,
+                        ),
+                      ),
                     ),
                     onPressed: () {
                       print("PEDOMETER PAGE OPENED");
@@ -166,8 +178,9 @@ class _MainMenuState extends State<MainMenu> {
                           Color.fromRGBO(0, 129, 235, 0.639)),
                     ),
                     child: Icon(
-                      Icons.fitness_center,
-                      size: 75,
+                      //FontAwesomeIcons.weight,
+                      LineIcons.weight,
+                      size: 70,
                     ),
                     onPressed: () {
                       print("BMI PAGE OPENED");
@@ -196,7 +209,7 @@ class _MainMenuState extends State<MainMenu> {
                           Color.fromRGBO(0, 129, 235, 0.639)),
                     ),
                     child: Icon(
-                      Icons.fitness_center,
+                      LineIcons.tint,
                       size: 75,
                     ),
                     onPressed: () {
@@ -221,7 +234,7 @@ class _MainMenuState extends State<MainMenu> {
                           Color.fromRGBO(0, 129, 235, 0.639)),
                     ),
                     child: Icon(
-                      Icons.fitness_center,
+                      LineIcons.fruitApple,
                       size: 75,
                     ),
                     onPressed: () {
@@ -247,7 +260,7 @@ class _MainMenuState extends State<MainMenu> {
                           Color.fromRGBO(0, 129, 235, 0.639)),
                     ),
                     child: Icon(
-                      Icons.fitness_center,
+                      LineIcons.heartbeat,
                       size: 75,
                     ),
                     onPressed: () {
@@ -277,7 +290,7 @@ class _MainMenuState extends State<MainMenu> {
                           Color.fromRGBO(0, 129, 235, 0.639)),
                     ),
                     child: Icon(
-                      Icons.fitness_center,
+                      LineIcons.trophy,
                       size: 75,
                     ),
                     onPressed: () {
@@ -302,7 +315,7 @@ class _MainMenuState extends State<MainMenu> {
                           Color.fromRGBO(0, 129, 235, 0.639)),
                     ),
                     child: Icon(
-                      Icons.fitness_center,
+                      LineIcons.handshake,
                       size: 75,
                     ),
                     onPressed: () {
@@ -328,7 +341,7 @@ class _MainMenuState extends State<MainMenu> {
                           Color.fromRGBO(0, 129, 235, 0.639)),
                     ),
                     child: Icon(
-                      Icons.fitness_center,
+                      LineIcons.question,
                       size: 75,
                     ),
                     onPressed: () {
