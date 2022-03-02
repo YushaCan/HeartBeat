@@ -17,9 +17,43 @@ class VideoControlsWidget extends StatelessWidget {
       color: Colors.white.withOpacity(0.95),
     ),
     height: 142,
-    child: buildButtons(context),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            buildText(
+              title: 'Duration',
+              value: '${exercise.duration.inSeconds} Seconds',
+            ),
+            buildText(
+              title: 'Reps',
+              value: '${exercise.noOfReps} times',
+            ),
+          ],
+        ),
+        buildButtons(context),
+      ],
+    ),
   );
 
+  Widget buildText({
+    required String title,
+    required String value,
+  }) => Column(
+    children: [
+      Text(
+        title,
+        style: TextStyle(color: Colors.grey),
+      ),
+      SizedBox(height: 8),
+      Text(
+        value,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+    ],
+  );
   Widget buildButtons(BuildContext context) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
@@ -41,6 +75,25 @@ class VideoControlsWidget extends StatelessWidget {
   );
 
   Widget buildPlayButton(BuildContext context){
+    final isLoading =
+        exercise.controller == null || !exercise.controller.value.isInitialized;
+    if(isLoading){
+      return Center(child: CircularProgressIndicator());
+    }
+    else if(exercise.controller.value.isPlaying){
+      return buildButton(
+          context,
+          icon: Icon(Icons.pause, size: 30, color: Colors.white,),
+          onClicked: () => onTogglePlaying(false),
+      );
+    }
+    else{
+      return buildButton(
+        context,
+        icon: Icon(Icons.play_arrow, size: 30, color: Colors.white,),
+        onClicked: () => onTogglePlaying(true),
+      );
+    }
     return buildButton(
       context,
       icon: Icon(Icons.play_arrow, size: 30, color: Colors.white,),
@@ -58,6 +111,13 @@ class VideoControlsWidget extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Color(0xFFff6369),
+                blurRadius: 8,
+                offset: Offset(2,2)
+              ),
+            ]
           ),
           child: CircleAvatar(
             radius: 24,

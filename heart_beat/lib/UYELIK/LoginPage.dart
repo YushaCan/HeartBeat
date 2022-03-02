@@ -58,9 +58,10 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _userEmailController = TextEditingController();
   TextEditingController _userNameController = TextEditingController();
 
+  var checkBoxValue = false;
   bool seePassword = true;
   bool lockIcon = true;
-
+  bool newValue = false;
   String passwordText = "";
   String confirmedPasswordText = "";
   String email = "";
@@ -187,14 +188,20 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 150, vertical: 8),
-              child: Row(
+              padding: EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+              child: Wrap(
                 children: <Widget>[
-                  Text("Remember me!",
-                    style: TextStyle(
-                      color: Colors.blueAccent,
-                    ),
-                    textAlign: TextAlign.right,),
+                  CheckboxListTile(
+                      title: Text("Remember me"),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: checkBoxValue,
+                      activeColor: Colors.green,
+                      onChanged:(newValue){
+                        setState(() {
+                          checkBoxValue = newValue!;
+                        });
+                      }
+                  ),
                 ],
               ),
             ),
@@ -228,11 +235,19 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 170, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 100, vertical: 5),
+
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   IconButton(
-                    icon: Image.asset('assets/images/1534129544.png'),
+                    icon: Image.asset('assets/1534129544.png'),
+                    iconSize: 50,
+                    onPressed: () {
+                      signup(context);},
+                  ),
+                  IconButton(
+                    icon: Image.asset('assets/Facebook.png'),
                     iconSize: 50,
                     onPressed: () {
                       signup(context);},
