@@ -2,18 +2,21 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'FriendsList.dart';
 import 'dart:math' as math;
 import 'package:line_icons/line_icons.dart';
 
 class MainMenuPage extends StatelessWidget {
-  const MainMenuPage({Key? key}) : super(key: key);
-
+  MainMenuPage({Key? key}) : super(key: key);
+  // FOR OPEN DRAWER PROGRAMMATICALLY
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Heart Beat',
         home: Scaffold(
+          key: _key,
+          drawer: SideBar(),
           appBar: AppBar(
             backgroundColor: Color.fromRGBO(0, 129, 235, 92),
             // For Friends List on AppBar
@@ -21,6 +24,7 @@ class MainMenuPage extends StatelessWidget {
               // Open Friends list
               onPressed: () {
                 print('FRIENDS LIST OPENED');
+                _key.currentState!.openDrawer();
               },
               icon: Icon(Icons.people),
               iconSize: 30,

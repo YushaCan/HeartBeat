@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Antreman/HomePage.dart';
+import 'package:heart_beat/MainPages/MainMenu.dart';
 import 'package:heart_beat/StepCounter/test2.dart';
 import 'package:heart_beat/UYELIK/SignUpPage.dart';
 import 'package:heart_beat/MainPages/SplashScreen.dart';
@@ -125,7 +126,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(builder: (context) => HomePage()),
                 );
-
               },
               child: Text("MySteppage"),
             )
@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SignUpPage()),
+            MaterialPageRoute(builder: (context) => MainMenuPage()),
           );
         },
         tooltip: 'Increment',
