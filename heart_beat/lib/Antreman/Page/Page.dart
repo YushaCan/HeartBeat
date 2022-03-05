@@ -58,8 +58,21 @@ class _ExercisePageState extends State<ExercisePage> {
 
   Widget buildVideoControllers() => VideoControlsWidget(
     exercise: currentExercise,
-    onTogglePlaying: (isPlaying) {},
-    onNextVideo: () {},
-    onRewindVideo: () {},
+    onTogglePlaying: (isPlaying) {
+      setState(() {
+        if(isPlaying){
+          currentExercise.controller.play();
+        }
+        else{
+          currentExercise.controller.pause();
+        }
+      });
+    },
+    onNextVideo: () => controller.nextPage(
+        duration: Duration(microseconds: 300),
+        curve: Curves.easeIn),
+    onRewindVideo: () => controller.previousPage(
+        duration: Duration(microseconds: 300),
+        curve: Curves.easeIn),
   );
 }
