@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:heart_beat/MainPages/ProfilePage.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'FriendsList.dart';
 import 'dart:math' as math;
@@ -41,6 +42,10 @@ class MainMenuPage extends StatelessWidget {
                 child: IconButton(
                   onPressed: () {
                     print('PROFILE PAGE OPENED');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profile()),
+                    );
                   },
                   icon: Icon(Icons.person),
                   iconSize: 30,
