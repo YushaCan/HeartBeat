@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class Profile extends StatelessWidget {
 }
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  ProfilePage({Key? key}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -34,6 +36,9 @@ class _ProfilePageState extends State<ProfilePage> {
   String surname = "Surname";
   String mail = "E-Mail";
   ////////////////////////////////////////////
+  // For the pick Profile Image
+  File? _pickedImage;
+  ////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -44,34 +49,67 @@ class _ProfilePageState extends State<ProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(left: 30),
+                padding: EdgeInsets.only(left: 20),
               ),
               // PROFILE PHOTO AND NICK
               Stack(
                 children: <Widget>[
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image(
-                      image: AssetImage("assets/profilephoto.jpg"),
+                  Container(
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.purple,
+                      child: CircleAvatar(
+                        radius: 55,
+                        backgroundImage: _pickedImage == null
+                            ? AssetImage("assets/profilephoto.jpg")
+                                as ImageProvider
+                            : FileImage(_pickedImage!),
+                      ),
                     ),
                   ),
+                  /*SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage("assets/profilephoto.jpg"),
+                    ),
+                  ),*/
                   Positioned(
-                    left: 70,
-                    bottom: 70,
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      alignment: Alignment.center,
-                      decoration: new BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle,
+                    bottom: 0,
+                    right: 0,
+                    child: InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: ((builder) => bottomSheet()),
+                        );
+                      },
+                      // PICK IMAGE BUTTON
+                      child: CircleAvatar(
+                        radius: 15,
+                        backgroundColor: Color.fromARGB(0, 255, 255, 255),
+                        child: Icon(
+                          Icons.camera_alt,
+                          size: 35,
+                          color: Colors.teal,
+                        ),
                       ),
+                    ),
+                  ),
+                  // LEVEL CIRCLE
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 87,
+                    ),
+                    child: CircleAvatar(
+                      radius: 17,
+                      backgroundColor: Colors.blue,
                       child: Text(
                         "$level",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -191,6 +229,49 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children: <Widget>[
+          Text(
+            "Choose Profile Photo",
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton.icon(
+                onPressed: () {
+                  // TAKE A SHOT WITH A CAMERA
+                },
+                icon: Icon(Icons.camera),
+                label: Text("Camera"),
+              ),
+              FlatButton.icon(
+                onPressed: () {
+                  // TAKE IMAGE FROM GALLERY
+                },
+                icon: Icon(Icons.image),
+                label: Text("Gallery"),
+              ),
+            ],
+          ),
         ],
       ),
     );
