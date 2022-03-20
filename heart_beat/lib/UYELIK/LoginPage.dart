@@ -192,7 +192,6 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             ),
-<<<<<<< Updated upstream
             Row(
               children: <Widget>[
                 Padding(padding: EdgeInsets.only(left: 190)),
@@ -209,21 +208,6 @@ class _SignUpState extends State<SignUp> {
                   "Remember me",
                   style: TextStyle(
                     fontSize: 15,
-=======
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 100, vertical: 0),
-              child: Wrap(
-                children: <Widget>[
-                  CheckboxListTile(
-                    title: Text("title text"),
-                      value: checkBoxValue,
-                      activeColor: Colors.green,
-                      onChanged:(newValue){
-                        setState(() {
-                          checkBoxValue = newValue!;
-                        });
-                      },
->>>>>>> Stashed changes
                   ),
                 ),
               ],
@@ -253,18 +237,12 @@ class _SignUpState extends State<SignUp> {
               padding: EdgeInsets.only(left: 49),
               child: Row(
                 children: <Widget>[
-<<<<<<< Updated upstream
                   Padding(padding: EdgeInsets.only(left: 35)),
                   Text(
                     "Don't have an account? ",
                     style: TextStyle(
                       color: Colors.blueAccent,
                     ),
-=======
-                  Text("Don't have an account?",
-                    style: TextStyle(
-                    color: Colors.blueAccent,),
->>>>>>> Stashed changes
                   ),
                   TextButton(
                     onPressed: () {
@@ -273,7 +251,6 @@ class _SignUpState extends State<SignUp> {
                         MaterialPageRoute(builder: (context) => SignUpPage()),
                       );
                     },
-<<<<<<< Updated upstream
                     child: Text(
                       "Sign Up!",
                       style: TextStyle(
@@ -283,10 +260,6 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   )
-=======
-                    child: Text(" Sign Up!"),
-                  ),
->>>>>>> Stashed changes
                 ],
               ),
             ),
