@@ -12,7 +12,11 @@ class ExerciseSetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => InkWell(
     onTap: () {
-      ExercisesOfSetPage(exercises: exerciseSet.exercises!);
+      print("i am tapped");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ExercisesOfSetPage(exercises: exerciseSet.exercises!)),
+      );
     },
     child: Container(
       padding: const EdgeInsets.all(16),
