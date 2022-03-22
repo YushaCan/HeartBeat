@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_beat/Antreman2/ExerciseCounter/Counter.dart';
 import 'package:heart_beat/MainPages/MainMenu.dart';
 import 'package:heart_beat/Antreman2/Pages/ExerciseHomePage.dart';
 import 'package:heart_beat/Antreman2/Pages/testPage.dart';
@@ -131,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ExerciseHomePage()),
+                  MaterialPageRoute(builder: (context) => CounterWidget()),
                 );
               },
               child: Text("MySteppage"),
