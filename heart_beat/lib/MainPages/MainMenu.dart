@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:heart_beat/MainPages/ProfilePage.dart';
+import 'package:heart_beat/MainPages/WaterPage.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'FriendsList.dart';
 import 'dart:math' as math;
@@ -111,7 +112,7 @@ class _MainMenuState extends State<MainMenu> {
           // First Row
           Row(
             children: <Widget>[
-              // TRAININ BUTTON
+              // TRAINING BUTTON
               SizedBox(
                 height: 120,
                 width: 120,
@@ -223,6 +224,10 @@ class _MainMenuState extends State<MainMenu> {
                     ),
                     onPressed: () {
                       print("WATER PAGE OPENED");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => WaterPage()),
+                      );
                     },
                   ),
                 ),

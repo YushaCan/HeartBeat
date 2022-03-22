@@ -34,6 +34,7 @@ dependencies:
   firebase_auth: ^3.3.7
   google_sign_in: ^5.2.3
   percent_indicator: ^4.0.0
+  liquid_progress_indicator: ^0.4.0
   cupertino_icons: ^1.0.2
   pedometer: ^3.0.0
   font_awesome_flutter: ^9.2.0
