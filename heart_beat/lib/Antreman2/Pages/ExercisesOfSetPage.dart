@@ -11,7 +11,13 @@ class ExercisesOfSetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Exercises "
+        ),
+      ),
       body: ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: 10),
             itemCount: this.exercises.length,
             itemBuilder: (context, index){
               return InkWell(
@@ -23,10 +29,10 @@ class ExercisesOfSetPage extends StatelessWidget {
                 },
                 child: SizedBox(
                   width: 300.0,
-                  height: 75.0,
+                  height: 100.0,
                   child: Card(
                     shadowColor: Colors.pinkAccent,
-                    color: Colors.blueAccent,
+                    color: Colors.blueAccent.shade100,
                     child: Center(
                       child: Text(
                         this.exercises[index].name!,

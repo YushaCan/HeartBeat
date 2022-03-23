@@ -25,43 +25,14 @@ class _ExerciseVideoState extends State<ExerciseVideo> {
            mainAxisAlignment: MainAxisAlignment.center,
            children: [
              SizedBox(
-               child: Container(
-                 height: 100,
-                 width: 200,
-                 color: Colors.transparent,
-                 child: Container(
-                   decoration: BoxDecoration(
-                     color: Colors.blueAccent,
-                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                   ),
-                   child: Center(
-                     child: Text("Learn First Then start the exercise!",
-                     style: TextStyle(
-                         color: Colors.white, fontSize: 15),
-                     textAlign: TextAlign.center),
-                   ),
-                 ),
+               child: Image.network(
+                 widget.url,
+                 height: 200,
+                 width: 300,
+                 fit: BoxFit.cover,
                ),
              ),
-              ClipOval(
-                  child: Image.network(
-                    widget.url,
-                    height: 300,
-                    width: 300,
-                    fit: BoxFit.cover,
-                  ),
-              ),
-             SizedBox(
-               child: ElevatedButton(
-                 onPressed: () {
-                   Navigator.push(
-                     context,
-                     MaterialPageRoute(builder: (context) => CounterWidget()),
-                   );
-                 },
-                 child: Text("Go And Crush it!"),
-               ),
-             )
+             CounterWidget()
            ],
          ),
     ));

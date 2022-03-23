@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'ButtonWidget.dart';
+import 'CongratulationsWidget.dart';
 
 class CounterWidget extends StatefulWidget {
   const CounterWidget({Key? key}) : super(key: key);
@@ -112,7 +113,8 @@ class _CounterWidgetState extends State<CounterWidget> {
 
   Widget buildTime(){
     if(seconds == 0){
-      return Icon(Icons.done, color: Colors.greenAccent, size: 50,);
+      //return Icon(Icons.done, color: Colors.greenAccent, size: 50,);
+      return CongratulationsWidget();
     }else{
       return Text(
         '$seconds',
