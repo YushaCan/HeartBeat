@@ -11,14 +11,14 @@ class CounterWidget extends StatefulWidget {
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
-  static const maxSeconds = 60;
+  static const maxSeconds = 10;
   int seconds = maxSeconds;
   Timer? timer;
   void startTimer({bool reset = true}){
     if(reset){
       resetTimer();
     }
-    timer = Timer.periodic(Duration(milliseconds: 50), (_){
+    timer = Timer.periodic(Duration(seconds: 1), (_){
       if(seconds>0){
         setState(() {
           seconds--;
@@ -40,8 +40,8 @@ class _CounterWidgetState extends State<CounterWidget> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return SizedBox(
+      child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -55,8 +55,8 @@ class _CounterWidgetState extends State<CounterWidget> {
   }
 
   Widget buildTimer()=> SizedBox(
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
     child: Stack(
       fit: StackFit.expand,
       children: [
@@ -94,6 +94,7 @@ class _CounterWidgetState extends State<CounterWidget> {
         ButtonWidget(
           text: 'Cancel',
           onClicked: (){
+            print("I am clicked");
             stopTimer();
           },
         )
@@ -111,14 +112,14 @@ class _CounterWidgetState extends State<CounterWidget> {
 
   Widget buildTime(){
     if(seconds == 0){
-      return Icon(Icons.done, color: Colors.greenAccent, size: 112,);
+      return Icon(Icons.done, color: Colors.greenAccent, size: 50,);
     }else{
       return Text(
         '$seconds',
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.white,
-          fontSize: 80,
+          color: Colors.green,
+          fontSize: 30,
         ),
       );
     }
