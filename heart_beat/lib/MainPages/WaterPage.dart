@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:line_icons/line_icons.dart';
@@ -35,6 +37,33 @@ class _WaterPageContentState extends State<WaterPageContent>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
 
+  // Water amount should consumed
+  static double waterAmount = 0;
+  //////////////////////////////
+  // User can click button when it is not %100
+  static bool canClick = true;
+
+  void GainExperiencePoint() {
+    // GAIN EXPERIENCE POINTS
+
+    /////////////////////////
+    // Disable button when water management reached %100
+    if (waterAmount >= 0.8) {
+      setState(() {
+        canClick = false;
+      });
+    } else {
+      setState(() {
+        canClick = true;
+      });
+    }
+    ////////////////////////////////////////////////////
+    setState(() {
+      waterAmount += 0.2;
+      animationController.animateTo(waterAmount);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -45,7 +74,10 @@ class _WaterPageContentState extends State<WaterPageContent>
 
     animationController.addListener(() => setState(() {}));
     // CHANGE THE VALUE IN THE animeteTo dynamically with respect to consumed water
-    animationController.animateTo(0.7);
+    if (animationController.value <= waterAmount) {
+      animationController.animateTo(waterAmount);
+    }
+
     //////////////////////////////////////////////////////////////////////////////
   }
 
@@ -62,6 +94,20 @@ class _WaterPageContentState extends State<WaterPageContent>
     return Center(
       child: Stack(
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 350, left: 115),
+            child: ElevatedButton(
+              onPressed: canClick ? GainExperiencePoint : null,
+              child: Icon(
+                Icons.local_drink,
+                size: 35,
+              ),
+              style: ElevatedButton.styleFrom(
+                  // padding: EdgeInsets.only(left: 70),
+                  shape: const CircleBorder(),
+                  fixedSize: Size(70, 70)),
+            ),
+          ),
           SizedBox(
             width: 300,
             height: 300,
@@ -83,17 +129,5 @@ class _WaterPageContentState extends State<WaterPageContent>
         ],
       ),
     );
-  }
-
-  Path BuildWaterPath() {
-    return Path()
-      ..moveTo(50, 0)
-      ..quadraticBezierTo(0, 0, 0, 37.5)
-      ..quadraticBezierTo(0, 75, 25, 75)
-      ..quadraticBezierTo(25, 95, 5, 95)
-      ..quadraticBezierTo(35, 95, 40, 75)
-      ..quadraticBezierTo(100, 75, 100, 37.5)
-      ..quadraticBezierTo(100, 0, 50, 0)
-      ..close();
   }
 }
