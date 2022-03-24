@@ -113,7 +113,12 @@ class _CounterWidgetState extends State<CounterWidget> {
 
   Widget buildTime(){
     if(seconds == 0){
-      //return Icon(Icons.done, color: Colors.greenAccent, size: 50,);
+      //return Icon(Icons.done, color: Colors.greenAccent, size: 50,);CongratulationsWidget()
+     //Navigator.of(context).pushNamed('/CongratulationsWidget');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>CongratulationsWidget()),
+      );
       return CongratulationsWidget();
     }else{
       return Text(

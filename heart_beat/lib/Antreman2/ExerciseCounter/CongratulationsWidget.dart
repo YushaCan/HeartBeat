@@ -35,7 +35,6 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
         title: Text("Flutter Confetti Animation Demo"),
         automaticallyImplyLeading: false,
       ),
-
       body: SafeArea(
         child: Stack(
           children: <Widget>[
