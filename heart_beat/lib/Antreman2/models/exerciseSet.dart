@@ -27,6 +27,7 @@ class ExerciseSet {
   late  ExerciseType? exerciseType;
   late  Color? color;
   late String imageUrl;
+  late String iconUrl;
 
    ExerciseSet({
       this.name,
@@ -34,7 +35,8 @@ class ExerciseSet {
       this.exercises,
       this.exerciseType,
       this.color,
-      required this.imageUrl
+      required this.imageUrl,
+      required this.iconUrl
   });
 
 }

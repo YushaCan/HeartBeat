@@ -22,8 +22,6 @@ class _ExercisesWidgetState extends State<ExercisesWidget> {
     super.didChangeDependencies();
     exerciseSets = await showExerciseSetData();
     super.setState(() {});
-    print("i am from ExercisesWidget");
-    print(exerciseSets.length);
     length = exerciseSets.length;
   }
   @override

@@ -5,15 +5,23 @@ import 'ButtonWidget.dart';
 import 'CongratulationsWidget.dart';
 
 class CounterWidget extends StatefulWidget {
-  const CounterWidget({Key? key}) : super(key: key);
-
+  const CounterWidget({Key? key, required this.exerciseDuration}) : super(key: key);
+  final int exerciseDuration;
   @override
   _CounterWidgetState createState() => _CounterWidgetState();
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
-  static const maxSeconds = 10;
-  int seconds = maxSeconds;
+  late int seconds;
+  late int maxSeconds;
+  @override
+  void initState() {
+    if(mounted){
+      maxSeconds = widget.exerciseDuration;
+      seconds = maxSeconds;
+      super.initState();
+    }
+  }
   Timer? timer;
   void startTimer({bool reset = true}){
     if(reset){
@@ -21,9 +29,11 @@ class _CounterWidgetState extends State<CounterWidget> {
     }
     timer = Timer.periodic(Duration(seconds: 1), (_){
       if(seconds>0){
-        setState(() {
-          seconds--;
-        });
+        if(mounted){
+          setState(() {
+            seconds--;
+          });
+        }
       } else {
         stopTimer(reset: false);
       }
@@ -35,9 +45,10 @@ class _CounterWidgetState extends State<CounterWidget> {
     if(reset){
       resetTimer();
     }
+    if(mounted){
     setState(() {
-      timer?.cancel();
-    });
+        timer?.cancel();
+    });}
   }
   @override
   Widget build(BuildContext context) {
@@ -47,7 +58,7 @@ class _CounterWidgetState extends State<CounterWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               buildTimer(),
-              const SizedBox(height: 80,),
+              const SizedBox(height: 20,),
               buildButtons(),
             ],
           ),
@@ -77,13 +88,13 @@ class _CounterWidgetState extends State<CounterWidget> {
   Widget buildButtons(){
     final isRunning = timer == null ? false: timer!.isActive;
     final isCompleted = seconds == maxSeconds || seconds == 0;
-
     return isRunning || !isCompleted
       ? Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ButtonWidget(
           text: isRunning ? 'Pause' : 'Resume',
+          backgroundColor: Colors.greenAccent,
           onClicked: (){
             if(isRunning){
               stopTimer(reset: false);
@@ -92,8 +103,12 @@ class _CounterWidgetState extends State<CounterWidget> {
             }
           },
         ),
+        SizedBox(
+          width: 10,
+        ),
         ButtonWidget(
           text: 'Cancel',
+          backgroundColor: Colors.greenAccent,
           onClicked: (){
             print("I am clicked");
             stopTimer();
@@ -102,10 +117,9 @@ class _CounterWidgetState extends State<CounterWidget> {
       ],
     ) : ButtonWidget(
       text: 'Start',
-      color: Colors.black,
+      color: Colors.greenAccent,
       backgroundColor: Colors.white,
       onClicked:(){
-        print("I am clicked");
         startTimer(reset: false);
       },
     );
@@ -113,13 +127,10 @@ class _CounterWidgetState extends State<CounterWidget> {
 
   Widget buildTime(){
     if(seconds == 0){
-      //return Icon(Icons.done, color: Colors.greenAccent, size: 50,);CongratulationsWidget()
-     //Navigator.of(context).pushNamed('/CongratulationsWidget');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) =>CongratulationsWidget()),
-      );
-      return CongratulationsWidget();
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => CongratulationsWidget()));
+      });
+      return Container();
     }else{
       return Text(
         '$seconds',

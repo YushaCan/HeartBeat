@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_beat/Antreman2/Widgets/ExerciseSetWidget.dart';
+import 'package:heart_beat/Antreman2/Widgets/ExercisesWidget.dart';
 
 
 class CongratulationsWidget extends StatefulWidget {
@@ -13,11 +15,12 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
-    setState(() {
-      initController();
-    });
-
+    if(mounted){
+      setState(() {
+        initController();
+        super.initState();
+      });
+    }
   }
 
   void initController() {
@@ -30,11 +33,6 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.pink[50],
-      appBar: AppBar(
-        backgroundColor: Colors.cyan,
-        title: Text("Flutter Confetti Animation Demo"),
-        automaticallyImplyLeading: false,
-      ),
       body: SafeArea(
         child: Stack(
           children: <Widget>[

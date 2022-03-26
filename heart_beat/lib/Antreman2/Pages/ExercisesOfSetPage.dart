@@ -24,7 +24,7 @@ class ExercisesOfSetPage extends StatelessWidget {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ExerciseVideo(url: this.exercises[index].videoUrl!,)),
+                    MaterialPageRoute(builder: (context) => ExerciseVideo(url: this.exercises[index].videoUrl!,duration: int.parse(this.exercises[index].duration!),)),
                   );
                 },
                 child: SizedBox(
@@ -52,15 +52,15 @@ class ExercisesOfSetPage extends StatelessWidget {
                             ),
                             SizedBox(
                               child: Text(
-                                this.exercises[index].duration!.toString(),
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                                "Duration: ${this.exercises[index].duration!.toString()}",
+                                style: TextStyle(color: Colors.blueAccent[200]),
                               ),
                             ),
                           ],
                         ),
                         ClipOval( //no need to provide border radius to make circular image
-                          child: Image.asset(
-                            "assets/jumpinplace.jpg",
+                          child: Image.network(
+                            this.exercises[index].iconUrl!.toString(),
                             height: 100.0,
                             width: 100.0,
                             fit:BoxFit.cover, //change image fill type

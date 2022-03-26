@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:heart_beat/Antreman2/ExerciseCounter/Counter.dart';
 
 class ExerciseVideo extends StatefulWidget {
-  const ExerciseVideo({Key? key, required this.url}) : super(key: key);
+  const ExerciseVideo({Key? key, required this.url, required this.duration}) : super(key: key);
   final String url;
+  final int duration;
   @override
   _ExerciseVideoState createState() => _ExerciseVideoState();
 }
@@ -19,7 +20,7 @@ class _ExerciseVideoState extends State<ExerciseVideo> {
        leading: IconButton(icon:Icon(Icons.arrow_back), onPressed: () {  },),
      ),
        body: Container(
-          height: MediaQuery.of(context).size.height / 1.5,
+         // height: MediaQuery.of(context).size.height / 1.5,
           color: Colors.white,
            child: Column(
            mainAxisAlignment: MainAxisAlignment.center,
@@ -27,12 +28,17 @@ class _ExerciseVideoState extends State<ExerciseVideo> {
              SizedBox(
                child: Image.network(
                  widget.url,
-                 height: 200,
-                 width: 300,
+                 height: 300,
+                 width: 400,
                  fit: BoxFit.cover,
                ),
              ),
-             CounterWidget()
+             SizedBox(
+               height: 40,
+             ),
+             SizedBox(
+               child: CounterWidget(exerciseDuration: widget.duration),
+             ),
            ],
          ),
     ));

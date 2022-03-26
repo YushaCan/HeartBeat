@@ -23,7 +23,6 @@ class ButtonWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       ),
       onPressed: () {
-       // startTimer(reset: false);
         onClicked();
       },
       child: Text(

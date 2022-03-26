@@ -5,6 +5,7 @@ class Exercise {
   late String? duration;
   late String? noOfReps;
   late String? videoUrl;
+  late String? iconUrl;
   late String? isDone;
   late String? set;
   late VideoPlayerController? controller;
@@ -14,6 +15,7 @@ class Exercise {
      this.duration,
      this.noOfReps,
      this.videoUrl,
+     this.iconUrl,
      this.isDone,
      this.set
   });
