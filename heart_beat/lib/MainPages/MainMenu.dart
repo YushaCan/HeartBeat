@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:heart_beat/MainPages/ProfilePage.dart';
 import 'package:heart_beat/MainPages/WaterPage.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -69,8 +70,9 @@ class MainMenu extends StatefulWidget {
 class _MainMenuState extends State<MainMenu> {
   double sliderValue = 0;
   // Each level's experience points & numbers
-  double levelExp = 100;
-  int currentLevel = 9;
+  double levelExp = Gamification.experiencePoint;
+  double nextLevelExp = Gamification.expForOtherLevel;
+  int currentLevel = Gamification.level;
   late int nextLevel = currentLevel + 1;
   //////////////////////////////////////////
   @override
@@ -95,15 +97,17 @@ class _MainMenuState extends State<MainMenu> {
                       currentLevel.toString(),
                       style: TextStyle(
                         fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     trailing: new Text(
                       nextLevel.toString(),
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
                     ),
-                    percent: 0.7,
+                    percent: levelExp / nextLevelExp,
                     linearStrokeCap: LinearStrokeCap.butt,
                     progressColor: Colors.yellow,
                   )

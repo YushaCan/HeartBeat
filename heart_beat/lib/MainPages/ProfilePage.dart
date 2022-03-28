@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:ui';
-
+import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_beat/MainPages/MainMenu.dart';
 import 'package:image_picker/image_picker.dart';
+import 'MainMenu.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -39,6 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
   // For the pick Profile Image
   File? _pickedImage;
   ////////////////////////////////////////////
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -57,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Container(
                     child: CircleAvatar(
                       radius: 60,
-                      backgroundColor: Colors.purple,
+                      backgroundColor: Gamification.Rank(),
                       child: CircleAvatar(
                         radius: 55,
                         backgroundImage: _pickedImage == null

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -45,7 +46,7 @@ class _WaterPageContentState extends State<WaterPageContent>
 
   void GainExperiencePoint() {
     // GAIN EXPERIENCE POINTS
-
+    Gamification.experiencePoint += 100;
     /////////////////////////
     // Disable button when water management reached %100
     if (waterAmount >= 0.8) {
@@ -59,7 +60,7 @@ class _WaterPageContentState extends State<WaterPageContent>
     }
     ////////////////////////////////////////////////////
     setState(() {
-      waterAmount += 0.2;
+      waterAmount += 0.1;
       animationController.animateTo(waterAmount);
     });
   }
