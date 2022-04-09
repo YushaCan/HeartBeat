@@ -1,6 +1,60 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/MainPages/MainMenu.dart';
+
+
+class UID{
+  final  USER_ID;
+  UID(this.USER_ID);
+
+  UID.fromJson(Map<dynamic, dynamic> json) : USER_ID = json['USER_ID'] as String;
+
+  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+    'USER_ID': USER_ID,
+  };
+}
+
+class ULEVEL{
+  final  level;
+  ULEVEL(this.level);
+
+  ULEVEL.fromJson(Map<dynamic, dynamic> json) : level = json['level'] as String;
+
+  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+    'level': level,
+  };
+}
+
+class UXP{
+  final  xp;
+  UXP(this.xp);
+
+  UXP.fromJson(Map<dynamic, dynamic> json) : xp = json['xp'] as String;
+
+  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+    'xp': xp,
+  };
+}
+
+class UDATA{
+  final  uid;
+  final name;
+  final photoURL;
+  UDATA(this.uid,this.name,this.photoURL);
+
+  UDATA.fromJson(Map<dynamic, dynamic> json) :
+        uid = json['uid'] as String,
+        name = json['name'] as String,
+        photoURL = json['photoURL'] as String
+        ;
+
+  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+    'uid': uid,
+    'name': name,
+    'photoURL': photoURL,
+  };
+}
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -32,9 +86,11 @@ class _SignUpState extends State<SignUp> {
   String passwordText = "";
   String confirmedPasswordText = "";
   String email = "";
+  String name = "";
 
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   void Toggle() {
     setState(() {
@@ -44,11 +100,35 @@ class _SignUpState extends State<SignUp> {
 
   Future<void> _createUser() async {
     try {
-      print("user:  $email");
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: email.trim(), password: passwordText);
-      print("user:  $userCredential");
+      //userCredential.user?.updateDisplayName(name);
+      User? user = userCredential.user;
+      user?.updateDisplayName(name);
+      print("${user?.displayName}");
+      //***********SET XP NODE FOR THE NEW USER***********
+      final user_xp = UXP("0");
+      DatabaseReference ref1 = FirebaseDatabase.instance.ref()
+          .child("USERS")
+          .child("${userCredential.user?.uid}")
+          .child("XP");
+      ref1.push().set(user_xp.toJson());
+
+
+      //***********SET LEVEL NODE FOR THE NEW USER***********
+      final user_level = ULEVEL("0");
+      DatabaseReference ref2 = FirebaseDatabase.instance.ref()
+          .child("USERS")
+          .child("${userCredential.user?.uid}")
+          .child("LEVEL");
+      ref2.push().set(user_level.toJson());
+
+      //***********SET USERS_TO_VIEW NODE FOR THE NEW USER***********
+      final user_data = UDATA(userCredential.user?.uid,user?.displayName,userCredential.user?.photoURL);
+      DatabaseReference ref3 = FirebaseDatabase.instance.ref().child("USERS_TO_VIEW");
+      ref3.push().set(user_data.toJson());
+
     } on FirebaseAuthException catch (e) {
       print("error: $e");
     } catch (e) {
@@ -99,11 +179,15 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
         ]),
-        const Padding(
+         Padding(
           padding: EdgeInsets.symmetric(horizontal: 45, vertical: 8),
-          child: TextField(
+          child: TextFormField(
+            controller: nameController,
+            onChanged: (value) {
+              name = nameController.text;
+            },
             decoration: InputDecoration(
-              //icon: Icon(Icons.person),
+              //icon: Icon(Icons.email),
               border: OutlineInputBorder(),
               hintText: 'Username',
             ),
