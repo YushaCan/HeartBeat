@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ import 'package:heart_beat/StepCounter/test2.dart';
 import 'package:heart_beat/UYELIK/SignUpPage.dart';
 import 'package:heart_beat/MainPages/SplashScreen.dart';
 import 'package:heart_beat/UYELIK/LoginPage.dart';
+import '../FriendShip/FriendShipActions.dart';
 import '../FriendShip/GetUsersFireBase.dart';
 import 'MainMenu.dart';
 
@@ -104,9 +104,17 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextButton(
               onPressed: () {
-                showUSERS_LIST();
+                FriendShipSentRequests();
               },
               child: Text("Users"),
+            ),
+            TextButton(
+              onPressed: () {
+                String uid = "GpsvIg2UJJZcV2g1SApCiWQ1WuE2";
+                //AddFriend(uid);
+                RejectRequest(uid);
+              },
+              child: Text("cancel friend"),
             )
           ],
         ),

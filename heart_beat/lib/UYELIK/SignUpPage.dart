@@ -3,18 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/MainPages/MainMenu.dart';
 
-
-class UID{
-  final  USER_ID;
-  UID(this.USER_ID);
-
-  UID.fromJson(Map<dynamic, dynamic> json) : USER_ID = json['USER_ID'] as String;
-
-  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-    'USER_ID': USER_ID,
-  };
-}
-
 class ULEVEL{
   final  level;
   ULEVEL(this.level);
@@ -107,6 +95,7 @@ class _SignUpState extends State<SignUp> {
       User? user = userCredential.user;
       user?.updateDisplayName(name);
       print("${user?.displayName}");
+
       //***********SET XP NODE FOR THE NEW USER***********
       final user_xp = UXP("0");
       DatabaseReference ref1 = FirebaseDatabase.instance.ref()
