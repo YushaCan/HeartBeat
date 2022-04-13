@@ -23,25 +23,27 @@ Future<List<ExerciseSet>> showExerciseSetData () async {
         element.children.forEach((element) {
           //{duration: 30, set: 1, name: jump in place, isDone: 0, URL: https://firebasestorage.googleapis.com/v0/b/heartbeat-cbae0.appspot.com/o/assets%2Fcore%2F5.gif?alt=media&token=a389e861-904d-4728-8975-3d11674edc26}
           Exercise SingleExercise =  new Exercise();
-          print(element.value);
+         // print(element.value);
           element.children.forEach((element) {// 30 1 jump in place
+           // print(element.value);
             if(count==1){
               SingleExercise.duration= element.value.toString();
             }
             else if(count==2){
-              SingleExercise.isDone= element.value.toString();
+              SingleExercise.set= element.value.toString();
             }
             else if(count==3){
-              SingleExercise.iconUrl= element.value.toString();
+              SingleExercise.videoUrl= element.value.toString();
             }
             else if(count==4){
               SingleExercise.name= element.value.toString();
             }
             else if(count==5){
-              SingleExercise.set= element.value.toString();
+              SingleExercise.iconUrl= element.value.toString();
             }
             else if(count==6){
-              SingleExercise.videoUrl= element.value.toString();
+
+              SingleExercise.isDone= element.value.toString();
             }
             count++;
           });

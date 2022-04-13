@@ -110,9 +110,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextButton(
               onPressed: () {
-                String uid = "GpsvIg2UJJZcV2g1SApCiWQ1WuE2";
-                //AddFriend(uid);
-                RejectRequest(uid);
+                String uid = "bHo9QRBPvxO5lolbFpoZHSO58Wu1";
+                //"6AKlxePrz3eWhLNpgpLkTP963B92"
+                //AddFriend("GpsvIg2UJJZcV2g1SApCiWQ1WuE2");
+                //AddFriend("bHo9QRBPvxO5lolbFpoZHSO58Wu1");
+                //AddFriend("6AKlxePrz3eWhLNpgpLkTP963B92");
+                //RejectCancelRequest(uid);
+                AcceptFriend("bHo9QRBPvxO5lolbFpoZHSO58Wu1");
               },
               child: Text("cancel friend"),
             )
