@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/MainPages/MainMenu.dart';
+import '../XP/actions.dart';
 
 class ULEVEL{
   final  level;
@@ -14,16 +15,7 @@ class ULEVEL{
   };
 }
 
-class UXP{
-  final  xp;
-  UXP(this.xp);
 
-  UXP.fromJson(Map<dynamic, dynamic> json) : xp = json['xp'] as String;
-
-  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-    'xp': xp,
-  };
-}
 
 class UDATA{
   final  uid;

@@ -3,11 +3,13 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Antreman2/Widgets/ExerciseSetWidget.dart';
 import 'package:heart_beat/Antreman2/Widgets/ExercisesWidget.dart';
+import 'package:heart_beat/XP/actions.dart';
 
 
 class CongratulationsWidget extends StatefulWidget {
   @override
   _CongratulationsWidgetState createState() => _CongratulationsWidgetState();
+
 }
 
 class _CongratulationsWidgetState extends State<CongratulationsWidget> {
@@ -19,6 +21,7 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
       setState(() {
         initController();
         super.initState();
+        EarnXp(10);
       });
     }
   }
@@ -73,7 +76,7 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              "Congratulations!",
+              "Congratulations! You earned 10 xp",
               style: TextStyle(
                 fontSize: 30,
                 color: Colors.white,

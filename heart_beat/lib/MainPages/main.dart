@@ -16,6 +16,7 @@ import 'package:heart_beat/MainPages/SplashScreen.dart';
 import 'package:heart_beat/UYELIK/LoginPage.dart';
 import '../FriendShip/FriendShipActions.dart';
 import '../FriendShip/GetUsersFireBase.dart';
+import '../XP/actions.dart';
 import 'MainMenu.dart';
 
 Future<void> main() async {
@@ -119,6 +120,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 AcceptFriend("bHo9QRBPvxO5lolbFpoZHSO58Wu1");
               },
               child: Text("cancel friend"),
+            ),
+            TextButton(
+              onPressed: () {
+                String uid = "bHo9QRBPvxO5lolbFpoZHSO58Wu1";
+                EarnXp(10);
+              },
+              child: Text("earn xp"),
             )
           ],
         ),
