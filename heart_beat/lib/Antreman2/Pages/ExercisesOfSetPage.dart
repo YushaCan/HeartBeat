@@ -74,6 +74,4 @@ class ExercisesOfSetPage extends StatelessWidget {
             }),
     );
   }
-
-
 }
