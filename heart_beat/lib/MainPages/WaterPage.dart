@@ -17,7 +17,7 @@ class WaterPage extends StatelessWidget {
           title: Text("Water Management"),
           backgroundColor: Colors.lightBlue,
           leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.pop(context),
             icon: Icon(Icons.arrow_back),
           ),
         ),

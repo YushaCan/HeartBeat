@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:heart_beat/FriendShip/FriendShipActions.dart';
+import 'package:heart_beat/MainPages/AddFriendsPage.dart';
 
 class SideBar extends StatefulWidget {
   SideBar({Key? key}) : super(key: key);
@@ -8,8 +10,6 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-  TextEditingController friendNameController = new TextEditingController();
-  String friendName = "";
   /////////////////////////////////
   late double paddingFromLeft = 25;
 
@@ -123,64 +123,18 @@ class _SideBarState extends State<SideBar> {
               bottom: 25,
               left: 200,
             ),
+            // TO ADD FRIEND PAGE
             child: IconButton(
               icon: Icon(Icons.person_add),
               iconSize: 60,
               color: Colors.white,
-              onPressed: () => showDialog(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                  title: Text("Add Friend"),
-                  content: TextFormField(
-                    controller: friendNameController,
-                    decoration: InputDecoration(
-                      hintText: "Enter Name",
-                    ),
-                    onChanged: (text) {
-                      friendName = friendNameController.text;
-                      print(text);
-                    },
-                  ),
-                  actions: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 110),
-                      child: TextButton(
-                        onPressed: () {
-                          print("Canceled");
-                          Navigator.pop(context, "Cancel");
-                        },
-                        child: Text(
-                          "Cancel",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        print("Added");
-                        friendNameController.clear();
-                        setState(() {
-                          // WILL CONTROL THe FIREBASE IF THAT NAME USED OR NOT AND WHETER HE/SHE ONLINE OR NOT
-                          // THEN ADD IT TO THE LIST
-                          friendsList.add(friendName);
-                          isOnline.add(false);
-                        });
-
-                        Navigator.pop(context, "Add");
-                      },
-                      child: Text(
-                        "Add",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              onPressed: () {
+                print('ADD FRIEND PAGE OPENED');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddFriends()),
+                );
+              },
             ),
           ),
         ],
