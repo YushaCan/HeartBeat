@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class UID{
-  final  USER_ID;
+  late var USER_ID;
   UID(this.USER_ID);
 
   UID.fromJson(Map<dynamic, dynamic> json) : USER_ID = json['USER_ID'] as String;
