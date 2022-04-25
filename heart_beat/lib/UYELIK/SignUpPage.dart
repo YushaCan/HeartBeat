@@ -66,7 +66,7 @@ class _SignUpState extends State<SignUp> {
   String passwordText = "";
   String confirmedPasswordText = "";
   String email = "";
-  String name = "";
+  String DisplayName = "";
 
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -78,16 +78,23 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  Future<void> _createUser() async {
+  Future<void> _createUser(String DisplayName) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: email.trim(), password: passwordText);
-      //userCredential.user?.updateDisplayName(name);
       User? user = userCredential.user;
-      user?.updateDisplayName(name);
-      print("${user?.displayName}");
-
+      if (user != null) {
+        //add display name for just created user
+        user.updateDisplayName(DisplayName);
+        //get updated user
+        await user.reload();
+        var _auth = FirebaseAuth.instance;
+        user = await _auth.currentUser;
+        //print final version to console
+        print("Registered user:");
+        print(user);
+      }
       //***********SET XP NODE FOR THE NEW USER***********
       final user_xp = UXP("0");
       DatabaseReference ref1 = FirebaseDatabase.instance.ref()
@@ -106,7 +113,7 @@ class _SignUpState extends State<SignUp> {
       ref2.push().set(user_level.toJson());
 
       //***********SET USERS_TO_VIEW NODE FOR THE NEW USER***********
-      final user_data = UDATA(userCredential.user?.uid,user?.displayName,userCredential.user?.photoURL);
+      final user_data = UDATA(user?.uid,user?.displayName,user?.photoURL);
       DatabaseReference ref3 = FirebaseDatabase.instance.ref().child("USERS_TO_VIEW");
       ref3.push().set(user_data.toJson());
 
@@ -165,7 +172,7 @@ class _SignUpState extends State<SignUp> {
           child: TextFormField(
             controller: nameController,
             onChanged: (value) {
-              name = nameController.text;
+              DisplayName = nameController.text;
             },
             decoration: InputDecoration(
               //icon: Icon(Icons.email),
@@ -258,7 +265,7 @@ class _SignUpState extends State<SignUp> {
                 child: Text('Sign Up'),
                 onPressed: () {
                   // When tapped, if everything is right, passed to the Main Menu Page. It needs an animation between two pages.
-                  _createUser();
+                  _createUser(DisplayName);
                   if (confirmedPassword) {
                     Navigator.push(
                       context,

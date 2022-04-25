@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Challenge/friendsWidget.dart';
 import 'package:heart_beat/Gamification/Gamification.dart';
@@ -348,7 +347,7 @@ class _MainMenuState extends State<MainMenu> {
                       print("CHALLENGE PAGE OPENED");
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => friends()),
+                        MaterialPageRoute(builder: (context) => Friends()),
                       );
                     },
                   ),

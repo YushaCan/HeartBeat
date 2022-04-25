@@ -9,12 +9,12 @@ class ExercisesOfSetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.indigo[900],
+      backgroundColor: Colors.lightBlue[50],
       appBar: AppBar(
         title: Text(
           "Exercises "
         ),
-        backgroundColor: Colors.indigo[900],
+        backgroundColor: Colors.lightBlueAccent,
       ),
       body: ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 20),
@@ -34,8 +34,8 @@ class ExercisesOfSetPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       //set border radius more than 50% of height and width to make circle
                     ),
-                    shadowColor: Colors.pinkAccent,
-                    color: Colors.grey[100],
+                    shadowColor: Colors.lightBlueAccent,
+                    color: Colors.white,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [

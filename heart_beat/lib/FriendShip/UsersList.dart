@@ -1,8 +1,8 @@
 
 class Userz{
   late String? uid;
-  final uname;
-  final photoURL;
+  late String? uname;
+  late String? photoURL;
 
   Userz({this.uid,this.uname,this.photoURL});
 }

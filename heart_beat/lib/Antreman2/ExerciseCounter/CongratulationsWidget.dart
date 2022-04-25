@@ -76,9 +76,9 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              "Congratulations! You earned 10 xp",
+              "Congratulations! You earned 10 xp!",
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 20,
                 color: Colors.white,
               ),
             ),

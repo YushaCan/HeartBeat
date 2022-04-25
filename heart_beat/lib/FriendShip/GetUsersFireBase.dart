@@ -11,7 +11,12 @@ Future<List<Userz>> showUSERS_LIST () async{
       Userz user = new Userz();
       element.children.forEach((element){
         print(element.value);
-        user.uid = element.value.toString();
+        if(element.key=="uid"){
+          user.uid = element.value.toString();
+        }
+        else if(element.key=="name"){
+          user.uname = element.value.toString();
+        }
       });
       Users.add(user);
       });

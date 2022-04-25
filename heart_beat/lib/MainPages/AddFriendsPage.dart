@@ -1,6 +1,8 @@
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+
+import '../Challenge/ChallengeFirebaseData.dart';
+import '../FriendShip/UsersList.dart';
 
 class AddFriends extends StatelessWidget {
   const AddFriends({Key? key}) : super(key: key);
@@ -96,6 +98,15 @@ class _AddFriendState extends State<AddFriend> {
     }
   }
 
+  List<Userz> friendsSet = [];
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    friendsSet = await showFriendsSetData();
+    super.setState(() {});
+  }
+
   // This list for add friend button
   List<bool> buttonItems = [];
   List<int> indexOfButtons = [];
@@ -168,7 +179,7 @@ class _AddFriendState extends State<AddFriend> {
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: idItems.length,
+            itemCount: friendsSet.length,
             itemBuilder: (BuildContext context, int index) {
               // EVERY ELEMENT OF THE LIST
               return Card(
@@ -185,7 +196,7 @@ class _AddFriendState extends State<AddFriend> {
                       ),
                       Padding(padding: EdgeInsets.only(top: 40, left: 7)),
                       // User Names
-                      Text(idItems[index]), // Usernames
+                      Text("${friendsSet[index].uname}"), // Usernames
                       Spacer(),
                       IconButton(
                         onPressed: () {

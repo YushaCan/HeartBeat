@@ -16,8 +16,9 @@ class _ExerciseVideoState extends State<ExerciseVideo> {
   Widget build(BuildContext context) {
    return Scaffold(
      appBar: AppBar(
-       title: Text("page"),
+       title: Text("Exercise"),
        leading: IconButton(icon:Icon(Icons.arrow_back), onPressed: () {  },),
+       backgroundColor: Colors.lightBlueAccent,
      ),
        body: Container(
          // height: MediaQuery.of(context).size.height / 1.5,
@@ -29,7 +30,7 @@ class _ExerciseVideoState extends State<ExerciseVideo> {
                child: Image.network(
                  widget.url,
                  height: 300,
-                 width: 400,
+                 width: 300,
                  fit: BoxFit.cover,
                ),
              ),

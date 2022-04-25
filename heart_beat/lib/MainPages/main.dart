@@ -105,28 +105,23 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextButton(
               onPressed: () {
-                FriendShipSentRequests();
+                showUSERS_LIST();
               },
               child: Text("Users"),
             ),
             TextButton(
               onPressed: () {
-                String uid = "bHo9QRBPvxO5lolbFpoZHSO58Wu1";
-                //"6AKlxePrz3eWhLNpgpLkTP963B92"
-                //AddFriend("GpsvIg2UJJZcV2g1SApCiWQ1WuE2");
-                //AddFriend("bHo9QRBPvxO5lolbFpoZHSO58Wu1");
-                //AddFriend("6AKlxePrz3eWhLNpgpLkTP963B92");
-                //RejectCancelRequest(uid);
-                AcceptFriend("bHo9QRBPvxO5lolbFpoZHSO58Wu1");
+                String uid = "Qwjh2TT1BOh68qXhCW3Q1FMRGBI2";
+                AddFriend(uid);
               },
-              child: Text("cancel friend"),
+              child: Text("AddFriend"),
             ),
             TextButton(
               onPressed: () {
-                String uid = "bHo9QRBPvxO5lolbFpoZHSO58Wu1";
-                EarnXp(10);
+                String uid = "b9UwiDhRAbQXPcl43AyZ9ArDVaI2";
+                AcceptFriend(uid);
               },
-              child: Text("earn xp"),
+              child: Text("AcceptFriend "),
             )
           ],
         ),
