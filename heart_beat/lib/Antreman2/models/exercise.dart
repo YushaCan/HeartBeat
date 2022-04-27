@@ -8,6 +8,7 @@ class Exercise {
   late String? iconUrl;
   late String? isDone;
   late String? set;
+  late String? exNo;
   late VideoPlayerController? controller;
 
   Exercise({
@@ -17,6 +18,7 @@ class Exercise {
      this.videoUrl,
      this.iconUrl,
      this.isDone,
-     this.set
+     this.set,
+     this.exNo
   });
 }

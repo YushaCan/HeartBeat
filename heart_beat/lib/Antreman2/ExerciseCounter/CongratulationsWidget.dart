@@ -1,12 +1,13 @@
 import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:heart_beat/Antreman2/Widgets/ExerciseSetWidget.dart';
-import 'package:heart_beat/Antreman2/Widgets/ExercisesWidget.dart';
 import 'package:heart_beat/XP/actions.dart';
+import '../models/exercise.dart';
 
 
 class CongratulationsWidget extends StatefulWidget {
+  const CongratulationsWidget({Key? key, required this.exercises}) : super(key: key);
+  final Exercise exercises;
   @override
   _CongratulationsWidgetState createState() => _CongratulationsWidgetState();
 
@@ -53,7 +54,7 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
                 ],
               ),
             ),
-            buildButton()
+            buildButton(),
           ],
         ),
       ),

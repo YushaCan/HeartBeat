@@ -1,12 +1,49 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../models/exercise.dart';
 import 'ButtonWidget.dart';
 import 'CongratulationsWidget.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+void markAsDone(Exercise ex) async{
+  String set = "";
+  if(int.parse(ex.set!)==1){
+    set="CORE";
+  }
+  else if(int.parse(ex.set!)==2){
+    set="LEGS";
+  }
+  else if(int.parse(ex.set!)==3){
+    set = "CARDIO";
+  }
+  String exNo="";
+  if(int.parse(ex.exNo!)==1){
+    exNo = "ONE";
+  }
+  else if(int.parse(ex.exNo!)==2){
+    exNo = "TWO";
+  }
+  else if(int.parse(ex.exNo!)==3){
+    exNo = "THREE";
+  }
+  else if(int.parse(ex.exNo!)==4){
+    exNo = "FOUR";
+  }
+
+  FirebaseDatabase.instance.ref("EXERCISES/${set}/${exNo}").update({
+    'duration': ex.duration.toString(),
+    'exNo': ex.exNo.toString(),
+    'iconURL': ex.iconUrl.toString(),
+    'isDone': '1',
+    'name': ex.name.toString(),
+    'set': ex.set.toString(),
+    'videoURL': ex.videoUrl.toString()});
+}
 
 class CounterWidget extends StatefulWidget {
-  const CounterWidget({Key? key, required this.exerciseDuration}) : super(key: key);
-  final int exerciseDuration;
+  const CounterWidget({Key? key, required this.exercises}) : super(key: key);
+  final Exercise exercises;
   @override
   _CounterWidgetState createState() => _CounterWidgetState();
 }
@@ -17,7 +54,7 @@ class _CounterWidgetState extends State<CounterWidget> {
   @override
   void initState() {
     if(mounted){
-      maxSeconds = widget.exerciseDuration;
+      maxSeconds = int.parse(widget.exercises.duration!);
       seconds = maxSeconds;
       super.initState();
     }
@@ -127,8 +164,9 @@ class _CounterWidgetState extends State<CounterWidget> {
 
   Widget buildTime(){
     if(seconds == 0){
+      markAsDone(widget.exercises);
       WidgetsBinding.instance?.addPostFrameCallback((_) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => CongratulationsWidget()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => CongratulationsWidget(exercises: widget.exercises,)));
       });
       return Container();
     }else{

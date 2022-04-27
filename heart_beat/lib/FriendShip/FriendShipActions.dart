@@ -11,7 +11,13 @@ class UID{
     'USER_ID': USER_ID,
   };
 }
+class Userz{
+  late String? uid;
+  late String? uname;
+  late String? photoURL;
 
+  Userz({this.uid,this.uname,this.photoURL});
+}
 void AddFriend(String uid){
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;

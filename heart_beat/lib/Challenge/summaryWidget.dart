@@ -1,8 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:heart_beat/Challenge/model.dart';
-import '../FriendShip/UsersList.dart';
+import '../FriendShip/FriendShipActions.dart';
 import 'ChallengeFirebaseData.dart';
 
 

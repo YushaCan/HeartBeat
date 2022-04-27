@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'UsersList.dart';
-
+import 'FriendShipActions.dart';
 Future<List<Userz>> showUSERS_LIST () async{
 
   List<Userz> Users = [];

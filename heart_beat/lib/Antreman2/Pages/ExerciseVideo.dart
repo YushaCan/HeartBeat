@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Antreman2/ExerciseCounter/Counter.dart';
 
+import '../models/exercise.dart';
+
 class ExerciseVideo extends StatefulWidget {
-  const ExerciseVideo({Key? key, required this.url, required this.duration}) : super(key: key);
-  final String url;
-  final int duration;
+  const ExerciseVideo({Key? key, required this.exercises}) : super(key: key);
+  final Exercise exercises;
   @override
   _ExerciseVideoState createState() => _ExerciseVideoState();
 }
@@ -28,7 +29,7 @@ class _ExerciseVideoState extends State<ExerciseVideo> {
            children: [
              SizedBox(
                child: Image.network(
-                 widget.url,
+                 widget.exercises.videoUrl!,
                  height: 300,
                  width: 300,
                  fit: BoxFit.cover,
@@ -38,7 +39,7 @@ class _ExerciseVideoState extends State<ExerciseVideo> {
                height: 40,
              ),
              SizedBox(
-               child: CounterWidget(exerciseDuration: widget.duration),
+               child: CounterWidget(exercises: widget.exercises,),
              ),
            ],
          ),

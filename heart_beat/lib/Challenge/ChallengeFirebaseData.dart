@@ -2,8 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:heart_beat/FriendShip/FriendShipActions.dart';
 import '../FriendShip/GetUsersFireBase.dart';
-import '../FriendShip/UsersList.dart';
-import 'model.dart';
+
+class challenge{
+  late int id;
+  late String videoURL;
+  challenge({required this.id,required this.videoURL});
+}
 
 class challengeSummary{
   late var USER_ID;
@@ -109,6 +113,7 @@ bool SendChallengeRequest(String uid,String challengeId){
   return isDone;
 }
 
+//şimdilik buna gerek yok
 void AcceptChallenge(String uid,String challengeId){
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;
@@ -132,6 +137,45 @@ void AcceptChallenge(String uid,String challengeId){
 
 }
 
+Future<challengeToViewSummary> showReceivedChallenge() async{
+  challengeToViewSummary singleChallenge = new challengeToViewSummary("","");
+  challengeSummary receivedChallenge = new challengeSummary("","");
+  List<Userz> friends = await showFriendsSetData(); // öncelikle arkadaiları çekeriz
+  List<challenge> challenges = await showChallengeSetData(); // bu bize challenge lari döndürüyor
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+
+  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/ReceivedChallenges");
+  await ref.once().then((value) {
+    value.snapshot.children.forEach((element) {
+      element.children.forEach((element) {
+        if(element.key.toString() == "USER_ID"){
+          receivedChallenge.USER_ID = element.value;
+        }
+        else if(element.key.toString()=="CHALLENGE_ID"){
+          receivedChallenge.CHALLENGE_ID = element.value.toString();
+        }
+      });
+    });
+  });
+
+  for(int i=0; i<friends.length; i++){
+    if(friends[i].uid==receivedChallenge.USER_ID){
+      singleChallenge.USER_NAME=friends[i].uname;
+      break;
+    }
+  }
+
+  for(int i=0; i<challenges.length; i++){
+    if(challenges[i].id==receivedChallenge.CHALLENGE_ID){
+      singleChallenge.CHALLENGE_URL=challenges[i].videoURL;
+      break;
+    }
+  }
+
+  return singleChallenge;
+}
 
 
 

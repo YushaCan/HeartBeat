@@ -8,12 +8,14 @@ class ExerciseHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: CustomScrollView(
-      physics: BouncingScrollPhysics(),
-      slivers: [
-        buildAppBar(context),
-        ExercisesWidget(),
-      ],
+    body: Container(
+      child: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: [
+          buildAppBar(context),
+          ExercisesWidget(),
+        ],
+      ),
     ),
   );
 

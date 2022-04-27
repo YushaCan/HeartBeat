@@ -1,8 +1,6 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
-
 import '../Challenge/ChallengeFirebaseData.dart';
-import '../FriendShip/UsersList.dart';
+import '../FriendShip/FriendShipActions.dart';
 
 class AddFriends extends StatelessWidget {
   const AddFriends({Key? key}) : super(key: key);
