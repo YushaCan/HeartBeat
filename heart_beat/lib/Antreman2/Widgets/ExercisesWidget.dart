@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Antreman2/firebasedata/exerciseSetdata.dart';
 import 'package:heart_beat/Antreman2/models/exerciseSet.dart';
-
 import 'ExerciseSetWidget.dart';
 
 class ExercisesWidget extends StatefulWidget {
