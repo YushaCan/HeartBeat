@@ -4,10 +4,12 @@ import 'package:heart_beat/Challenge/friendsWidget.dart';
 import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:heart_beat/MainPages/ProfilePage.dart';
 import 'package:heart_beat/MainPages/WaterPage.dart';
+import 'package:heart_beat/MainPages/main.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../Antreman2/Pages/ExerciseHomePage.dart';
 import '../Challenge/ChallengeFirebaseData.dart';
 import '../Challenge/challengeWidget.dart';
+import '../UYELIK/LoginPage.dart';
 import 'FriendsList.dart';
 import 'dart:math' as math;
 import 'package:line_icons/line_icons.dart';
@@ -145,7 +147,8 @@ class _MainMenuState extends State<MainMenu> {
                       print("TRAINING PAGE OPENED");
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExerciseHomePage()),
+                        MaterialPageRoute(
+                            builder: (context) => ExerciseHomePage()),
                       );
                     },
                   ),

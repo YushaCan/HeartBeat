@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_beat/MainPages/ProfilePage.dart';
 import '../Challenge/ChallengeFirebaseData.dart';
 import '../FriendShip/FriendShipActions.dart';
 
@@ -35,27 +36,26 @@ class _AddFriendState extends State<AddFriend> {
   // For search engine
   TextEditingController searchController = TextEditingController();
   List<String> userNames = [];
-  var idItems = [];
+  List<String> idItems = [];
 
   // SEARCHING ALGORTIHM
   void FilterSearchResults(String query) {
     List<String> dummySearchList = [];
-    dummySearchList.addAll(userNames);
+    dummySearchList.addAll(idItems);
     if (query.isNotEmpty) {
       List<String> dummyListData = [];
 
       dummySearchList.asMap().forEach((value, item) {
         if (item.contains(query)) {
           dummyListData.add(item);
-          print(value);
           indexOfButtons.add(value);
           print(indexOfButtons);
+          print(value);
         }
       });
       setState(() {
-        idItems.clear();
-        idItems.addAll(dummyListData);
-        // BU FOR DÖNGÜSÜYTLE UĞRAŞ AGAAAAAAAAAAAAAA
+        friendsName.clear();
+        friendsName.addAll(dummyListData);
         for (int i = 0; i < buttonItems.length; i++) {
           for (int j = 0; j < indexOfButtons.length; j++) {
             if (buttonItems[i] == buttonItems[j]) {
@@ -71,13 +71,12 @@ class _AddFriendState extends State<AddFriend> {
             }
           }
         }
-        //////////////////////////
       });
       return;
     } else {
       setState(() {
-        idItems.clear();
-        idItems.addAll(userNames);
+        friendsName.clear();
+        friendsName.addAll(idItems);
         setState(() {
           for (int i = 0; i < buttonItems.length; i++) {
             for (int j = 0; j < indexOfButtons.length; j++) {
@@ -97,11 +96,16 @@ class _AddFriendState extends State<AddFriend> {
   }
 
   List<Userz> friendsSet = [];
+  List<String> friendsName = [];
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
     friendsSet = await showFriendsSetData();
+    for (int i = 0; i < friendsSet.length; i++) {
+      friendsName.add(friendsSet[i].uname.toString());
+      idItems.add(friendsName[i]);
+    }
     super.setState(() {});
   }
 
@@ -114,12 +118,6 @@ class _AddFriendState extends State<AddFriend> {
     // This "for" is for buttons
     for (int i = 0; i < 20; i++) {
       buttonItems.add(false);
-    }
-    for (int i = 0; i < 20; i++) {
-      // WILL PULL FROM DATABASE
-      userNames.add("User $i");
-      idItems.add(userNames[i]);
-      ////////////////////////////
     }
   }
 
@@ -144,40 +142,12 @@ class _AddFriendState extends State<AddFriend> {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
             ),
-
-            /*Card(
-              color: Colors.grey,
-              elevation: 5,
-              child: InkWell(
-                onTap: () {
-                  // TAP SEARCH BUTTON AND TYPE
-                  showSearch(context: context, delegate: )
-                },
-                child: SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(left: 5)),
-                      Icon(Icons.search),
-                      Padding(padding: EdgeInsets.only(left: 10)),
-                      Text(
-                        // It will dissapear when user tap on the InkWell
-                        "Search ...",
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),*/
           ),
           // LIST PART
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: friendsSet.length,
+            itemCount: friendsName.length,
             itemBuilder: (BuildContext context, int index) {
               // EVERY ELEMENT OF THE LIST
               return Card(
@@ -185,6 +155,10 @@ class _AddFriendState extends State<AddFriend> {
                 child: InkWell(
                   onTap: () {
                     // OPEN UP THE PROFILE PAGE OF SELECTED USER
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profile()),
+                    );
                   },
                   child: Row(
                     children: <Widget>[
@@ -194,7 +168,8 @@ class _AddFriendState extends State<AddFriend> {
                       ),
                       Padding(padding: EdgeInsets.only(top: 40, left: 7)),
                       // User Names
-                      Text("${friendsSet[index].uname}"), // Usernames
+                      //Text("${friendsSet[index].uname}"), // Usernames
+                      Text(friendsName[index]),
                       Spacer(),
                       IconButton(
                         onPressed: () {
@@ -206,13 +181,15 @@ class _AddFriendState extends State<AddFriend> {
                               buttonItems[indexOfButtons[index]] =
                                   !buttonItems[indexOfButtons[index]];
                               // To change the button state of the temporary button
-                              buttonItems[index] = !buttonItems[index];
+                              //buttonItems[index] = !buttonItems[index];
                             });
                           } else if (indexOfButtons.isEmpty &&
                               !buttonItems[index]) {
                             setState(() {
                               buttonItems[index] = !buttonItems[index];
                             });
+                            //
+                            print(friendsSet[index].uname);
                           }
 
                           // Also it will send friend request to the selected user
