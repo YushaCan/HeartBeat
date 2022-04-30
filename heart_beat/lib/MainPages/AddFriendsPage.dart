@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_beat/FriendShip/GetUsersFireBase.dart';
 import 'package:heart_beat/MainPages/ProfilePage.dart';
 import '../Challenge/ChallengeFirebaseData.dart';
 import '../FriendShip/FriendShipActions.dart';
@@ -19,20 +20,20 @@ class AddFriends extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        body: AddFriend(),
+        body: AddFriendPage(),
       ),
     );
   }
 }
 
-class AddFriend extends StatefulWidget {
-  const AddFriend({Key? key}) : super(key: key);
+class AddFriendPage extends StatefulWidget {
+  const AddFriendPage({Key? key}) : super(key: key);
 
   @override
-  State<AddFriend> createState() => _AddFriendState();
+  State<AddFriendPage> createState() => _AddFriendPageState();
 }
 
-class _AddFriendState extends State<AddFriend> {
+class _AddFriendPageState extends State<AddFriendPage> {
   // For search engine
   TextEditingController searchController = TextEditingController();
   List<String> userNames = [];
@@ -151,7 +152,6 @@ class _AddFriendState extends State<AddFriend> {
             itemBuilder: (BuildContext context, int index) {
               // EVERY ELEMENT OF THE LIST
               return Card(
-                //color: Colors.white,
                 child: InkWell(
                   onTap: () {
                     // OPEN UP THE PROFILE PAGE OF SELECTED USER
@@ -176,6 +176,12 @@ class _AddFriendState extends State<AddFriend> {
                           // Will change with the icon ...
                           if (indexOfButtons.isNotEmpty &&
                               !buttonItems[indexOfButtons[index]]) {
+                            // The functions of Add Friend
+                            AddFriend(friendsSet[indexOfButtons[index]]
+                                .uid
+                                .toString());
+                            print(
+                                "KULLANICININ ID'SI ======>   ${friendsSet[indexOfButtons[index]].uid.toString()}");
                             setState(() {
                               // To change the button state of the real index of that user
                               buttonItems[indexOfButtons[index]] =
@@ -185,11 +191,15 @@ class _AddFriendState extends State<AddFriend> {
                             });
                           } else if (indexOfButtons.isEmpty &&
                               !buttonItems[index]) {
+                            // The functions of Add Friend
+                            AddFriend(friendsSet[index].uid.toString());
+                            print(
+                                "KULLANICININ ID'SI ======>   ${friendsSet[index].uid.toString()}");
                             setState(() {
                               buttonItems[index] = !buttonItems[index];
                             });
                             //
-                            print(friendsSet[index].uname);
+                            //print(friendsSet[index].uname);
                           }
 
                           // Also it will send friend request to the selected user
