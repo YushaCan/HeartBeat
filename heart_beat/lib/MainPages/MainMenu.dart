@@ -10,6 +10,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../Antreman2/Pages/ExerciseHomePage.dart';
 import '../Challenge/ChallengeFirebaseData.dart';
 import '../Challenge/challengeWidget.dart';
+import '../FriendShip/FriendRequestsWidget.dart';
 import '../UYELIK/LoginPage.dart';
 import 'FriendsList.dart';
 import 'dart:math' as math;
@@ -181,7 +182,9 @@ class _MainMenuState extends State<MainMenu> {
                       ),
                     ),
                     onPressed: () {
-                      print("PEDOMETER PAGE OPENED");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FriendRequestsWidget(),));
                     },
                   ),
                 ),

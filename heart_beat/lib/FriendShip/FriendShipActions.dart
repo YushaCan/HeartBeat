@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+import 'GetUsersFireBase.dart';
+
 class UID{
   late var USER_ID;
   UID(this.USER_ID);
@@ -79,7 +81,12 @@ void RejectCancelRequest(String uid) async{
           ChildToDelete = element1.key.toString();
           print(ChildToDelete);
           if(ChildToDelete!=""){
-            FirebaseDatabase.instance.ref().child("USERS").child("$uid").child("ReceivedRequests").child("$ChildToDelete").remove();
+            FirebaseDatabase.instance.ref()
+                .child("USERS")
+                .child("$uid")
+                .child("ReceivedRequests")
+                .child("$ChildToDelete")
+                .remove();
           }
           else{
           }
@@ -88,8 +95,6 @@ void RejectCancelRequest(String uid) async{
     });
   });
 }
-
-
 void AcceptFriend(String uid){
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;
@@ -111,4 +116,37 @@ void AcceptFriend(String uid){
       .child("FriendsList");
   ref2.push().set(asil_user.toJson());
 
+  RejectCancelRequest(uid);
+}
+
+Future<List<Userz>> showFriendRequestsSetData () async {
+  List<UID> friendsSet = [];
+  List<Userz> Users = await showUSERS_LIST();
+  List<Userz> result = [];
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+  print(current_uid);
+
+  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/ReceivedRequests");
+  await ref.once().then((value) {
+    value.snapshot.children.forEach((element) {
+      UID SingleFriend= new UID(0);
+      element.children.forEach((element) {
+        if(element.key.toString() == "USER_ID"){
+          SingleFriend.USER_ID = element.value;
+        }
+      });
+      friendsSet.add(SingleFriend);
+    });
+  });
+
+  for(int i=0; i<friendsSet.length; i++){
+    for(int j=0; j<Users.length; j++){
+      if(friendsSet[i].USER_ID==Users[j].uid){
+        result.add(Users[j]);
+      }
+    }
+  }
+  return result;
 }

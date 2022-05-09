@@ -102,7 +102,7 @@ class _AddFriendPageState extends State<AddFriendPage> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    friendsSet = await showFriendsSetData();
+    friendsSet = await showUSERS_LIST();
     for (int i = 0; i < friendsSet.length; i++) {
       friendsName.add(friendsSet[i].uname.toString());
       idItems.add(friendsName[i]);
