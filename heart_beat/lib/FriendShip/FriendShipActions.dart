@@ -57,7 +57,7 @@ void RejectCancelRequest(String uid) async{
       .then((snapshot){
         snapshot.snapshot.children.forEach((element1) {
           element1.children.forEach((element2) {
-            if(element2.value.toString()==uid){
+            if(element2.value.toString()==""){
               ChildToDelete = element1.key.toString();
               if(ChildToDelete!=""){
                 FirebaseDatabase.instance.ref().child("USERS").child("$current_uid").child("SentRequests").child("$ChildToDelete").remove();

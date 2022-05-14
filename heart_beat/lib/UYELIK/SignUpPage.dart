@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/MainPages/MainMenu.dart';
 import '../XP/actions.dart';
+import 'LoginPage.dart';
 
 class ULEVEL{
   final  level;
@@ -15,7 +16,16 @@ class ULEVEL{
   };
 }
 
+class UWATER{
+  final  water;
+  UWATER(this.water);
 
+  UWATER.fromJson(Map<dynamic, dynamic> json) : water = json['water'] as String;
+
+  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+    'water': water,
+  };
+}
 
 class UDATA{
   final  uid;
@@ -103,7 +113,6 @@ class _SignUpState extends State<SignUp> {
           .child("XP");
       ref1.push().set(user_xp.toJson());
 
-
       //***********SET LEVEL NODE FOR THE NEW USER***********
       final user_level = ULEVEL("0");
       DatabaseReference ref2 = FirebaseDatabase.instance.ref()
@@ -116,6 +125,29 @@ class _SignUpState extends State<SignUp> {
       final user_data = UDATA(user?.uid,user?.displayName,user?.photoURL);
       DatabaseReference ref3 = FirebaseDatabase.instance.ref().child("USERS_TO_VIEW");
       ref3.push().set(user_data.toJson());
+
+      //***********SET WATER NODE FOR THE NEW USER***********
+      final user_water = UWATER("0");
+      DatabaseReference ref4 = FirebaseDatabase.instance.ref()
+          .child("USERS")
+          .child("${userCredential.user?.uid}")
+          .child("WATER");
+      ref4.push().set(user_water.toJson());
+
+      DatabaseReference ref5 = FirebaseDatabase.instance.ref()
+          .child("USERS").child("${userCredential.user?.uid}").child("EXERCISES");
+      ref5.child("CARDIO").child("ONE").push().set({"isDone":"0", "set": "3","exNo":1});
+      ref5.child("CARDIO").child("TWO").push().set({"isDone":"0", "set": "3","exNo":2});
+      ref5.child("CARDIO").child("THREE").push().set({"isDone":"0", "set": "3","exNo":3});
+      ref5.child("CARDIO").child("FOUR").push().set({"isDone":"0", "set": "3","exNo":4});
+
+      ref5.child("CORE").child("ONE").push().set({"isDone":"0", "set": "1","exNo":1});
+      ref5.child("CORE").child("TWO").push().set({"isDone":"0", "set": "1","exNo":2});
+
+      ref5.child("LEGS").child("ONE").push().set({"isDone":"0", "set": "2","exNo":1});
+      ref5.child("LEGS").child("TWO").push().set({"isDone":"0", "set": "2","exNo":2});
+      ref5.child("LEGS").child("THREE").push().set({"isDone":"0", "set": "2","exNo":3});
+      ref5.child("LEGS").child("FOUR").push().set({"isDone":"0", "set": "2","exNo":4});
 
     } on FirebaseAuthException catch (e) {
       print("error: $e");
@@ -269,7 +301,7 @@ class _SignUpState extends State<SignUp> {
                   if (confirmedPassword) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MainMenuPage()),
+                      MaterialPageRoute(builder: (context) => UserDataList()),
                     );
                   }
                 })),

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Antreman2/models/exercise.dart';
+import '../firebasedata/realtimedata.dart';
+import '../models/isDoneExercise.dart';
 import 'ExerciseVideo.dart';
 class ExercisesOfSetPage extends StatefulWidget {
   //const ExercisesOfSetPage({Key? key, required this.exercises}) : super(key: key);
@@ -12,7 +14,16 @@ class ExercisesOfSetPage extends StatefulWidget {
 }
 
 class _ExercisesOfSetPageState extends State<ExercisesOfSetPage> {
+
   String url="https://firebasestorage.googleapis.com/v0/b/heartbeat-cbae0.appspot.com/o/assets%2Ficons%2FDodawnie%20i%20odejmowanie%20do%2010%20by%20beat_tom%20on%20Genially.png?alt=media&token=ff8a8366-0ae7-4dcf-a0c6-ca114c3708a2";
+  List<isDoneExercise> isDoneExercises=[];
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    isDoneExercises = await showIsDoneExercisesSetData();
+    super.setState(() {});
+  }
 
   @override
   Widget build(BuildContext context){
@@ -67,7 +78,7 @@ class _ExercisesOfSetPageState extends State<ExercisesOfSetPage> {
                           ],
                         ),
                         ClipOval( //no need to provide border radius to make circular image
-                          child: this.widget.exercises[index].isDone=="0"?
+                          child: isDoneExercises[index].isDone.toString()=="0" && this.widget.exercises[index].set==isDoneExercises[index].set && this.widget.exercises[index].exNo==isDoneExercises[index].exNo?
                           Image.network(
                             this.widget.exercises[index].iconUrl!.toString(),
                             height: 50.0,

@@ -1,10 +1,19 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:flutter/material.dart';
-import 'package:heart_beat/MainPages/MainMenu.dart';
-import 'package:image_picker/image_picker.dart';
-import 'MainMenu.dart';
+import 'package:heart_beat/UYELIK/LoginPage.dart';
+
+Future<void> _signOut() async {
+  await FirebaseAuth.instance.signOut();
+  runApp(
+      new MaterialApp(
+        home: new UserDataList(),
+      )
+
+  );
+}
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -231,7 +240,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 labelText: 'About me',
               ),
             ),
-          )
+          ),
+          TextButton(
+              onPressed: (){
+                _signOut();
+              },
+              child: Text("Sign Out"))
         ],
       ),
     );

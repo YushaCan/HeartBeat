@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../FriendShip/FriendShipActions.dart';
+import '../../FriendShip/GetUsersFireBase.dart';
 import '../models/exercise.dart';
 import 'ButtonWidget.dart';
 import 'CongratulationsWidget.dart';
@@ -31,16 +34,71 @@ void markAsDone(Exercise ex) async{
     exNo = "FOUR";
   }
 
-  FirebaseDatabase.instance.ref("EXERCISES/${set}/${exNo}").update({
-    'duration': ex.duration.toString(),
-    'exNo': ex.exNo.toString(),
-    'iconURL': ex.iconUrl.toString(),
-    'isDone': '1',
-    'name': ex.name.toString(),
-    'set': ex.set.toString(),
-    'videoURL': ex.videoUrl.toString()});
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  String childToDelete = "";
+  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${user?.uid}/EXERCISES/${set}/${exNo}/");
+  await ref.once().then((value){
+    value.snapshot.children.forEach((element) {
+      childToDelete = element.key.toString();
+      FirebaseDatabase.instance.ref("USERS/${user?.uid}/EXERCISES/${set}/${exNo}/${childToDelete}").update({
+        'exNo': ex.exNo,
+        'set':ex.set,
+        'isDone': '1'});
+    });
+  });
+
 }
 
+void MarkAsNotDone() async{
+  // 1:1 2 2:1 2 3 4 3: 1 2 3 4
+  List<Userz> users= await showUSERS_LIST();
+  for(int i=0; i<users.length; i++ ){
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CORE/ONE").update({
+      'exNo': 1,
+      'set':1,
+      'isDone': '0'});
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CORE/TWO").update({
+      'exNo': 2,
+      'set':1,
+      'isDone': '0'});
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/ONE").update({
+      'exNo': 1,
+      'set':2,
+      'isDone': '0'});
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/TWO").update({
+      'exNo': 2,
+      'set':2,
+      'isDone': '0'});
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/THREE").update({
+      'exNo': 3,
+      'set':2,
+      'isDone': '0'});
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/FOUR").update({
+      'exNo': 4,
+      'set':2,
+      'isDone': '0'});
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/ONE").update({
+      'exNo': 1,
+      'set':3,
+      'isDone': '0'});
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/TWO").update({
+      'exNo': 2,
+      'set':3,
+      'isDone': '0'});
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/THREE").update({
+      'exNo': 3,
+      'set':3,
+      'isDone': '0'});
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/FOUR").update({
+      'exNo': 4,
+      'set':3,
+      'isDone': '0'});
+
+    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/WATER").update({
+      'water': '0'});
+  }
+}
 class CounterWidget extends StatefulWidget {
   const CounterWidget({Key? key, required this.exercises}) : super(key: key);
   final Exercise exercises;

@@ -1,17 +1,16 @@
-import 'dart:ffi';
+import 'dart:async';
+
+import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Challenge/friendsWidget.dart';
 import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:heart_beat/MainPages/Leaderboard.dart';
 import 'package:heart_beat/MainPages/ProfilePage.dart';
 import 'package:heart_beat/MainPages/WaterPage.dart';
-import 'package:heart_beat/MainPages/main.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import '../Antreman2/ExerciseCounter/Counter.dart';
 import '../Antreman2/Pages/ExerciseHomePage.dart';
-import '../Challenge/ChallengeFirebaseData.dart';
-import '../Challenge/challengeWidget.dart';
 import '../FriendShip/FriendRequestsWidget.dart';
-import '../UYELIK/LoginPage.dart';
 import 'FriendsList.dart';
 import 'dart:math' as math;
 import 'package:line_icons/line_icons.dart';
@@ -76,6 +75,14 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   double sliderValue = 0;
+
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 30), (Timer t) => MarkAsNotDone());
+  }
   // Each level's experience points & numbers
   double levelExp = Gamification.experiencePoint;
   double nextLevelExp = Gamification.expForOtherLevel;

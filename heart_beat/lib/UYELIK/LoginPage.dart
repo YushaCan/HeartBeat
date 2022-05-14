@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../InsertToDatabaseCode/USER_DATA_DAO';
 import '../InsertToDatabaseCode/USER_DATA';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'SignUpPage.dart';
 import '../MainPages/MainMenu.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDataListState extends State<UserDataList> {
   TextEditingController _userPasswordController = TextEditingController();
@@ -75,11 +75,12 @@ class _SignUpState extends State<SignUp> {
 
   Future<void> _loginUser() async {
     try {
-      print("user:  $email");
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: email.trim(), password: _userPasswordController.text);
-      print("user:  $userCredential");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('UID', userCredential.user!.uid);
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MainMenuPage()),

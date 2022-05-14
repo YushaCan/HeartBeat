@@ -38,3 +38,27 @@ void EarnXp(int xp) async{
       .child("XP")
       .set({"count": xp});
 }
+
+void AddWater(int water) async{
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+  int? previous_water = 0;
+
+  //**********************Retrieve exisiting water**********************
+  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/$current_uid/WATER");
+  await ref.once().then((value){
+    value.snapshot.children.forEach((element) {
+      previous_water = element.value as int?;
+      print(previous_water);
+    });
+  });
+
+  //**********************SentRequests*******************************
+  water += previous_water!;
+  FirebaseDatabase.instance.ref()
+      .child("USERS")
+      .child("$current_uid")
+      .child("WATER")
+      .set({"water": water});
+}
