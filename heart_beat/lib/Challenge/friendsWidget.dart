@@ -136,7 +136,7 @@ class _FriendsState extends State<Friends> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
         title: Text("Firends List"),
         titleTextStyle: TextStyle(
           fontSize: 25,
@@ -208,7 +208,7 @@ class _FriendsState extends State<Friends> {
           }
         },
         child: const Icon(Icons.navigate_next),
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
       ),
 
     );

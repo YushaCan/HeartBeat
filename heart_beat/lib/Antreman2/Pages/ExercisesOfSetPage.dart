@@ -33,7 +33,7 @@ class _ExercisesOfSetPageState extends State<ExercisesOfSetPage> {
         title: Text(
           "Exercises "
         ),
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
       ),
       body: ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 20),
@@ -77,20 +77,17 @@ class _ExercisesOfSetPageState extends State<ExercisesOfSetPage> {
                             ),
                           ],
                         ),
-                        ClipOval( //no need to provide border radius to make circular image
-                          child: isDoneExercises[index].isDone.toString()=="0" && this.widget.exercises[index].set==isDoneExercises[index].set && this.widget.exercises[index].exNo==isDoneExercises[index].exNo?
-                          Image.network(
-                            this.widget.exercises[index].iconUrl!.toString(),
-                            height: 50.0,
-                            width: 50.0,
-                            fit:BoxFit.cover, //change image fill type
-                          ) :
-                          Image.network(
-                            "$url",
-                            height: 50.0,
-                            width: 50.0,
-                            fit:BoxFit.cover, //change image fill type
-                          ),
+                        Spacer(),
+                        IconButton(
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ExerciseVideo(exercises: this.widget.exercises[index],)),
+                              );
+                            },
+                            icon: isDoneExercises[index].isDone.toString()=="0"
+                            ? Icon(Icons.play_arrow,color: Colors.green,size: 50)
+                            : Icon(Icons.done,color: Colors.green,size: 50),
                         ),
                       ]//Text
                     ), //Center

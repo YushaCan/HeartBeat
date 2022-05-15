@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_beat/MainPages/MainMenu.dart';
 import 'package:heart_beat/UYELIK/LoginPage.dart';
 
 Future<void> _signOut() async {
@@ -22,8 +23,17 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Profile Page",
-      home: Scaffold(
-        body: ProfilePage(),
+      home:  new WillPopScope(
+        child: Scaffold(
+          body: ProfilePage(),
+        ),
+        onWillPop: () async{
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainMenu()),
+          );
+          return true;
+        },
       ),
     );
   }
@@ -42,14 +52,22 @@ class _ProfilePageState extends State<ProfilePage> {
   static var aboutMeController = TextEditingController();
   ///////////////////////////////////////////////////////////
   // This values too will be taken from firebase
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user ;
   int level = 9;
-  String name = "Name";
-  String surname = "Surname";
-  String mail = "E-Mail";
+  String name = "";
+  String surname = "";
+  String mail = "E-";
   ////////////////////////////////////////////
   // For the pick Profile Image
   File? _pickedImage;
   ////////////////////////////////////////////
+
+  @override
+  void initState(){
+    super.initState();
+    user = auth.currentUser;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         onPressed: null,
                         // This child will be changed with user's name
                         child: Text(
-                          "$name",
+                          "${user?.displayName}",
                           style: TextStyle(
                             color: Colors.black,
                           ),
@@ -210,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         onPressed: null,
                         // This child will be changed with user's surname
                         child: Text(
-                          "$mail",
+                          "${user?.email}",
                           style: TextStyle(
                             color: Colors.black,
                           ),

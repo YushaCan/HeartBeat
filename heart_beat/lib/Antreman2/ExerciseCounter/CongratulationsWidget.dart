@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/XP/actions.dart';
+import '../../MainPages/MainMenu.dart';
 import '../models/exercise.dart';
 
 
@@ -35,30 +36,42 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.pink[50],
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            buildConfettiWidget(controllerTopCenter, pi / 1),
-            buildConfettiWidget(controllerTopCenter, pi / 4),
-            Align(
-              alignment: Alignment.center,
-              child: Column(
-                children: <Widget>[
-                  Image.asset(
-                    "assets/trophy.png",
-                    width: MediaQuery.of(context).size.width*0.5,
-                    height: MediaQuery.of(context).size.height*0.5,
-                  ),
-                ],
+    return new WillPopScope(
+        onWillPop: () async{
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainMenuPage()),
+          );
+          return true;
+        },
+      child:Scaffold(
+        backgroundColor: Colors.pink[50],
+        body: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              buildConfettiWidget(controllerTopCenter, pi / 1),
+              buildConfettiWidget(controllerTopCenter, pi / 4),
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    Image.asset(
+                      "assets/trophy.png",
+                      width: MediaQuery.of(context).size.width*0.5,
+                      height: MediaQuery.of(context).size.height*0.5,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            buildButton(),
-          ],
+              buildButton(),
+            ],
+          ),
         ),
       ),
+
     );
+
+
   }
 
   Align buildButton() {

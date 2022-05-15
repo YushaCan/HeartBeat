@@ -53,47 +53,127 @@ void markAsDone(Exercise ex) async{
 void MarkAsNotDone() async{
   // 1:1 2 2:1 2 3 4 3: 1 2 3 4
   List<Userz> users= await showUSERS_LIST();
+  String childToDelete = "";
   for(int i=0; i<users.length; i++ ){
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CORE/ONE").update({
-      'exNo': 1,
-      'set':1,
-      'isDone': '0'});
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CORE/TWO").update({
-      'exNo': 2,
-      'set':1,
-      'isDone': '0'});
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/ONE").update({
-      'exNo': 1,
-      'set':2,
-      'isDone': '0'});
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/TWO").update({
-      'exNo': 2,
-      'set':2,
-      'isDone': '0'});
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/THREE").update({
-      'exNo': 3,
-      'set':2,
-      'isDone': '0'});
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/FOUR").update({
-      'exNo': 4,
-      'set':2,
-      'isDone': '0'});
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/ONE").update({
-      'exNo': 1,
-      'set':3,
-      'isDone': '0'});
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/TWO").update({
-      'exNo': 2,
-      'set':3,
-      'isDone': '0'});
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/THREE").update({
-      'exNo': 3,
-      'set':3,
-      'isDone': '0'});
-    FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/FOUR").update({
-      'exNo': 4,
-      'set':3,
-      'isDone': '0'});
+
+    // CORE ONE
+    DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CORE/ONE");
+    await ref.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CORE/ONE/${childToDelete}").update({
+          'exNo': 1,
+          'set':1,
+          'isDone': '0'});
+      });
+    });
+    // CORE TWO
+    DatabaseReference ref1 = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CORE/TWO");
+    await ref1.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CORE/TWO/${childToDelete}").update({
+          'exNo': 2,
+          'set':1,
+          'isDone': '0'});
+      });
+    });
+
+    // LEGS ONE
+    DatabaseReference ref2 = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/ONE");
+    await ref2.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/ONE/${childToDelete}").update({
+          'exNo': 1,
+          'set':2,
+          'isDone': '0'});
+      });
+    });
+
+    // LEGS TWO
+    DatabaseReference ref3 = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/TWO");
+    await ref3.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/TWO/${childToDelete}").update({
+          'exNo': 2,
+          'set':2,
+          'isDone': '0'});
+      });
+    });
+
+    // LEGS THREE
+    DatabaseReference ref4 = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/THREE");
+    await ref4.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/THREE/${childToDelete}").update({
+          'exNo': 3,
+          'set':2,
+          'isDone': '0'});
+      });
+    });
+
+    // LEGS FOUR
+    DatabaseReference ref5 = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/FOUR");
+    await ref5.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/LEGS/FOUR/${childToDelete}").update({
+          'exNo': 4,
+          'set':2,
+          'isDone': '0'});
+      });
+    });
+
+    // CARDIO ONE
+    DatabaseReference ref6 = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/ONE");
+    await ref6.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/ONE/${childToDelete}").update({
+          'exNo': 1,
+          'set':3,
+          'isDone': '0'});
+      });
+    });
+
+    // CARDIO TWO
+    DatabaseReference ref7 = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/TWO");
+    await ref7.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/TWO/${childToDelete}").update({
+          'exNo': 2,
+          'set':3,
+          'isDone': '0'});
+      });
+    });
+
+    // CARDIO THREE
+    DatabaseReference ref8 = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/THREE");
+    await ref8.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/THREE/${childToDelete}").update({
+          'exNo': 3,
+          'set':3,
+          'isDone': '0'});
+      });
+    });
+
+    // CARDIO FOUR
+    DatabaseReference ref9 = FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/FOUR");
+    await ref9.once().then((value){
+      value.snapshot.children.forEach((element) {
+        childToDelete = element.key.toString();
+        FirebaseDatabase.instance.ref("USERS/${users[i].uid}/EXERCISES/CARDIO/FOUR/${childToDelete}").update({
+          'exNo': 4,
+          'set':3,
+          'isDone': '0'});
+      });
+    });
 
     FirebaseDatabase.instance.ref("USERS/${users[i].uid}/WATER").update({
       'water': '0'});

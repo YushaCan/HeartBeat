@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Challenge/friendsWidget.dart';
 import 'package:heart_beat/Gamification/Gamification.dart';
@@ -23,46 +21,56 @@ class MainMenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Heart Beat',
-        home: Scaffold(
-          key: _key,
-          drawer: SideBar(),
-          appBar: AppBar(
-            backgroundColor: Color.fromRGBO(0, 129, 235, 92),
-            // For Friends List on AppBar
-            leading: IconButton(
-              // Open Friends list
-              onPressed: () {
-                print('FRIENDS LIST OPENED');
-                _key.currentState!.openDrawer();
-              },
-              icon: Icon(Icons.people),
-              iconSize: 30,
-            ),
-            title: Text('Heart Beat'),
-            titleTextStyle: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w600,
-            ),
-            // For Profile Page on AppBar
-            actions: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: IconButton(
-                  onPressed: () {
-                    print('PROFILE PAGE OPENED');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Profile()),
-                    );
-                  },
-                  icon: Icon(Icons.person),
-                  iconSize: 30,
-                ),
+        home: new WillPopScope(
+          onWillPop: () async{
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainMenuPage()),
+            );
+            return true;
+          },
+          child: Scaffold(
+            key: _key,
+            drawer: SideBar(),
+            appBar: AppBar(
+              backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+              // For Friends List on AppBar
+              leading: IconButton(
+                // Open Friends list
+                onPressed: () {
+                  print('FRIENDS LIST OPENED');
+                  _key.currentState!.openDrawer();
+                },
+                icon: Icon(Icons.people),
+                iconSize: 30,
               ),
-            ],
+              title: Text('Heart Beat'),
+              titleTextStyle: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w600,
+              ),
+              // For Profile Page on AppBar
+              actions: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: IconButton(
+                    onPressed: () {
+                      print('PROFILE PAGE OPENED');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Profile()),
+                      );
+                    },
+                    icon: Icon(Icons.person),
+                    iconSize: 30,
+                  ),
+                ),
+              ],
+            ),
+            body: MainMenu(),
           ),
-          body: MainMenu(),
-        ));
+        ),
+);
   }
 }
 
@@ -81,7 +89,7 @@ class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 30), (Timer t) => MarkAsNotDone());
+    timer = Timer.periodic(Duration(hours: 24), (Timer t) => MarkAsNotDone());
   }
   // Each level's experience points & numbers
   double levelExp = Gamification.experiencePoint;
@@ -143,7 +151,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 129, 235, 0.639)),
+                          Color.fromRGBO(0, 31, 235,0.6)),
                     ),
                     child: Transform.rotate(
                       angle: math.pi / 4,
@@ -176,7 +184,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 129, 235, 0.639)),
+                          Color.fromRGBO(0, 31, 235,0.6)),
                     ),
                     child: Align(
                       alignment: Alignment(0.0, 0.0),
@@ -210,7 +218,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 129, 235, 0.639)),
+                          Color.fromRGBO(0, 31, 235,0.6)),
                     ),
                     child: Icon(
                       //FontAwesomeIcons.weight,
@@ -241,7 +249,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 129, 235, 0.639)),
+                          Color.fromRGBO(0, 31, 235,0.6)),
                     ),
                     child: Icon(
                       LineIcons.tint,
@@ -270,7 +278,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 129, 235, 0.639)),
+                          Color.fromRGBO(0, 31, 235,0.6)),
                     ),
                     child: Icon(
                       LineIcons.fruitApple,
@@ -296,7 +304,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 129, 235, 0.639)),
+                          Color.fromRGBO(0, 31, 235,0.6)),
                     ),
                     child: Icon(
                       LineIcons.heartbeat,
@@ -326,7 +334,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 129, 235, 0.639)),
+                          Color.fromRGBO(0, 31, 235,0.6)),
                     ),
                     child: Icon(
                       LineIcons.trophy,
@@ -356,7 +364,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 129, 235, 0.639)),
+                          Color.fromRGBO(0, 31, 235,0.6)),
                     ),
                     child: Icon(
                       LineIcons.handshake,
@@ -386,7 +394,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 129, 235, 0.639)),
+                          Color.fromRGBO(0, 31, 235,0.6)),
                     ),
                     child: Icon(
                       LineIcons.question,

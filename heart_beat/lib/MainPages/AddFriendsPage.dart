@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/FriendShip/GetUsersFireBase.dart';
 import 'package:heart_beat/MainPages/ProfilePage.dart';
 import '../Challenge/ChallengeFirebaseData.dart';
 import '../FriendShip/FriendShipActions.dart';
+import 'MainMenu.dart';
 
 class AddFriends extends StatelessWidget {
   const AddFriends({Key? key}) : super(key: key);
@@ -11,17 +13,26 @@ class AddFriends extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Add Friend',
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
-          title: Text("Add Friend"),
-          titleTextStyle: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w600,
+      home: new WillPopScope(
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+              title: Text("Add Friend"),
+              titleTextStyle: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            body: AddFriendPage(),
           ),
-        ),
-        body: AddFriendPage(),
-      ),
+        onWillPop: () async{
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainMenuPage()),
+          );
+          return true;
+        },),
+
     );
   }
 }
@@ -103,9 +114,17 @@ class _AddFriendPageState extends State<AddFriendPage> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
     friendsSet = await showUSERS_LIST();
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    final current_uid = user?.uid;
     for (int i = 0; i < friendsSet.length; i++) {
-      friendsName.add(friendsSet[i].uname.toString());
-      idItems.add(friendsName[i]);
+      if(current_uid==friendsSet[i].uid){
+        continue;
+      }
+      else{
+        friendsName.add(friendsSet[i].uname.toString());
+        //idItems.add(friendsName[i]);
+      }
     }
     super.setState(() {});
   }

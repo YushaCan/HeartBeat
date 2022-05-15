@@ -19,7 +19,7 @@ class _ExerciseVideoState extends State<ExerciseVideo> {
      appBar: AppBar(
        title: Text("Exercise"),
        leading: IconButton(icon:Icon(Icons.arrow_back), onPressed: () {  },),
-       backgroundColor: Colors.lightBlueAccent,
+       backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
      ),
        body: Container(
          // height: MediaQuery.of(context).size.height / 1.5,

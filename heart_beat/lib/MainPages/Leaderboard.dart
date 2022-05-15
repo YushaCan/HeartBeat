@@ -13,7 +13,7 @@ class LeaderBoardPage extends StatelessWidget {
       title: 'LeaderBoard Page',
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
           title: Text("Leader Board"),
           titleTextStyle: TextStyle(
             fontSize: 25,

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'FriendShipActions.dart';
+
 Future<List<Userz>> showUSERS_LIST () async{
 
   List<Userz> Users = [];
@@ -9,13 +10,12 @@ Future<List<Userz>> showUSERS_LIST () async{
     value.snapshot.children.forEach((element) {
       Userz user = new Userz();
       element.children.forEach((element){
-        print(element.value);
-        if(element.key=="uid"){
-          user.uid = element.value.toString();
-        }
-        else if(element.key=="name"){
-          user.uname = element.value.toString();
-        }
+          if(element.key=="uid"){
+            user.uid = element.value.toString();
+          }
+          else if(element.key=="name"){
+            user.uname = element.value.toString();
+          }
       });
       Users.add(user);
       });

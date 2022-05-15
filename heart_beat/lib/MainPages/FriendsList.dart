@@ -61,7 +61,7 @@ class _SideBarState extends State<SideBar> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Color.fromRGBO(0, 129, 235, 0.85),
+      backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
       child: Column(
         children: <Widget>[
           // COULD PLACED SIMPLE ACCOUNT INFORMATION LIKE PHOTOS AND MAIL ETC.

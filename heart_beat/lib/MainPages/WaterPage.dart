@@ -15,7 +15,7 @@ class WaterPage extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text("Water Management"),
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(Icons.arrow_back),
@@ -116,7 +116,7 @@ class _WaterPageContentState extends State<WaterPageContent>
               value: animationController.value,
               direction: Axis.vertical,
               backgroundColor: Colors.white,
-              valueColor: AlwaysStoppedAnimation(Colors.blue),
+              valueColor: AlwaysStoppedAnimation(Color.fromRGBO(0, 31, 235,0.6)),
               center: Text(
                 "${percentage.toStringAsFixed(0)}%",
                 style: TextStyle(
