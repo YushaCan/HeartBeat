@@ -71,201 +71,168 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Padding(padding: EdgeInsets.only(top: 100)),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 20),
-              ),
-              // PROFILE PHOTO AND NICK
-              Stack(
+    return WillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+          title: Text("Profile Page"),
+          titleTextStyle: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+          ),
+          leading: IconButton(icon:Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainMenuPage()),
+              );
+          },),
+        ),
+        body: Center(
+          child: Column(
                 children: <Widget>[
-                  Container(
-                    child: CircleAvatar(
-                      radius: 60,
-                      backgroundColor: Gamification.Rank(),
-                      child: CircleAvatar(
-                        radius: 55,
-                        backgroundImage: _pickedImage == null
-                            ? AssetImage("assets/profilephoto.jpg")
-                                as ImageProvider
-                            : FileImage(_pickedImage!),
-                      ),
-                    ),
-                  ),
-                  /*SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage("assets/profilephoto.jpg"),
-                    ),
-                  ),*/
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: ((builder) => bottomSheet()),
-                        );
-                      },
-                      // PICK IMAGE BUTTON
-                      child: CircleAvatar(
-                        radius: 15,
-                        backgroundColor: Color.fromARGB(0, 255, 255, 255),
-                        child: Icon(
-                          Icons.camera_alt,
-                          size: 35,
-                          color: Colors.teal,
+                  Padding(padding: EdgeInsets.only(top: 20),),
+                  // PROFILE PHOTO AND NICK
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        child: CircleAvatar(
+                          radius: 120,
+                          backgroundColor: Gamification.Rank(),
+                          child: CircleAvatar(
+                            radius: 110,
+                            backgroundImage: _pickedImage == null
+                                ? AssetImage("assets/profilephoto.jpg")
+                                    as ImageProvider
+                                : FileImage(_pickedImage!),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  // LEVEL CIRCLE
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 87,
-                    ),
-                    child: CircleAvatar(
-                      radius: 17,
-                      backgroundColor: Colors.blue,
-                      child: Text(
-                        "$level",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: ((builder) => bottomSheet()),
+                            );
+                          },
+                          // PICK IMAGE BUTTON
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Color.fromARGB(0, 255, 255, 255),
+                            child: Icon(
+                              Icons.camera_alt,
+                              size: 35,
+                              color: Colors.teal,
+                            ),
+                          ),
                         ),
                       ),
+                      // LEVEL CIRCLE
+                      Padding(
+                        padding: EdgeInsets.only(left: 150,),
+                        child: CircleAvatar(
+                          radius: 17,
+                          backgroundColor: Colors.blue,
+                          child: Text(
+                            "$level",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 20)),
+                  // NAME-SURNAME-EMAIL PART
+                  SizedBox(
+                    width: 190,
+                    height: 120,
+                    child: Column(
+                      children: <Widget>[
+                        // NAME
+                        SizedBox(
+                          width: 190,
+                          height: 40,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                              onSurface: Colors.white,
+                              shadowColor: Color.fromARGB(0, 255, 255, 255),
+                              side: BorderSide(
+                                color: Color.fromRGBO(0, 31, 235,0.6),
+                                width: 3,
+                              ),
+                            ),
+                            onPressed: null,
+                            // This child will be changed with user's name
+                            child: Text(
+                              "${user?.displayName}",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            /////////////////////////////////////////////
+                          ),
+                        ),
+                        Padding(padding: EdgeInsets.only(top: 20)),
+                        // E-MAIL
+                        SizedBox(
+                          width: 190,
+                          height: 40,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                              onSurface: Colors.white,
+                              shadowColor: Color.fromARGB(0, 255, 255, 255),
+                              side: BorderSide(
+                                color: Color.fromRGBO(0, 31, 235,0.6),
+                                width: 3,
+                              ),
+                            ),
+                            onPressed: null,
+                            // This child will be changed with user's surname
+                            child: Text(
+                              "${user?.email}",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            /////////////////////////////////////////////////
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              Padding(padding: EdgeInsets.only(left: 10)),
-              // NAME-SURNAME-EMAIL PART
-              SizedBox(
-                width: 190,
-                height: 120,
-                child: Column(
-                  children: <Widget>[
-                    // NAME
-                    SizedBox(
-                      width: 190,
-                      height: 30,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,
-                          ),
-                          onSurface: Colors.white,
-                          shadowColor: Color.fromARGB(0, 255, 255, 255),
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 3,
-                          ),
-                        ),
-                        onPressed: null,
-                        // This child will be changed with user's name
-                        child: Text(
-                          "${user?.displayName}",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        /////////////////////////////////////////////
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 10)),
-                    // SURNAME
-                    SizedBox(
-                      width: 190,
-                      height: 30,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,
-                          ),
-                          onSurface: Colors.white,
-                          shadowColor: Color.fromARGB(0, 255, 255, 255),
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 3,
-                          ),
-                        ),
-                        onPressed: null,
-                        // This child will be changed with user's surname
-                        child: Text(
-                          "$surname",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        /////////////////////////////////////////////////
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 10)),
-                    // E-MAIL
-                    SizedBox(
-                      width: 190,
-                      height: 30,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,
-                          ),
-                          onSurface: Colors.white,
-                          shadowColor: Color.fromARGB(0, 255, 255, 255),
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 3,
-                          ),
-                        ),
-                        onPressed: null,
-                        // This child will be changed with user's surname
-                        child: Text(
-                          "${user?.email}",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        /////////////////////////////////////////////////
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          // ABOUT ME PART
+        ),
 
-          Container(
-            padding: EdgeInsets.only(top: 30),
-            width: 350,
-            height: 300,
-            child: TextField(
-              controller: aboutMeController,
-              keyboardType: TextInputType.multiline,
-              textInputAction: TextInputAction.newline,
-              minLines: 1,
-              maxLines: 7,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'About me',
-              ),
-            ),
-          ),
-          TextButton(
-              onPressed: (){
-                _signOut();
-              },
-              child: Text("Sign Out"))
-        ],
+
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _signOut();
+          },
+          child: const Icon(Icons.logout),
+          backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+        ),
       ),
+      onWillPop: () async{
+         Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainMenuPage()),
+        );
+         return true;
+      },
     );
   }
 

@@ -48,48 +48,48 @@ void RejectCancelRequest(String uid) async{
   final current_uid = user?.uid;
   String ChildToDelete;
   /**/
+  //print(uid);
   FirebaseDatabase.instance.ref()
       .child("USERS")
-      .child("$current_uid")
+      .child("$uid")
       .child("SentRequests")
       .once()
       .then((snapshot){
         snapshot.snapshot.children.forEach((element1) {
           element1.children.forEach((element2) {
-            if(element2.value.toString()==""){
               ChildToDelete = element1.key.toString();
               if(ChildToDelete!=""){
-                FirebaseDatabase.instance.ref().child("USERS").child("$current_uid").child("SentRequests").child("$ChildToDelete").remove();
+                FirebaseDatabase.instance.ref().child("USERS").child("$uid").child("SentRequests").child("$ChildToDelete").remove();
               }
               else{
+                print(ChildToDelete);
               }
-            }
           });
         });
   });
 
   FirebaseDatabase.instance.ref()
       .child("USERS")
-      .child("$uid")
+      .child("$current_uid")
       .child("ReceivedRequests")
       .once()
       .then((snapshot){
     snapshot.snapshot.children.forEach((element1) {
       element1.children.forEach((element2) {
-        if(element2.value.toString()==current_uid){
           ChildToDelete = element1.key.toString();
           print(ChildToDelete);
           if(ChildToDelete!=""){
+            print(ChildToDelete);
             FirebaseDatabase.instance.ref()
                 .child("USERS")
-                .child("$uid")
+                .child("$current_uid")
                 .child("ReceivedRequests")
                 .child("$ChildToDelete")
                 .remove();
           }
           else{
           }
-        }
+
       });
     });
   });
@@ -125,13 +125,12 @@ Future<List<Userz>> showFriendRequestsSetData () async {
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;
   final current_uid = user?.uid;
-  print(current_uid);
-
   DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/ReceivedRequests");
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
       UID SingleFriend= new UID(0);
       element.children.forEach((element) {
+
         if(element.key.toString() == "USER_ID"){
           SingleFriend.USER_ID = element.value;
         }
@@ -143,6 +142,7 @@ Future<List<Userz>> showFriendRequestsSetData () async {
   for(int i=0; i<friendsSet.length; i++){
     for(int j=0; j<Users.length; j++){
       if(friendsSet[i].USER_ID==Users[j].uid){
+        print(friendsSet[i].USER_ID);
         result.add(Users[j]);
       }
     }

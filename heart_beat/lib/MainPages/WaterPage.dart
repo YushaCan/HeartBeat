@@ -5,6 +5,8 @@ import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:line_icons/line_icons.dart';
 
+import 'MainMenu.dart';
+
 class WaterPage extends StatelessWidget {
   const WaterPage({Key? key}) : super(key: key);
 
@@ -17,7 +19,12 @@ class WaterPage extends StatelessWidget {
           title: Text("Water Management"),
           backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
           leading: IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainMenuPage()),
+              );
+            },
             icon: Icon(Icons.arrow_back),
           ),
         ),

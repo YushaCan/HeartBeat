@@ -58,36 +58,41 @@ class _ExercisesOfSetPageState extends State<ExercisesOfSetPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              alignment: Alignment.bottomCenter,
-                                padding: const EdgeInsets.all(20),
-                                child: Text(
-                                  this.widget.exercises[index].name!,
-                                  style: TextStyle(color: Colors.deepPurpleAccent,fontWeight: FontWeight.bold,fontSize: 20),
-                                ),
-                            ),
-                            SizedBox(
-                              child: Text(
-                                "Duration: ${this.widget.exercises[index].duration!.toString()}",
-                                style: TextStyle(color: Colors.blueAccent[200]),
+                        SizedBox(
+                          width: 200,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                alignment: Alignment.bottomCenter,
+                                  padding: const EdgeInsets.all(20),
+                                  child: Text(
+                                    this.widget.exercises[index].name!,
+                                    style: TextStyle(color: Colors.deepPurpleAccent,fontWeight: FontWeight.bold,fontSize: 20),
+                                  ),
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                child: Text(
+                                  "Duration: ${this.widget.exercises[index].duration!.toString()}",
+                                  style: TextStyle(color: Colors.blueAccent[200]),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Spacer(),
-                        IconButton(
-                            onPressed: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => ExerciseVideo(exercises: this.widget.exercises[index],)),
-                              );
-                            },
-                            icon: isDoneExercises[index].isDone.toString()=="0"
-                            ? Icon(Icons.play_arrow,color: Colors.green,size: 50)
-                            : Icon(Icons.done,color: Colors.green,size: 50),
+                        Padding(padding: EdgeInsets.only(left: 20)),
+                        SizedBox(
+                          child: IconButton(
+                              onPressed: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ExerciseVideo(exercises: this.widget.exercises[index],)),
+                                );
+                              },
+                              icon: isDoneExercises[index].isDone.toString()=="0"
+                              ? Icon(Icons.play_arrow,color: Colors.green,size: 50)
+                              : Icon(Icons.done,color: Colors.green,size: 50),
+                          ),
                         ),
                       ]//Text
                     ), //Center

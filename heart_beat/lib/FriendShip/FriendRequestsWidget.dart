@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../MainPages/MainMenu.dart';
 import 'FriendShipActions.dart';
 
@@ -12,22 +11,22 @@ class FriendRequestsWidget extends StatefulWidget {
 }
 
 class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
-
   List<Userz> friendsSet = [];
 
   @override
   void didChangeDependencies() async {
-    super.didChangeDependencies();
     friendsSet = await showFriendRequestsSetData();
+    super.didChangeDependencies();
     super.setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return new WillPopScope(
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
-            title: Text("Friends List"),
+            title: Text("Friendship Requests"),
             titleTextStyle: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.w600,
@@ -59,6 +58,9 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
                           IconButton(
                             onPressed: (){
                               AcceptFriend(friendsSet[index].uid!);
+                              setState(() {
+
+                              });
                             },
                             icon: const Icon(Icons.done),
                             color: Colors.green,
@@ -66,6 +68,9 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
                           IconButton(
                             onPressed: (){
                               RejectCancelRequest(friendsSet[index].uid!);
+                              setState(() {
+                                super.initState();
+                              });
                             },
                             icon: const Icon(Icons.close),
                             color: Colors.red,)

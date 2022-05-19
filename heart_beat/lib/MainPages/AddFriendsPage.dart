@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/FriendShip/GetUsersFireBase.dart';
 import 'package:heart_beat/MainPages/ProfilePage.dart';
-import '../Challenge/ChallengeFirebaseData.dart';
 import '../FriendShip/FriendShipActions.dart';
 import 'MainMenu.dart';
 
@@ -22,6 +21,13 @@ class AddFriends extends StatelessWidget {
                 fontSize: 25,
                 fontWeight: FontWeight.w600,
               ),
+              leading: IconButton(icon:Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainMenuPage()),
+                  );
+                },),
             ),
             body: AddFriendPage(),
           ),
@@ -167,7 +173,7 @@ class _AddFriendPageState extends State<AddFriendPage> {
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: friendsName.length,
+            itemCount: friendsSet.length,
             itemBuilder: (BuildContext context, int index) {
               // EVERY ELEMENT OF THE LIST
               return Card(
@@ -188,7 +194,7 @@ class _AddFriendPageState extends State<AddFriendPage> {
                       Padding(padding: EdgeInsets.only(top: 40, left: 7)),
                       // User Names
                       //Text("${friendsSet[index].uname}"), // Usernames
-                      Text(friendsName[index]),
+                      Text("${friendsSet[index].uname}"),
                       Spacer(),
                       IconButton(
                         onPressed: () {

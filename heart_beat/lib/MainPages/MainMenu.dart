@@ -13,6 +13,8 @@ import 'FriendsList.dart';
 import 'dart:math' as math;
 import 'package:line_icons/line_icons.dart';
 
+import 'VegsFruits.dart';
+
 class MainMenuPage extends StatelessWidget {
   MainMenuPage({Key? key}) : super(key: key);
   // FOR OPEN DRAWER PROGRAMMATICALLY
@@ -51,6 +53,19 @@ class MainMenuPage extends StatelessWidget {
               ),
               // For Profile Page on AppBar
               actions: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FriendRequestsWidget()),
+                      );
+                    },
+                    icon: Icon(Icons.add_alert),
+                    iconSize: 30,
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(right: 20.0),
                   child: IconButton(
@@ -111,7 +126,7 @@ class _MainMenuState extends State<MainMenu> {
                 children: <Widget>[
                   // Level Bar Codes
                   new LinearPercentIndicator(
-                    width: 300,
+                    width: 350,
                     animation: true,
                     animationDuration: 1500,
                     lineHeight: 25,
@@ -138,10 +153,11 @@ class _MainMenuState extends State<MainMenu> {
           // First Row
           Row(
             children: <Widget>[
+              Padding(padding: EdgeInsets.only(left: 40),),
               // TRAINING BUTTON
               SizedBox(
                 height: 120,
-                width: 120,
+                width: 160,
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 6,
@@ -174,7 +190,7 @@ class _MainMenuState extends State<MainMenu> {
               // PEDOMETER BUTTON
               SizedBox(
                 height: 120,
-                width: 120,
+                width: 160,
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 6,
@@ -204,42 +220,16 @@ class _MainMenuState extends State<MainMenu> {
                   ),
                 ),
               ),
-              // BMI (Body Mass Index) BUTTON
-              SizedBox(
-                height: 120,
-                width: 120,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 5,
-                    top: 20,
-                    right: 5,
-                  ),
-                  // For BMI
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 31, 235,0.6)),
-                    ),
-                    child: Icon(
-                      //FontAwesomeIcons.weight,
-                      LineIcons.weight,
-                      size: 70,
-                    ),
-                    onPressed: () {
-                      print("BMI PAGE OPENED");
-                    },
-                  ),
-                ),
-              ),
             ],
           ),
           // Second Row
           Row(
             children: <Widget>[
+              Padding(padding: EdgeInsets.only(left: 40),),
               // TRAININ BUTTON
               SizedBox(
                 height: 130,
-                width: 120,
+                width: 160,
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 6,
@@ -268,7 +258,7 @@ class _MainMenuState extends State<MainMenu> {
               // PEDOMETER BUTTON
               SizedBox(
                 height: 130,
-                width: 120,
+                width: 160,
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 6,
@@ -286,32 +276,11 @@ class _MainMenuState extends State<MainMenu> {
                     ),
                     onPressed: () {
                       print("FOOD PAGE OPENED");
-                    },
-                  ),
-                ),
-              ),
-              // BMI (Body Mass Index) BUTTON
-              SizedBox(
-                height: 130,
-                width: 120,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 5,
-                    top: 30,
-                    right: 5,
-                  ),
-                  // For BMI
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 31, 235,0.6)),
-                    ),
-                    child: Icon(
-                      LineIcons.heartbeat,
-                      size: 75,
-                    ),
-                    onPressed: () {
-                      print("HEART RATE PAGE OPENED");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VegsFruits()),
+                      );
                     },
                   ),
                 ),
@@ -321,10 +290,11 @@ class _MainMenuState extends State<MainMenu> {
           // Third Row
           Row(
             children: <Widget>[
+              Padding(padding: EdgeInsets.only(left: 40),),
               // TRAININ BUTTON
               SizedBox(
                 height: 130,
-                width: 120,
+                width: 160,
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 6,
@@ -354,7 +324,7 @@ class _MainMenuState extends State<MainMenu> {
               // PEDOMETER BUTTON
               SizedBox(
                 height: 130,
-                width: 120,
+                width: 160,
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: 6,
@@ -381,7 +351,7 @@ class _MainMenuState extends State<MainMenu> {
                 ),
               ),
               // BMI (Body Mass Index) BUTTON
-              SizedBox(
+       /*       SizedBox(
                 height: 130,
                 width: 120,
                 child: Padding(
@@ -405,7 +375,7 @@ class _MainMenuState extends State<MainMenu> {
                     },
                   ),
                 ),
-              ),
+              ), */
             ],
           ),
         ],

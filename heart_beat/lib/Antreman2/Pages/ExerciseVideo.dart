@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Antreman2/ExerciseCounter/Counter.dart';
-
 import '../models/exercise.dart';
 
 class ExerciseVideo extends StatefulWidget {

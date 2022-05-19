@@ -12,7 +12,6 @@ class ExerciseSetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => InkWell(
     onTap: () {
-      print("i am tapped");
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ExercisesOfSetPage(exercises: exerciseSet.exercises!)),
@@ -36,7 +35,6 @@ class ExerciseSetWidget extends StatelessWidget {
 
   Widget buildText() {
     final exercises = exerciseSet.exercises!.length.toString();
-    final minutes = "test";
     final name = exerciseSet.name;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

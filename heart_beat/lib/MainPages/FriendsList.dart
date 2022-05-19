@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:heart_beat/FriendShip/FriendShipActions.dart';
 import 'package:heart_beat/MainPages/AddFriendsPage.dart';
+
+import '../Challenge/ChallengeFirebaseData.dart';
+import '../Challenge/challengeWidget.dart';
+import '../FriendShip/FriendShipActions.dart';
 
 class SideBar extends StatefulWidget {
   SideBar({Key? key}) : super(key: key);
@@ -10,6 +13,9 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
+
+  int selectedIndex = -1;
+
   /////////////////////////////////
   late double paddingFromLeft = 25;
 
@@ -56,6 +62,14 @@ class _SideBarState extends State<SideBar> {
     return online;
   }
 
+  List<Userz> friendsSet = [];
+
+  @override
+  void didChangeDependencies() async {
+    super.setState(() {});
+    super.didChangeDependencies();
+    friendsSet = await showFriendsSetData();
+  }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   @override
@@ -88,31 +102,40 @@ class _SideBarState extends State<SideBar> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: friendsList.length,
+              itemCount: friendsSet.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.only(
-                    left: paddingFromLeft,
-                    bottom: paddingFromBottom,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        // Will change with friends list's name
-                        '${friendsList[index]}',
-                        style: TextStyle(
-                          fontSize: 20,
-                          // Dynamically change color. Based on user is online or not
-                          color: isOnline[index] ? Colors.white : Colors.grey,
-                          fontWeight: FontWeight.normal,
+                return InkWell(
+                  onTap: (){
+                    setState(() => selectedIndex=index);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => challenges(selectedUserData: friendsSet[selectedIndex],),));
+
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      left: paddingFromLeft,
+                      bottom: paddingFromBottom,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          // Will change with friends list's name
+                          '${friendsSet[index].uname}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            // Dynamically change color. Based on user is online or not
+                            color: isOnline[index] ? Colors.white : Colors.grey,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
-                      ),
-                      Icon(
-                        Icons.circle,
-                        color: isOnline[index] ? Colors.green : Colors.grey,
-                      )
-                    ],
+                        Icon(
+                          Icons.circle,
+                          color: isOnline[index] ? Colors.green : Colors.grey,
+                        )
+                      ],
+                    ),
                   ),
                 );
               },

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/XP/actions.dart';
@@ -36,7 +37,7 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new WillPopScope(
+    return WillPopScope(
         onWillPop: () async{
           Navigator.push(
             context,
@@ -52,7 +53,7 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
               buildConfettiWidget(controllerTopCenter, pi / 1),
               buildConfettiWidget(controllerTopCenter, pi / 4),
               Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: Column(
                   children: <Widget>[
                     Image.asset(
@@ -68,10 +69,7 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
           ),
         ),
       ),
-
     );
-
-
   }
 
   Align buildButton() {
@@ -82,7 +80,6 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
         child: RaisedButton(
           onPressed: (){
             controllerTopCenter.play();
-
           },
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           color: Colors.red,
@@ -114,9 +111,11 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
         maxBlastForce: 20, // set a lower max blast force
         minBlastForce: 8, // set a lower min blast force
         emissionFrequency: 1,
-        numberOfParticles: 8, // a lot of particles at once
+        numberOfParticles: 16, // a lot of particles at once
         gravity: 1,
       ),
     );
   }
+
+
 }
