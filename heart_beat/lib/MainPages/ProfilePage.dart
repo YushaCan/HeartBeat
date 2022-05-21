@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    return new WillPopScope(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(0, 31, 235,0.6),

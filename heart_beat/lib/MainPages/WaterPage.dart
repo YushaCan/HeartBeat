@@ -12,8 +12,7 @@ class WaterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        child: Scaffold(
+    return Scaffold(
           appBar: AppBar(
             title: Text("Water Management"),
             backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
@@ -28,14 +27,7 @@ class WaterPage extends StatelessWidget {
             ),
           ),
           body: WaterPageContent(),
-        ),
-        onWillPop: () async{
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MainMenuPage()),
-          );
-          return true;
-        });
+        );
   }
 }
 
@@ -105,42 +97,42 @@ class _WaterPageContentState extends State<WaterPageContent>
     final percentage = animationController.value * 100;
     ///////////////
     return Center(
-      child: Stack(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 350, left: 115),
-            child: ElevatedButton(
-              onPressed: canClick ? GainExperiencePoint : null,
-              child: Icon(
-                Icons.local_drink,
-                size: 35,
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 350, left: 115),
+              child: ElevatedButton(
+                onPressed: canClick ? GainExperiencePoint : null,
+                child: Icon(
+                  Icons.local_drink,
+                  size: 35,
+                ),
+                style: ElevatedButton.styleFrom(
+                    // padding: EdgeInsets.only(left: 70),
+                    shape: const CircleBorder(),
+                    fixedSize: Size(70, 70)),
               ),
-              style: ElevatedButton.styleFrom(
-                  // padding: EdgeInsets.only(left: 70),
-                  shape: const CircleBorder(),
-                  fixedSize: Size(70, 70)),
             ),
-          ),
-          SizedBox(
-            width: 300,
-            height: 300,
-            child: LiquidCircularProgressIndicator(
-              value: animationController.value,
-              direction: Axis.vertical,
-              backgroundColor: Colors.white,
-              valueColor: AlwaysStoppedAnimation(Color.fromRGBO(0, 31, 235,0.6)),
-              center: Text(
-                "${percentage.toStringAsFixed(0)}%",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+            SizedBox(
+              width: 300,
+              height: 300,
+              child: LiquidCircularProgressIndicator(
+                value: animationController.value,
+                direction: Axis.vertical,
+                backgroundColor: Colors.white,
+                valueColor: AlwaysStoppedAnimation(Color.fromRGBO(0, 31, 235,0.6)),
+                center: Text(
+                  "${percentage.toStringAsFixed(0)}%",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
   }
 }

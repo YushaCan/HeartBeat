@@ -91,6 +91,7 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
             MaterialPageRoute(builder: (context) => MainMenuPage()),
           );
           return true;
-        });
+        }
+        );
   }
 }
