@@ -58,9 +58,10 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
                           IconButton(
                             onPressed: (){
                               AcceptFriend(friendsSet[index].uid!);
-                              setState(() {
-
-                              });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => FriendRequestsWidget()),
+                              );
                             },
                             icon: const Icon(Icons.done),
                             color: Colors.green,
@@ -68,9 +69,10 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
                           IconButton(
                             onPressed: (){
                               RejectCancelRequest(friendsSet[index].uid!);
-                              setState(() {
-                                super.initState();
-                              });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => FriendRequestsWidget()),
+                              );
                             },
                             icon: const Icon(Icons.close),
                             color: Colors.red,)

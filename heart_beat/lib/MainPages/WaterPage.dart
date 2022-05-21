@@ -12,25 +12,30 @@ class WaterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Water Management",
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Water Management"),
-          backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
-          leading: IconButton(
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainMenuPage()),
-              );
-            },
-            icon: Icon(Icons.arrow_back),
+    return WillPopScope(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Water Management"),
+            backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+            leading: IconButton(
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainMenuPage()),
+                );
+              },
+              icon: Icon(Icons.arrow_back),
+            ),
           ),
+          body: WaterPageContent(),
         ),
-        body: WaterPageContent(),
-      ),
-    );
+        onWillPop: () async{
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainMenuPage()),
+          );
+          return true;
+        });
   }
 }
 

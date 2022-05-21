@@ -1,10 +1,8 @@
-import 'dart:math';
-
 import 'package:another_flushbar/flushbar.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../XP/actions.dart';
+import 'package:heart_beat/XP/actions.dart';
 import 'MainMenu.dart';
 
 class VegsFruits extends StatefulWidget {
@@ -64,6 +62,7 @@ class _VegsFruitsState extends State<VegsFruits> {
                       ),
                       IconButton(
                           onPressed: (){
+                            EarnXp(5);
                             show_SelectFirst(context);
                             controllerTopCenter!.play();
                           },

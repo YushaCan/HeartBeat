@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             backgroundColor: Color.fromARGB(0, 255, 255, 255),
                             child: Icon(
                               Icons.camera_alt,
-                              size: 35,
+                              size: 45,
                               color: Colors.teal,
                             ),
                           ),
@@ -132,14 +132,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       // LEVEL CIRCLE
                       Padding(
-                        padding: EdgeInsets.only(left: 150,),
+                        padding: EdgeInsets.only(left: 185,),
                         child: CircleAvatar(
-                          radius: 17,
+                          radius: 25,
                           backgroundColor: Colors.blue,
                           child: Text(
                             "$level",
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
