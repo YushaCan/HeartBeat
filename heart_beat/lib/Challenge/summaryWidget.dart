@@ -87,7 +87,7 @@ class summary extends StatelessWidget {
               child: SizedBox(
                   width: 200,
                   height: 50,
-                  child: Text("${selectedUserData.uname}",
+                  child: Text("To ${selectedUserData.uname}",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,fontSize: 24,color: Colors.deepPurple
                   ),
@@ -109,10 +109,10 @@ class summary extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(80, 30, 30, 0),
             child: SizedBox(
                 width: 200,
-                height: 50,
-                child: Text("The challenge will be available for 24 hours since ${selectedUserData.uname} accepts it!",
+                height: 90,
+                child: Text("The challenge will be available for 24 hours when ${selectedUserData.uname} accepts it!",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,fontSize: 24,color: Colors.deepPurple
+                      fontWeight: FontWeight.bold,fontSize: 20,color: Colors.deepPurple
                   ),
                   textAlign: TextAlign.center, )
             ),
