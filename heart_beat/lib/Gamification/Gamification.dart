@@ -10,8 +10,8 @@ class Gamification {
   // FOR THE RANK OF THE USER
   static bool isBronze = false;
   static bool isSilver = false;
-  static bool isGold = true;
-  static bool isDiamond = false;
+  static bool isGold = false;
+  static bool isDiamond = true;
   static Color Rank() {
     Color color = Colors.black;
     if (isBronze) {
