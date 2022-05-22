@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_beat/Challenge/AllReceivedChallenges.dart';
 import 'package:heart_beat/Challenge/friendsWidget.dart';
 import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:heart_beat/MainPages/Leaderboard.dart';
@@ -101,6 +102,7 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  double leftSpace = 4;
   double sliderValue = 0;
 
   Timer? timer;
@@ -134,6 +136,16 @@ class _MainMenuState extends State<MainMenu> {
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
+          Image(
+            image: AssetImage("assets/background.jpg"),
+          ),
+          SizedBox(
+            width: 1000,
+            height: 1000,
+            child: Image(
+              image: AssetImage("assets/background.jpg"),
+            ),
+          ),
           Column(
             children: <Widget>[
               // Level Progression Bar
@@ -173,15 +185,15 @@ class _MainMenuState extends State<MainMenu> {
               Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(left: 40),
+                    padding: EdgeInsets.only(left: leftSpace),
                   ),
                   // TRAINING BUTTON
                   SizedBox(
-                    height: 120,
-                    width: 160,
+                    height: 140,
+                    width: 190,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: 6,
+                        left: 8,
                         top: 20,
                       ),
                       // For Training Page
@@ -197,7 +209,7 @@ class _MainMenuState extends State<MainMenu> {
                           angle: math.pi / 4,
                           child: Icon(
                             LineIcons.dumbbell,
-                            size: 85,
+                            size: 100,
                           ),
                         ),
                         onPressed: () {
@@ -213,11 +225,11 @@ class _MainMenuState extends State<MainMenu> {
                   ),
                   // PEDOMETER BUTTON
                   SizedBox(
-                    height: 120,
-                    width: 160,
+                    height: 140,
+                    width: 190,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: 6,
+                        left: 8,
                         top: 20,
                       ),
                       // For Pedometer Page
@@ -234,8 +246,8 @@ class _MainMenuState extends State<MainMenu> {
                           child: Transform.rotate(
                             angle: 0,
                             child: Icon(
-                              LineIcons.shoePrints,
-                              size: 70,
+                              LineIcons.clock,
+                              size: 80,
                             ),
                           ),
                         ),
@@ -243,7 +255,7 @@ class _MainMenuState extends State<MainMenu> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => FriendRequestsWidget(),
+                                builder: (context) => AllReceivedChallenges(),
                               ));
                         },
                       ),
@@ -255,15 +267,15 @@ class _MainMenuState extends State<MainMenu> {
               Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(left: 40),
+                    padding: EdgeInsets.only(left: leftSpace),
                   ),
                   // TRAININ BUTTON
                   SizedBox(
-                    height: 130,
-                    width: 160,
+                    height: 140,
+                    width: 190,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: 6,
+                        left: 8,
                         top: 30,
                       ),
                       // For Training Page
@@ -277,7 +289,7 @@ class _MainMenuState extends State<MainMenu> {
                         ),
                         child: Icon(
                           LineIcons.tint,
-                          size: 75,
+                          size: 90,
                         ),
                         onPressed: () {
                           print("WATER PAGE OPENED");
@@ -292,11 +304,11 @@ class _MainMenuState extends State<MainMenu> {
                   ),
                   // PEDOMETER BUTTON
                   SizedBox(
-                    height: 130,
-                    width: 160,
+                    height: 140,
+                    width: 190,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: 6,
+                        left: 8,
                         top: 30,
                       ),
                       // For Pedometer Page
@@ -310,7 +322,7 @@ class _MainMenuState extends State<MainMenu> {
                         ),
                         child: Icon(
                           LineIcons.fruitApple,
-                          size: 75,
+                          size: 90,
                         ),
                         onPressed: () {
                           print("FOOD PAGE OPENED");
@@ -329,15 +341,15 @@ class _MainMenuState extends State<MainMenu> {
               Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(left: 40),
+                    padding: EdgeInsets.only(left: leftSpace),
                   ),
                   // TRAININ BUTTON
                   SizedBox(
-                    height: 130,
-                    width: 160,
+                    height: 140,
+                    width: 190,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: 6,
+                        left: 8,
                         top: 30,
                       ),
                       // For Training Page
@@ -351,7 +363,7 @@ class _MainMenuState extends State<MainMenu> {
                         ),
                         child: Icon(
                           LineIcons.trophy,
-                          size: 75,
+                          size: 90,
                         ),
                         onPressed: () {
                           print("LEADER BOARD PAGE OPENED");
@@ -366,11 +378,11 @@ class _MainMenuState extends State<MainMenu> {
                   ),
                   // PEDOMETER BUTTON
                   SizedBox(
-                    height: 130,
-                    width: 160,
+                    height: 140,
+                    width: 190,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: 6,
+                        left: 8,
                         top: 30,
                       ),
                       // For Pedometer Page
@@ -384,7 +396,7 @@ class _MainMenuState extends State<MainMenu> {
                         ),
                         child: Icon(
                           LineIcons.handshake,
-                          size: 75,
+                          size: 90,
                         ),
                         onPressed: () {
                           print("CHALLENGE PAGE OPENED");

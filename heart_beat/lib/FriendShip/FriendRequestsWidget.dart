@@ -25,7 +25,7 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
     return new WillPopScope(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+            backgroundColor: Colors.lightBlueAccent,
             title: Text("Friendship Requests"),
             titleTextStyle: TextStyle(
               fontSize: 25,
@@ -49,33 +49,39 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
                         children: <Widget>[
                           CircleAvatar(
                             // THIS PROFILE PICTURE WILL BE PULL FROM THE DB
-                            backgroundImage: AssetImage("assets/profilephoto.jpg"),
+                            backgroundImage:
+                                AssetImage("assets/profilephoto.jpg"),
                           ),
                           Padding(padding: EdgeInsets.only(top: 40, left: 7)),
                           // User Names
                           Text("${friendsSet[index].uname}"), // Usernames
                           Spacer(),
                           IconButton(
-                            onPressed: (){
+                            onPressed: () {
                               AcceptFriend(friendsSet[index].uid!);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => FriendRequestsWidget()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        FriendRequestsWidget()),
                               );
                             },
                             icon: const Icon(Icons.done),
                             color: Colors.green,
                           ),
                           IconButton(
-                            onPressed: (){
+                            onPressed: () {
                               RejectCancelRequest(friendsSet[index].uid!);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => FriendRequestsWidget()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        FriendRequestsWidget()),
                               );
                             },
                             icon: const Icon(Icons.close),
-                            color: Colors.red,)
+                            color: Colors.red,
+                          )
                         ],
                       ),
                     ),
@@ -85,13 +91,12 @@ class _FriendRequestsWidgetState extends State<FriendRequestsWidget> {
             ],
           ),
         ),
-        onWillPop: () async{
+        onWillPop: () async {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => MainMenuPage()),
           );
           return true;
-        }
-        );
+        });
   }
 }

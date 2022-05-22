@@ -9,13 +9,8 @@ void show_SelectFirst(BuildContext context) {
     duration: Duration(seconds: 3),
     margin: EdgeInsets.all(8),
     padding: EdgeInsets.all(10),
-
     backgroundGradient: LinearGradient(
-      colors: [
-        Colors.red.shade500,
-        Colors.red.shade300,
-        Colors.red.shade100
-      ],
+      colors: [Colors.red.shade500, Colors.red.shade300, Colors.red.shade100],
       stops: [0.4, 0.7, 1],
     ),
     boxShadows: [
@@ -32,6 +27,7 @@ void show_SelectFirst(BuildContext context) {
     messageSize: 17,
   )..show(context);
 }
+
 class Friends extends StatefulWidget {
   const Friends({Key? key}) : super(key: key);
 
@@ -136,7 +132,7 @@ class _FriendsState extends State<Friends> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+        backgroundColor: Colors.lightBlueAccent,
         title: Text("Firends List"),
         titleTextStyle: TextStyle(
           fontSize: 25,
@@ -170,13 +166,13 @@ class _FriendsState extends State<Friends> {
             itemBuilder: (BuildContext context, int index) {
               // EVERY ELEMENT OF THE LIST
               return InkWell(
-                onTap: () => setState(() => selectedIndex=index),
+                onTap: () => setState(() => selectedIndex = index),
                 //color: Colors.white,
                 child: Card(
-                  shadowColor: (selectedIndex==index)? Colors.green: null,
-                  shape: (selectedIndex==index)
+                  shadowColor: (selectedIndex == index) ? Colors.green : null,
+                  shape: (selectedIndex == index)
                       ? RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.green))
+                          side: BorderSide(color: Colors.green))
                       : null,
                   child: Row(
                     children: <Widget>[
@@ -198,20 +194,21 @@ class _FriendsState extends State<Friends> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if(selectedIndex==-1){
+          if (selectedIndex == -1) {
             show_SelectFirst(context);
-          }
-          else if(selectedIndex>-1){
+          } else if (selectedIndex > -1) {
             Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => challenges(selectedUserData: friendsSet[selectedIndex],),)
-            );
+                MaterialPageRoute(
+                  builder: (context) => challenges(
+                    selectedUserData: friendsSet[selectedIndex],
+                  ),
+                ));
           }
         },
         child: const Icon(Icons.navigate_next),
-        backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+        backgroundColor: Colors.lightBlueAccent,
       ),
-
     );
   }
 }

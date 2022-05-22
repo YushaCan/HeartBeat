@@ -13,7 +13,6 @@ class AllReceivedChallenges extends StatefulWidget {
 }
 
 class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
-
   List<challengeSummary2> challlengesSet = [];
 
   @override
@@ -27,7 +26,7 @@ class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+        backgroundColor: Colors.lightBlueAccent,
         title: Text("Challenges List"),
         titleTextStyle: TextStyle(
           fontSize: 25,
@@ -47,8 +46,11 @@ class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
                 onTap: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => receivedChallengeWidget(challenge_node_id: challlengesSet[index].CHALLENGE_NODE_ID),)
-                  );
+                      MaterialPageRoute(
+                        builder: (context) => receivedChallengeWidget(
+                            challenge_node_id:
+                                challlengesSet[index].CHALLENGE_NODE_ID),
+                      ));
                 },
                 //color: Colors.white,
                 child: Card(
@@ -60,7 +62,8 @@ class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
                       ),
                       Padding(padding: EdgeInsets.only(top: 40, left: 7)),
                       // User Names
-                      Text("From ${challlengesSet[index].USER_NAME}"), // Usernames
+                      Text(
+                          "From ${challlengesSet[index].USER_NAME}"), // Usernames
                       Spacer(),
                     ],
                   ),

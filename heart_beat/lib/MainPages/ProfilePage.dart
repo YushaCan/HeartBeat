@@ -44,10 +44,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // TO EDIT ABOUT ME
-  // THIS WILL TAKE IT'S VALUE FROM FIREBASE AND REMAIN SAME
-  static var aboutMeController = TextEditingController();
-  ///////////////////////////////////////////////////////////
   // This values too will be taken from firebase
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user;
@@ -71,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return new WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(0, 31, 235, 0.6),
+          backgroundColor: Colors.lightBlueAccent,
           title: Text("Profile Page"),
           titleTextStyle: TextStyle(
             fontSize: 25,
@@ -170,7 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           onSurface: Colors.white,
                           shadowColor: Color.fromARGB(0, 255, 255, 255),
                           side: BorderSide(
-                            color: Color.fromRGBO(0, 31, 235, 0.6),
+                            color: Colors.lightBlueAccent,
                             width: 3,
                           ),
                         ),
@@ -198,7 +194,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           onSurface: Colors.white,
                           shadowColor: Color.fromARGB(0, 255, 255, 255),
                           side: BorderSide(
-                            color: Color.fromRGBO(0, 31, 235, 0.6),
+                            color: Colors.lightBlueAccent,
                             width: 3,
                           ),
                         ),
@@ -224,7 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
             _signOut();
           },
           child: const Icon(Icons.logout),
-          backgroundColor: Color.fromRGBO(0, 31, 235, 0.6),
+          backgroundColor: Colors.lightBlueAccent,
         ),
       ),
       onWillPop: () async {
