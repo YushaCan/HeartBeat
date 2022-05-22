@@ -5,6 +5,30 @@ import 'package:flutter/material.dart';
 import 'package:heart_beat/XP/actions.dart';
 import 'MainMenu.dart';
 
+
+class Fruits extends StatelessWidget {
+  const Fruits({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Fruits Page",
+      home:  new WillPopScope(
+        child: Scaffold(
+          body: VegsFruits(),
+        ),
+        onWillPop: () async{
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainMenu()),
+          );
+          return true;
+        },
+      ),
+    );
+  }
+}
+
 class VegsFruits extends StatefulWidget {
   const VegsFruits({Key? key}) : super(key: key);
 

@@ -204,7 +204,8 @@ class _FriendsState extends State<Friends> {
           else if(selectedIndex>-1){
             Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => challenges(selectedUserData: friendsSet[selectedIndex],),));
+                MaterialPageRoute(builder: (context) => challenges(selectedUserData: friendsSet[selectedIndex],),)
+            );
           }
         },
         child: const Icon(Icons.navigate_next),

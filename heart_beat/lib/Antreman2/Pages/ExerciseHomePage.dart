@@ -3,30 +3,43 @@ import 'package:flutter/material.dart';
 import 'package:heart_beat/Antreman2/Widgets/ExercisesWidget.dart';
 import 'package:heart_beat/Antreman2/Widgets/LineChartWidget.dart';
 
+import '../../MainPages/MainMenu.dart';
+
 class ExerciseHomePage extends StatelessWidget {
   const ExerciseHomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: Container(
-      child: CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.white,
-            expandedHeight: 300.0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: Image.network(
-                  "https://firebasestorage.googleapis.com/v0/b/heartbeat-cbae0.appspot.com/o/assets%2Ficons%2FWorkout%20Customizable%20Isometric%20Illustrations%20_%20Amico%20Style.png?alt=media&token=ec98765c-28af-43f0-8547-379ec5cc58a2",
-                  height: 200,width: 200,fit: BoxFit.fill,),
+  Widget build(BuildContext context) => MaterialApp(
+    home: new WillPopScope(
+      child: Scaffold(
+        body: Container(
+          child: CustomScrollView(
+            physics: BouncingScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Colors.white,
+                expandedHeight: 300.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Image.network(
+                      "https://firebasestorage.googleapis.com/v0/b/heartbeat-cbae0.appspot.com/o/assets%2Ficons%2FWorkout%20Customizable%20Isometric%20Illustrations%20_%20Amico%20Style.png?alt=media&token=ec98765c-28af-43f0-8547-379ec5cc58a2",
+                      height: 200,width: 200,fit: BoxFit.fill,),
+                  ),
+                ),
               ),
-            ),
+              ExercisesWidget(),
+            ],
           ),
-          ExercisesWidget(),
-        ],
+        ),
       ),
+      onWillPop: () async{
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainMenuPage()),
+        );
+        return true;
+      },
     ),
   );
 

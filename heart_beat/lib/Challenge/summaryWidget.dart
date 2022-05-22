@@ -63,11 +63,17 @@ void show_False(BuildContext context) {
   )..show(context);
 }
 
-class summary extends StatelessWidget {
+class summary extends StatefulWidget {
   final Userz selectedUserData;
   final challenge selectedChallengeData;
   const summary({Key? key, required this.selectedUserData, required this.selectedChallengeData}) : super(key: key);
 
+  @override
+  State<summary> createState() => _summaryState();
+}
+
+class _summaryState extends State<summary> {
+  String sender_repeat = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +93,7 @@ class summary extends StatelessWidget {
               child: SizedBox(
                   width: 200,
                   height: 50,
-                  child: Text("To ${selectedUserData.uname}",
+                  child: Text("To ${widget.selectedUserData.uname}",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,fontSize: 24,color: Colors.deepPurple
                   ),
@@ -98,7 +104,7 @@ class summary extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(80, 0, 30, 0),
             child: Card(
               child: Image.network(
-                selectedChallengeData.videoURL,
+                widget.selectedChallengeData.videoURL,
                 height: 200,
                 width: 200,
                 fit: BoxFit.cover,
@@ -108,9 +114,26 @@ class summary extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(80, 30, 30, 0),
             child: SizedBox(
+              width: 100,
+              height: 50,
+              child: TextField(
+                onChanged: (value) {
+                  sender_repeat = value;
+                }, //bu email
+                decoration: InputDecoration(
+                  // icon: Icon(Icons.person),
+                  border: OutlineInputBorder(),
+                  hintText: 'Repeat',
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(80, 30, 30, 0),
+            child: SizedBox(
                 width: 200,
                 height: 90,
-                child: Text("The challenge will be available for 24 hours when ${selectedUserData.uname} accepts it!",
+                child: Text("The challenge will be available for 24 hours when ${widget.selectedUserData.uname} accepts it!",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,fontSize: 20,color: Colors.deepPurple
                   ),
@@ -128,7 +151,7 @@ class summary extends StatelessWidget {
                   padding: EdgeInsets.all(0.0),
                   onPressed: () {
                     DateTime timer = DateTime.now().add(const Duration(hours: 24));
-                    var isDone = SendChallengeRequest(selectedUserData.uid.toString(),selectedChallengeData.id.toString());
+                    var isDone = SendChallengeRequest(widget.selectedUserData.uid.toString(),widget.selectedChallengeData.id.toString(),sender_repeat);
                     if(isDone){
                       show_True(context);
                     }
