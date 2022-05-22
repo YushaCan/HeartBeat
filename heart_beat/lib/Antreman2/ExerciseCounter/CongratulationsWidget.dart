@@ -6,13 +6,12 @@ import 'package:heart_beat/XP/actions.dart';
 import '../../MainPages/MainMenu.dart';
 import '../models/exercise.dart';
 
-
 class CongratulationsWidget extends StatefulWidget {
-  const CongratulationsWidget({Key? key, required this.exercises}) : super(key: key);
+  const CongratulationsWidget({Key? key, required this.exercises})
+      : super(key: key);
   final Exercise exercises;
   @override
   _CongratulationsWidgetState createState() => _CongratulationsWidgetState();
-
 }
 
 class _CongratulationsWidgetState extends State<CongratulationsWidget> {
@@ -20,32 +19,32 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
   @override
   void initState() {
     // TODO: implement initState
-    if(mounted){
+    if (mounted) {
       setState(() {
         initController();
         super.initState();
         EarnXp(10);
       });
     }
+    controllerTopCenter.play();
   }
 
   void initController() {
     controllerTopCenter =
-        ConfettiController(duration: const Duration(seconds: 1));
+        ConfettiController(duration: const Duration(seconds: 2));
   }
-
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async{
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MainMenuPage()),
-          );
-          return true;
-        },
-      child:Scaffold(
+      onWillPop: () async {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainMenuPage()),
+        );
+        return true;
+      },
+      child: Scaffold(
         backgroundColor: Colors.pink[50],
         body: SafeArea(
           child: Stack(
@@ -58,8 +57,8 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
                   children: <Widget>[
                     Image.asset(
                       "assets/trophy.png",
-                      width: MediaQuery.of(context).size.width*0.5,
-                      height: MediaQuery.of(context).size.height*0.5,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: MediaQuery.of(context).size.height * 0.5,
                     ),
                   ],
                 ),
@@ -78,10 +77,14 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 100),
         child: RaisedButton(
-          onPressed: (){
-            controllerTopCenter.play();
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainMenuPage()),
+            );
           },
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           color: Colors.red,
           textColor: Colors.white,
           child: Padding(
@@ -103,12 +106,12 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
     return Align(
       alignment: Alignment.topCenter,
       child: ConfettiWidget(
-        maximumSize: Size(30, 30),
+        maximumSize: Size(40, 40),
         shouldLoop: false,
         confettiController: controller,
         blastDirection: blastDirection,
-        blastDirectionality: BlastDirectionality.directional,
-        maxBlastForce: 20, // set a lower max blast force
+        blastDirectionality: BlastDirectionality.explosive,
+        maxBlastForce: 10, // set a lower max blast force
         minBlastForce: 8, // set a lower min blast force
         emissionFrequency: 1,
         numberOfParticles: 16, // a lot of particles at once
@@ -116,6 +119,4 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
       ),
     );
   }
-
-
 }
