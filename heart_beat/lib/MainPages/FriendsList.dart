@@ -13,7 +13,6 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-
   int selectedIndex = -1;
 
   /////////////////////////////////
@@ -28,18 +27,11 @@ class _SideBarState extends State<SideBar> {
 
   /////////////////////////////////////////////////////////////
   // This is a friends list which pulled from the database
-  late List<String> friendsList = <String>[
-    'KingOfSports',
-    'YouCantBeatMe',
-    'HealtyBetty',
-    'ProffesorHealthCare',
-    'DoctorSports',
-    'ImGreat',
-  ];
+  late List<String> friendsList = <String>[];
 
   late List<bool> isOnline = <bool>[
-    true,
-    true,
+    false,
+    false,
     false,
     false,
     false,
@@ -48,7 +40,7 @@ class _SideBarState extends State<SideBar> {
 
   // Bu iki fonksiyon online olan kişileri ve toplam arkadaş listesindeki kişi sayısını güncellemeyi sağlıyor.
   int TotalCount() {
-    totalFriends = friendsList.length;
+    totalFriends = friendsSet.length;
     return totalFriends;
   }
 
@@ -66,16 +58,16 @@ class _SideBarState extends State<SideBar> {
 
   @override
   void didChangeDependencies() async {
-    super.setState(() {});
     super.didChangeDependencies();
     friendsSet = await showFriendsSetData();
+    super.setState(() {});
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
+      backgroundColor: Color.fromRGBO(0, 31, 235, 0.6),
       child: Column(
         children: <Widget>[
           // COULD PLACED SIMPLE ACCOUNT INFORMATION LIKE PHOTOS AND MAIL ETC.
@@ -105,12 +97,15 @@ class _SideBarState extends State<SideBar> {
               itemCount: friendsSet.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
-                  onTap: (){
-                    setState(() => selectedIndex=index);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => challenges(selectedUserData: friendsSet[selectedIndex],),));
-
+                  onTap: () {
+                    setState(() => selectedIndex = index);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => challenges(
+                            selectedUserData: friendsSet[selectedIndex],
+                          ),
+                        ));
                   },
                   child: Container(
                     margin: EdgeInsets.only(
@@ -122,7 +117,7 @@ class _SideBarState extends State<SideBar> {
                       children: <Widget>[
                         Text(
                           // Will change with friends list's name
-                          '${friendsSet[index].uname}',
+                          "${friendsSet[index].uname}",
                           style: TextStyle(
                             fontSize: 20,
                             // Dynamically change color. Based on user is online or not

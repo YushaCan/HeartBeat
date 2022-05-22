@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:heart_beat/MainPages/MainMenu.dart';
 
 class Gamification {
   // This variables will pulling from firebase
   // For the level of user and user's experience point
   static int level = 1;
-  static double experiencePoint = 500;
-  static double expForOtherLevel = 1000;
+  static double experiencePoint = 0;
+  static double expForOtherLevel = 500;
+  static bool levelCongratulations = false;
+  static double LevelUp() {
+    levelCongratulations = false;
+    if (experiencePoint >= expForOtherLevel) {
+      // LEVEL UP CONGRATULATIONS
+      levelCongratulations = true;
+      ///////////////////////////
+      level++;
+      expForOtherLevel *= 3 / 2;
+      experiencePoint = 0;
+    }
+
+    return experiencePoint / expForOtherLevel;
+  }
 
   // FOR THE RANK OF THE USER
   static bool isBronze = false;

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:math';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Challenge/friendsWidget.dart';
 import 'package:heart_beat/Gamification/Gamification.dart';
@@ -22,70 +24,72 @@ class MainMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Heart Beat',
-        home: new WillPopScope(
-          onWillPop: () async{
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MainMenuPage()),
-            );
-            return true;
-          },
-          child: Scaffold(
-            key: _key,
-            drawer: SideBar(),
-            appBar: AppBar(
-              backgroundColor: Color.fromRGBO(0, 31, 235,0.6),
-              // For Friends List on AppBar
-              leading: IconButton(
-                // Open Friends list
-                onPressed: () {
-                  print('FRIENDS LIST OPENED');
-                  _key.currentState!.openDrawer();
-                },
-                icon: Icon(Icons.people),
-                iconSize: 30,
-              ),
-              title: Text('Heart Beat'),
-              titleTextStyle: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w600,
-              ),
-              // For Profile Page on AppBar
-              actions: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FriendRequestsWidget()),
-                      );
-                    },
-                    icon: Icon(Icons.add_alert),
-                    iconSize: 30,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: IconButton(
-                    onPressed: () {
-                      print('PROFILE PAGE OPENED');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Profile()),
-                      );
-                    },
-                    icon: Icon(Icons.person),
-                    iconSize: 30,
-                  ),
-                ),
-              ],
+      title: 'Heart Beat',
+      home: new WillPopScope(
+        onWillPop: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainMenuPage()),
+          );
+          return true;
+        },
+        child: Scaffold(
+          key: _key,
+          drawer: SideBar(),
+          appBar: AppBar(
+            //backgroundColor: Color.fromRGBO(0, 31, 235, 0.6),
+            backgroundColor: Colors.lightBlueAccent,
+            // For Friends List on AppBar
+            leading: IconButton(
+              // Open Friends list
+              onPressed: () {
+                print('FRIENDS LIST OPENED');
+                _key.currentState!.openDrawer();
+              },
+              icon: Icon(Icons.people),
+              iconSize: 30,
             ),
-            body: MainMenu(),
+            title: Text('Heart Beat'),
+            titleTextStyle: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.w600,
+            ),
+            // For Profile Page on AppBar
+            actions: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FriendRequestsWidget()),
+                    );
+                  },
+                  icon: Icon(Icons.add_alert),
+                  iconSize: 30,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: IconButton(
+                  onPressed: () {
+                    print('PROFILE PAGE OPENED');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profile()),
+                    );
+                  },
+                  icon: Icon(Icons.person),
+                  iconSize: 30,
+                ),
+              ),
+            ],
           ),
+          body: MainMenu(),
         ),
-);
+      ),
+    );
   }
 }
 
@@ -105,280 +109,318 @@ class _MainMenuState extends State<MainMenu> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(hours: 24), (Timer t) => MarkAsNotDone());
+    initController();
+    if (Gamification.levelCongratulations) {
+      confettiController.play();
+    }
   }
+
   // Each level's experience points & numbers
   double levelExp = Gamification.experiencePoint;
   double nextLevelExp = Gamification.expForOtherLevel;
   int currentLevel = Gamification.level;
   late int nextLevel = currentLevel + 1;
   //////////////////////////////////////////
+
+  late ConfettiController confettiController;
+  void initController() {
+    confettiController =
+        ConfettiController(duration: const Duration(seconds: 3));
+  }
+
+  //////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
+      child: Stack(
         children: <Widget>[
-          // Level Progression Bar
-          SizedBox(
-              width: 400,
-              height: 70,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // Level Bar Codes
-                  new LinearPercentIndicator(
-                    width: 350,
-                    animation: true,
-                    animationDuration: 1500,
-                    lineHeight: 25,
-                    leading: new Text(
-                      currentLevel.toString(),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    trailing: new Text(
-                      nextLevel.toString(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    percent: levelExp / nextLevelExp,
-                    linearStrokeCap: LinearStrokeCap.butt,
-                    progressColor: Colors.yellow,
-                  )
-                ],
-              )),
-          // First Row
-          Row(
+          Column(
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(left: 40),),
-              // TRAINING BUTTON
+              // Level Progression Bar
               SizedBox(
-                height: 120,
-                width: 160,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 6,
-                    top: 20,
-                  ),
-                  // For Training Page
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 31, 235,0.6)),
-                    ),
-                    child: Transform.rotate(
-                      angle: math.pi / 4,
-                      child: Icon(
-                        LineIcons.dumbbell,
-                        size: 85,
-                      ),
-                    ),
-                    onPressed: () {
-                      print("TRAINING PAGE OPENED");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ExerciseHomePage()),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              // PEDOMETER BUTTON
-              SizedBox(
-                height: 120,
-                width: 160,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 6,
-                    top: 20,
-                  ),
-                  // For Pedometer Page
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 31, 235,0.6)),
-                    ),
-                    child: Align(
-                      alignment: Alignment(0.0, 0.0),
-                      child: Transform.rotate(
-                        angle: 0,
-                        child: Icon(
-                          LineIcons.shoePrints,
-                          size: 70,
+                  width: 400,
+                  height: 70,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      // Level Bar Codes
+                      new LinearPercentIndicator(
+                        width: 350,
+                        animation: true,
+                        animationDuration: 1500,
+                        lineHeight: 25,
+                        leading: new Text(
+                          currentLevel.toString(),
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                        trailing: new Text(
+                          nextLevel.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        percent: Gamification.LevelUp(),
+                        linearStrokeCap: LinearStrokeCap.butt,
+                        progressColor: Colors.yellow,
+                      )
+                    ],
+                  )),
+              // First Row
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 40),
+                  ),
+                  // TRAINING BUTTON
+                  SizedBox(
+                    height: 120,
+                    width: 160,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 6,
+                        top: 20,
+                      ),
+                      // For Training Page
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          //backgroundColor: MaterialStateProperty.all<Color>(
+                          //Color.fromRGBO(0, 31, 235, 0.6)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.lightBlueAccent,
+                          ),
+                        ),
+                        child: Transform.rotate(
+                          angle: math.pi / 4,
+                          child: Icon(
+                            LineIcons.dumbbell,
+                            size: 85,
+                          ),
+                        ),
+                        onPressed: () {
+                          print("TRAINING PAGE OPENED");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ExerciseHomePage()),
+                          );
+                        },
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => FriendRequestsWidget(),));
-                    },
                   ),
-                ),
+                  // PEDOMETER BUTTON
+                  SizedBox(
+                    height: 120,
+                    width: 160,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 6,
+                        top: 20,
+                      ),
+                      // For Pedometer Page
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          //backgroundColor: MaterialStateProperty.all<Color>(
+                          //  Color.fromRGBO(0, 31, 235, 0.6)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.lightBlueAccent,
+                          ),
+                        ),
+                        child: Align(
+                          alignment: Alignment(0.0, 0.0),
+                          child: Transform.rotate(
+                            angle: 0,
+                            child: Icon(
+                              LineIcons.shoePrints,
+                              size: 70,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FriendRequestsWidget(),
+                              ));
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // Second Row
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 40),
+                  ),
+                  // TRAININ BUTTON
+                  SizedBox(
+                    height: 130,
+                    width: 160,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 6,
+                        top: 30,
+                      ),
+                      // For Training Page
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          // backgroundColor: MaterialStateProperty.all<Color>(
+                          //   Color.fromRGBO(0, 31, 235, 0.6)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.lightBlueAccent,
+                          ),
+                        ),
+                        child: Icon(
+                          LineIcons.tint,
+                          size: 75,
+                        ),
+                        onPressed: () {
+                          print("WATER PAGE OPENED");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WaterPage()),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  // PEDOMETER BUTTON
+                  SizedBox(
+                    height: 130,
+                    width: 160,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 6,
+                        top: 30,
+                      ),
+                      // For Pedometer Page
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          //backgroundColor: MaterialStateProperty.all<Color>(
+                          //  Color.fromRGBO(0, 31, 235, 0.6)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.lightBlueAccent,
+                          ),
+                        ),
+                        child: Icon(
+                          LineIcons.fruitApple,
+                          size: 75,
+                        ),
+                        onPressed: () {
+                          print("FOOD PAGE OPENED");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VegsFruits()),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // Third Row
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 40),
+                  ),
+                  // TRAININ BUTTON
+                  SizedBox(
+                    height: 130,
+                    width: 160,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 6,
+                        top: 30,
+                      ),
+                      // For Training Page
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          //backgroundColor: MaterialStateProperty.all<Color>(
+                          //  Color.fromRGBO(0, 31, 235, 0.6)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.lightBlueAccent,
+                          ),
+                        ),
+                        child: Icon(
+                          LineIcons.trophy,
+                          size: 75,
+                        ),
+                        onPressed: () {
+                          print("LEADER BOARD PAGE OPENED");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LeaderBoardPage()),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  // PEDOMETER BUTTON
+                  SizedBox(
+                    height: 130,
+                    width: 160,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 6,
+                        top: 30,
+                      ),
+                      // For Pedometer Page
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          //backgroundColor: MaterialStateProperty.all<Color>(
+                          //  Color.fromRGBO(0, 31, 235, 0.6)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.lightBlueAccent,
+                          ),
+                        ),
+                        child: Icon(
+                          LineIcons.handshake,
+                          size: 75,
+                        ),
+                        onPressed: () {
+                          print("CHALLENGE PAGE OPENED");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Friends()),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          // Second Row
-          Row(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.only(left: 40),),
-              // TRAININ BUTTON
-              SizedBox(
-                height: 130,
-                width: 160,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 6,
-                    top: 30,
-                  ),
-                  // For Training Page
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 31, 235,0.6)),
-                    ),
-                    child: Icon(
-                      LineIcons.tint,
-                      size: 75,
-                    ),
-                    onPressed: () {
-                      print("WATER PAGE OPENED");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => WaterPage()),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              // PEDOMETER BUTTON
-              SizedBox(
-                height: 130,
-                width: 160,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 6,
-                    top: 30,
-                  ),
-                  // For Pedometer Page
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 31, 235,0.6)),
-                    ),
-                    child: Icon(
-                      LineIcons.fruitApple,
-                      size: 75,
-                    ),
-                    onPressed: () {
-                      print("FOOD PAGE OPENED");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VegsFruits()),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          // Third Row
-          Row(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.only(left: 40),),
-              // TRAININ BUTTON
-              SizedBox(
-                height: 130,
-                width: 160,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 6,
-                    top: 30,
-                  ),
-                  // For Training Page
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 31, 235,0.6)),
-                    ),
-                    child: Icon(
-                      LineIcons.trophy,
-                      size: 75,
-                    ),
-                    onPressed: () {
-                      print("LEADER BOARD PAGE OPENED");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LeaderBoardPage()),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              // PEDOMETER BUTTON
-              SizedBox(
-                height: 130,
-                width: 160,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 6,
-                    top: 30,
-                  ),
-                  // For Pedometer Page
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 31, 235,0.6)),
-                    ),
-                    child: Icon(
-                      LineIcons.handshake,
-                      size: 75,
-                    ),
-                    onPressed: () {
-                      print("CHALLENGE PAGE OPENED");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Friends()),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              // BMI (Body Mass Index) BUTTON
-       /*       SizedBox(
-                height: 130,
-                width: 120,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 5,
-                    top: 30,
-                    right: 5,
-                  ),
-                  // For BMI
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(0, 31, 235,0.6)),
-                    ),
-                    child: Icon(
-                      LineIcons.question,
-                      size: 75,
-                    ),
-                    onPressed: () {
-                      print("FAQ PAGE OPENED");
-                    },
-                  ),
-                ),
-              ), */
-            ],
-          ),
+          buildConfettiWidget(confettiController, pi / 1),
+          buildConfettiWidget(confettiController, pi / 5),
         ],
+      ),
+    );
+  }
+
+  Align buildConfettiWidget(controller, double blastDirection) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ConfettiWidget(
+        maximumSize: Size(40, 40),
+        shouldLoop: false,
+        confettiController: controller,
+        blastDirection: blastDirection,
+        blastDirectionality: BlastDirectionality.explosive,
+        maxBlastForce: 10, // set a lower max blast force
+        minBlastForce: 8, // set a lower min blast force
+        emissionFrequency: 1,
+        numberOfParticles: 16, // a lot of particles at once
+        gravity: 1,
       ),
     );
   }
