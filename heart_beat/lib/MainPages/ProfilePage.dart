@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
   // This values too will be taken from firebase
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user;
-  int level = Gamification.level;
+  //int level = Gamification.level;
   String name = "";
   String surname = "";
   String mail = "E-";
@@ -136,7 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       radius: 25,
                       backgroundColor: Colors.blue,
                       child: Text(
-                        "$level",
+                        "", //"$level",
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,

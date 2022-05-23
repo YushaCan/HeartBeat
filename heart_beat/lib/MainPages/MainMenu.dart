@@ -8,6 +8,7 @@ import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:heart_beat/MainPages/Leaderboard.dart';
 import 'package:heart_beat/MainPages/ProfilePage.dart';
 import 'package:heart_beat/MainPages/WaterPage.dart';
+import 'package:heart_beat/XP/actions.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../Antreman2/ExerciseCounter/Counter.dart';
 import '../Antreman2/Pages/ExerciseHomePage.dart';
@@ -103,7 +104,6 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   double leftSpace = 4;
-  double sliderValue = 0;
 
   Timer? timer;
 
@@ -119,11 +119,20 @@ class _MainMenuState extends State<MainMenu> {
 
   // Each level's experience points & numbers
   double levelExp = Gamification.experiencePoint;
-  double nextLevelExp = Gamification.expForOtherLevel;
-  int currentLevel = Gamification.level;
-  late int nextLevel = currentLevel + 1;
-  //////////////////////////////////////////
+  int? currentLevel = 0;
+  late double expForOtherLevel =
+      (currentLevel! * currentLevel!) * (3 / 2) * 100;
+  int nextLevel = 0;
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    currentLevel = await showLevel();
+    nextLevel = currentLevel! + 1;
+    super.setState(() {});
+  }
 
+  //////////////////////////////////////////
+  /////////////////////////////////////////////////////////
   late ConfettiController confettiController;
   void initController() {
     confettiController =
