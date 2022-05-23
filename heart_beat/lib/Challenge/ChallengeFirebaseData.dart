@@ -83,6 +83,7 @@ class challengeSummary{
     'RECEIVER_REPEAT': RECEIVER_REPEAT,
   };
 }
+
 //bu listeleme için
 class challengeSummary2{
   late var LIST_CHALLENGE_NODE_ID;
@@ -176,6 +177,7 @@ Future<challengeToViewSummary> showReceivedChallenge(String CHALLENGE_NODE_ID) a
 
   challengeToViewSummary singleChallenge = new challengeToViewSummary("","","","","","");
   challengeSummary receivedChallenge = new challengeSummary("","","","","");
+
   List<Userz> friends = await showFriendsSetData(); // öncelikle arkadaiları çekeriz
   List<challenge> challenges = await showChallengeSetData(); // bu bize challenge lari döndürüyor
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -204,11 +206,8 @@ Future<challengeToViewSummary> showReceivedChallenge(String CHALLENGE_NODE_ID) a
           receivedChallenge.RECEIVER_REPEAT = element.value.toString();
           singleChallenge.RECEIVER_REPEAT = receivedChallenge.RECEIVER_REPEAT;
         }
-
     });
   });
-
-
 
   for(int i=0; i<friends.length; i++){
     if(friends[i].uid==receivedChallenge.USER_ID){
@@ -219,6 +218,61 @@ Future<challengeToViewSummary> showReceivedChallenge(String CHALLENGE_NODE_ID) a
 
   for(int i=0; i<challenges.length; i++){
     if(challenges[i].id.toString()==receivedChallenge.CHALLENGE_ID){
+      singleChallenge.CHALLENGE_URL=challenges[i].videoURL;
+      break;
+    }
+  }
+
+  return singleChallenge;
+}
+
+Future<challengeToViewSummary> showSentChallenge(String CHALLENGE_NODE_ID) async{
+
+  challengeToViewSummary singleChallenge = new challengeToViewSummary("","","","","","");
+  challengeSummary sentChallenge = new challengeSummary("","","","","");
+  List<Userz> friends = await showFriendsSetData(); // öncelikle arkadaiları çekeriz
+  List<challenge> challenges = await showChallengeSetData(); // bu bize challenge lari döndürüyor
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+
+  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/SentChallenges/${CHALLENGE_NODE_ID}");
+  await ref.once().then((value) {
+    value.snapshot.children.forEach((element) {
+        if(element.key.toString()=="CHALLENGE_ID"){
+          sentChallenge.CHALLENGE_ID = element.value.toString();
+        }
+        else if(element.key.toString() == "USER_ID"){
+          sentChallenge.USER_ID = element.value;
+          singleChallenge.USER_ID = sentChallenge.USER_ID;
+        }
+        else if(element.key.toString()=="ACCEPT_TIME"){
+          sentChallenge.ACCEPT_TIME = element.value.toString();
+          singleChallenge.ACCEPT_TIME = sentChallenge.ACCEPT_TIME;
+        }
+        else if(element.key.toString()=="SENDER_REPEAT"){
+          sentChallenge.SENDER_REPEAT = element.value.toString();
+          singleChallenge.SENDER_REPEAT = sentChallenge.SENDER_REPEAT;
+        }
+        else if(element.key.toString()=="RECEIVER_REPEAT"){
+          sentChallenge.RECEIVER_REPEAT = element.value.toString();
+          singleChallenge.RECEIVER_REPEAT = sentChallenge.RECEIVER_REPEAT;
+        }
+
+    });
+  });
+
+
+
+  for(int i=0; i<friends.length; i++){
+    if(friends[i].uid==sentChallenge.USER_ID){
+      singleChallenge.USER_NAME=friends[i].uname;
+      break;
+    }
+  }
+
+  for(int i=0; i<challenges.length; i++){
+    if(challenges[i].id.toString()==sentChallenge.CHALLENGE_ID){
       singleChallenge.CHALLENGE_URL=challenges[i].videoURL;
       break;
     }
@@ -249,13 +303,52 @@ Future<List<challengeSummary2>> showAllReceivedChallenge() async{
       receivedChallenges.add(receivedChallenge);
     });
   });
+
   for(int i=0; i<friends.length; i++){
     if(friends[i].uid==receivedChallenges[i].USER_ID){
       receivedChallenges[i].USER_NAME=friends[i].uname!;
     }
   }
 
+  for(int i=0; i<receivedChallenges.length; i++){
+    DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${receivedChallenges[i].USER_ID}/SentChallenges");
+    await ref.once().then((value) {
+      value.snapshot.children.forEach((element) {
+        receivedChallenges[i].SENDER_CHALLENGE_NODE_ID = element.key.toString();
+      });
+    });
+  }
   return receivedChallenges;
+}
+
+Future<List<challengeSummary2>> showAllSentChallenge() async{
+
+  List<challengeSummary2> sentChallenges = [];
+  List<Userz> friends = await showFriendsSetData(); // öncelikle arkadaiları çekeriz
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+
+  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/SentChallenges");
+  await ref.once().then((value) {
+    value.snapshot.children.forEach((element) {
+      challengeSummary2 sentChallenge = new challengeSummary2("","","","","");
+      sentChallenge.RECEIVER_CHALLENGE_NODE_ID = element.key.toString();
+      element.children.forEach((element) {
+        if(element.key.toString() == "USER_ID"){
+          sentChallenge.USER_ID = element.value;
+        }
+      });
+      sentChallenges.add(sentChallenge);
+    });
+  });
+  for(int i=0; i<friends.length; i++){
+    if(friends[i].uid==sentChallenges[i].USER_ID){
+      sentChallenges[i].USER_NAME=friends[i].uname!;
+    }
+  }
+
+  return sentChallenges;
 }
 
 bool SendChallengeRequest(String uid,String challengeId,String sender_repeat){
@@ -290,7 +383,8 @@ bool SendChallengeRequest(String uid,String challengeId,String sender_repeat){
   return isDone;
 }
 
-void AcceptChallenge(String challenge_node_id,String sender_id,String sender_name,String sender_repeat,String receiver_repeat){
+void AcceptChallenge(String sender_node_id,String challenge_node_id,String sender_id,String sender_name,String sender_repeat,String receiver_repeat){
+
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;
   final current_uid = user?.uid;
@@ -318,6 +412,7 @@ void AcceptChallenge(String challenge_node_id,String sender_id,String sender_nam
     'RECEIVER_NAME':receiver_name,
     'SENDER_REPEAT':sender_repeat,
     'RECEIVER_REPEAT':receiver_repeat,
+    'SENDER_CHALLENGE_NODE_ID':sender_node_id
   });
 
 }
@@ -355,7 +450,7 @@ void ChallengeStarted(String ACCEPT_TIME) async{
   });
 }
 
-void deleteChallenge(String receiver_node_id){
+void deleteChallenge(String sender_id,String sender_node_id,String receiver_node_id){
 
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;

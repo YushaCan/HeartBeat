@@ -5,7 +5,9 @@ import 'ChallengeFirebaseData.dart';
 
 class challengeWinnerPage extends StatefulWidget {
   final challenge_node_id;
-  const challengeWinnerPage({Key? key,required this.challenge_node_id}) : super(key: key);
+  final sender_node_id;
+  final sender_id;
+  const challengeWinnerPage({Key? key,required this.challenge_node_id,required this.sender_node_id,required this.sender_id}) : super(key: key);
 
   @override
   _challengeWinnerPageState createState() => _challengeWinnerPageState();
@@ -46,7 +48,7 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                     padding: EdgeInsets.all(0.0),
                     onPressed: () {
-                      deleteChallenge(result.RECEIVER_CHALLENGE_NODE_ID);
+                      deleteChallenge(widget.sender_id,widget.sender_node_id,widget.challenge_node_id);
                       Navigator.push(
                           context,
                           MaterialPageRoute(

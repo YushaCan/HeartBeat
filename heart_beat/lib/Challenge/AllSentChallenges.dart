@@ -5,14 +5,14 @@ import '../FriendShip/FriendShipActions.dart';
 import 'ChallengeFirebaseData.dart';
 import 'challengeWidget.dart';
 
-class AllReceivedChallenges extends StatefulWidget {
-  const AllReceivedChallenges({Key? key}) : super(key: key);
+class AllSentChallenges extends StatefulWidget {
+  const AllSentChallenges({Key? key}) : super(key: key);
 
   @override
-  State<AllReceivedChallenges> createState() => _AllReceivedChallengesState();
+  State<AllSentChallenges> createState() => _AllSentChallengesState();
 }
 
-class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
+class _AllSentChallengesState extends State<AllSentChallenges> {
   List<challengeSummary2> challlengesSet = [];
 
   @override
