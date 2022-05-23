@@ -38,8 +38,8 @@ Future<challengeList> showChallengeResultList(String CHALLENGE_NODE_ID) async{
           }
         }
         if(isThisTheChallenge==true){
-          if(element.key.toString()=="SENDER_NAME"){
-            result.SENDER_NAME=element.value.toString();
+          if(element.key.toString()==""){
+
           }
           else if(element.key.toString()=="RECEIVER_NAME"){
             result.RECEIVER_NAME=element.value.toString();
@@ -50,11 +50,13 @@ Future<challengeList> showChallengeResultList(String CHALLENGE_NODE_ID) async{
           else if(element.key.toString()=="RECEIVER_REPEAT"){
             result.RECEIVER_REPEAT=element.value.toString();
           }
+          else if(element.key.toString()=="SENDER_NAME"){
+            result.SENDER_NAME=element.value.toString();
+          }
         }
       });
     });
   });
-
   return result;
 }
 
@@ -222,7 +224,7 @@ Future<challengeToViewSummary> showReceivedChallenge(String CHALLENGE_NODE_ID) a
     }
   }
 
-
+  print(CHALLENGE_NODE_ID);
   return singleChallenge;
 }
 
@@ -353,7 +355,7 @@ void ChallengeStarted(String ACCEPT_TIME) async{
   });
 }
 
-void deleteChallenge(String receiver_node_id, String challenge_list_node_id){
+void deleteChallenge(String receiver_node_id){
 
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;

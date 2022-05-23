@@ -45,7 +45,9 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
         ),
         backgroundColor: Colors.lightBlueAccent,
       ),
-      body: Column(
+      body: receivedChallenge.USER_NAME==""?
+      CircularProgressIndicator()
+      :Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -163,7 +165,11 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
                     onPressed: () {
                       setState(() {
                         AcceptChallenge(widget.challenge_node_id,receivedChallenge.USER_ID,receivedChallenge.USER_NAME,receivedChallenge.SENDER_REPEAT,receiver_repeat);
-                        challengeWinnerPage(challenge_node_id: widget.challenge_node_id,);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => challengeWinnerPage(challenge_node_id: widget.challenge_node_id,),
+                            ));
                       });
                     },
                     child: Ink(
