@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_beat/Challenge/challengeWinnerPage.dart';
 import 'ChallengeFirebaseData.dart';
 
 class receivedChallengeWidget extends StatefulWidget {
@@ -161,7 +162,8 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
                     padding: EdgeInsets.all(0.0),
                     onPressed: () {
                       setState(() {
-                        AcceptChallenge(receivedChallenge.USER_ID,receivedChallenge.USER_NAME,receivedChallenge.SENDER_REPEAT,receiver_repeat);
+                        AcceptChallenge(widget.challenge_node_id,receivedChallenge.USER_ID,receivedChallenge.USER_NAME,receivedChallenge.SENDER_REPEAT,receiver_repeat);
+                        challengeWinnerPage(challenge_node_id: widget.challenge_node_id,);
                       });
                     },
                     child: Ink(

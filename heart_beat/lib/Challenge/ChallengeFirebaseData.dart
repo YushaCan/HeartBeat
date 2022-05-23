@@ -8,6 +8,56 @@ class challenge{
   late String videoURL;
   challenge({required this.id,required this.videoURL});
 }
+
+class challengeList{
+  String SENDER_NAME;
+  String RECEIVER_NAME;
+  String SENDER_REPEAT;
+  String RECEIVER_REPEAT;
+  String RECEIVER_CHALLENGE_NODE_ID;
+
+  challengeList(this.SENDER_NAME,this.RECEIVER_NAME,this.SENDER_REPEAT,this.RECEIVER_REPEAT,this.RECEIVER_CHALLENGE_NODE_ID);
+}
+
+Future<challengeList> showChallengeResultList(String CHALLENGE_NODE_ID) async{
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+  bool isThisTheChallenge = false;
+  challengeList result = new challengeList("", "", "", "", "");
+  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/ChallengeList");
+  await ref.once().then((value) {
+    value.snapshot.children.forEach((element) {
+      element.children.forEach((element) {
+        if(element.key.toString()=="RECEIVER_CHALLENGE_NODE_ID"){
+          if(element.value.toString()==CHALLENGE_NODE_ID)
+          {
+            isThisTheChallenge = true;
+            result.RECEIVER_CHALLENGE_NODE_ID=element.value.toString();
+          }
+        }
+        if(isThisTheChallenge==true){
+          if(element.key.toString()=="SENDER_NAME"){
+            result.SENDER_NAME=element.value.toString();
+          }
+          else if(element.key.toString()=="RECEIVER_NAME"){
+            result.RECEIVER_NAME=element.value.toString();
+          }
+          else if(element.key.toString()=="SENDER_REPEAT"){
+            result.SENDER_REPEAT=element.value.toString();
+          }
+          else if(element.key.toString()=="RECEIVER_REPEAT"){
+            result.RECEIVER_REPEAT=element.value.toString();
+          }
+        }
+      });
+    });
+  });
+
+  return result;
+}
+
 class challengeSummary{
   late var USER_ID;
   late String CHALLENGE_ID;
@@ -33,23 +83,30 @@ class challengeSummary{
 }
 //bu listeleme için
 class challengeSummary2{
-  late var CHALLENGE_NODE_ID;
+  late var LIST_CHALLENGE_NODE_ID;
+  late var SENDER_CHALLENGE_NODE_ID;
+  late var RECEIVER_CHALLENGE_NODE_ID;
   late var USER_ID;
   late String USER_NAME;
 
-  challengeSummary2(this.USER_NAME,this.CHALLENGE_NODE_ID,this.USER_ID);
+  challengeSummary2(this.USER_NAME,this.LIST_CHALLENGE_NODE_ID,this.USER_ID,this.RECEIVER_CHALLENGE_NODE_ID,this.SENDER_CHALLENGE_NODE_ID);
 
   challengeSummary2.fromJson(Map<dynamic, dynamic> json) :
-        CHALLENGE_NODE_ID = json['CHALLENGE_NODE_ID'] as String,
+        LIST_CHALLENGE_NODE_ID = json['CHALLENGE_NODE_ID'] as String,
+        RECEIVER_CHALLENGE_NODE_ID = json['RECEIVER_CHALLENGE_NODE_ID'] as String,
+        SENDER_CHALLENGE_NODE_ID = json['SENDER_CHALLENGE_NODE_ID'] as String,
         USER_NAME = json['USER_NAME'] as String,
         USER_ID = json['USER_ID'] as String;
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-    'CHALLENGE_NODE_ID': CHALLENGE_NODE_ID,
+    'LIST_CHALLENGE_NODE_ID': LIST_CHALLENGE_NODE_ID,
+    'RECEIVER_CHALLENGE_NODE_ID': RECEIVER_CHALLENGE_NODE_ID,
+    'SENDER_CHALLENGE_NODE_ID': SENDER_CHALLENGE_NODE_ID,
     'USER_NAME': USER_NAME,
     'USER_ID': USER_ID,
   };
 }
+
 class challengeToViewSummary{
   late var USER_NAME;
   late var USER_ID;
@@ -180,8 +237,8 @@ Future<List<challengeSummary2>> showAllReceivedChallenge() async{
   DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/ReceivedChallenges");
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
-      challengeSummary2 receivedChallenge = new challengeSummary2("","","");
-      receivedChallenge.CHALLENGE_NODE_ID = element.key.toString();
+      challengeSummary2 receivedChallenge = new challengeSummary2("","","","","");
+      receivedChallenge.RECEIVER_CHALLENGE_NODE_ID = element.key.toString();
       element.children.forEach((element) {
         if(element.key.toString() == "USER_ID"){
           receivedChallenge.USER_ID = element.value;
@@ -231,7 +288,7 @@ bool SendChallengeRequest(String uid,String challengeId,String sender_repeat){
   return isDone;
 }
 
-void AcceptChallenge(String sender_id,String sender_name,String sender_repeat,String receiver_repeat){
+void AcceptChallenge(String challenge_node_id,String sender_id,String sender_name,String sender_repeat,String receiver_repeat){
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;
   final current_uid = user?.uid;
@@ -246,6 +303,7 @@ void AcceptChallenge(String sender_id,String sender_name,String sender_repeat,St
     'RECEIVER_NAME':receiver_name,
     'SENDER_REPEAT':sender_repeat,
     'RECEIVER_REPEAT':receiver_repeat,
+    'RECEIVER_CHALLENGE_NODE_ID':challenge_node_id
   });
 
   //***********************ReceivedRequests**************************
@@ -293,6 +351,33 @@ void ChallengeStarted(String ACCEPT_TIME) async{
         'ACCEPT_TIME': ACCEPT_TIME});
     });
   });
+}
+
+void deleteChallenge(String receiver_node_id, String challenge_list_node_id){
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+  String ChildToDelete="";
+  FirebaseDatabase.instance.ref()
+      .child("USERS")
+      .child("$current_uid")
+      .child("ChallengeList")
+      .once()
+      .then((snapshot){
+    snapshot.snapshot.children.forEach((element1) {
+      element1.children.forEach((element2) {
+        ChildToDelete = element1.key.toString();
+        if(element2.key.toString()=="RECEIVER_CHALLENGE_NODE_ID" && element2.value.toString()==receiver_node_id){
+          FirebaseDatabase.instance.ref().child("USERS").child("$current_uid").child("ChallengeList").child("$ChildToDelete").remove();
+        }
+        else{
+          print(ChildToDelete);
+        }
+      });
+    });
+  });
+  FirebaseDatabase.instance.ref().child("USERS").child("$current_uid").child("ReceivedChallenges").child("$receiver_node_id").remove();
 }
 
 

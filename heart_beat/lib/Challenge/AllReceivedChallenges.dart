@@ -47,9 +47,7 @@ class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => receivedChallengeWidget(
-                            challenge_node_id:
-                                challlengesSet[index].CHALLENGE_NODE_ID),
+                        builder: (context) => receivedChallengeWidget(challenge_node_id: challlengesSet[index].LIST_CHALLENGE_NODE_ID),
                       ));
                 },
                 //color: Colors.white,
