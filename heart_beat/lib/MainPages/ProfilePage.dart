@@ -5,6 +5,7 @@ import 'package:heart_beat/Gamification/Gamification.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/MainPages/MainMenu.dart';
 import 'package:heart_beat/UYELIK/LoginPage.dart';
+import 'package:heart_beat/XP/actions.dart';
 
 Future<void> _signOut() async {
   await FirebaseAuth.instance.signOut();
@@ -55,6 +56,13 @@ class _ProfilePageState extends State<ProfilePage> {
   // For the pick Profile Image
   File? _pickedImage;
   ////////////////////////////////////////////
+  int? currentLevel = 0;
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    currentLevel = await showLevel();
+    super.setState(() {});
+  }
 
   @override
   void initState() {
@@ -136,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       radius: 25,
                       backgroundColor: Colors.blue,
                       child: Text(
-                        "", //"$level",
+                        "$currentLevel",
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,

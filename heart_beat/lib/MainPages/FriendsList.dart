@@ -30,7 +30,7 @@ class _SideBarState extends State<SideBar> {
   late List<String> friendsList = <String>[];
 
   late List<bool> isOnline = <bool>[
-    false,
+    true,
     false,
     false,
     false,
@@ -127,7 +127,9 @@ class _SideBarState extends State<SideBar> {
                         ),
                         Icon(
                           Icons.circle,
-                          color: isOnline[index] ? Colors.green : Colors.grey,
+                          color: isOnline[index]
+                              ? Colors.lightGreenAccent
+                              : Colors.grey,
                         )
                       ],
                     ),
