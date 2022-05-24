@@ -136,11 +136,12 @@ Future<int?> showLevel() async {
       FirebaseDatabase.instance.ref("USERS/$current_uid/LEVEL");
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
-      element.children.forEach(
+      level = int.parse(element.value.toString());
+      /*element.children.forEach(
         (element) {
-          level = int.parse(element.value.toString());
+          
         },
-      );
+      );*/
     });
   });
 
