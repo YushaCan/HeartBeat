@@ -8,11 +8,11 @@ class UXP {
   UXP.fromJson(Map<dynamic, dynamic> json) : xp = json['xp'] as String;
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-        'xp': xp,
+        'count': xp,
       };
 
   Map<String, Object?> toUpdate() => <String, Object?>{
-        'xp': xp,
+        'count': xp,
       };
 }
 
@@ -27,11 +27,12 @@ void EarnXp(int xp) async {
       FirebaseDatabase.instance.ref("USERS/$current_uid/XP");
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
-      previous_xp = element.value as int?;
+      previous_xp = int.parse(element.value.toString());
       print(previous_xp);
     });
   });
 
+  print("earn xp is called");
   //**********************SentRequests*******************************
   xp += previous_xp!;
   FirebaseDatabase.instance
@@ -40,6 +41,19 @@ void EarnXp(int xp) async {
       .child("$current_uid")
       .child("XP")
       .set({"count": xp});
+}
+
+void XpSifirla() async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+
+  FirebaseDatabase.instance
+      .ref()
+      .child("USERS")
+      .child("$current_uid")
+      .child("XP")
+      .set({"count": "0"});
 }
 
 Future<int?> showXP() async {
@@ -51,24 +65,24 @@ Future<int?> showXP() async {
       FirebaseDatabase.instance.ref("USERS/$current_uid/XP");
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
-      xp = element.value as int?;
+      xp = int.parse(element.value.toString());
     });
   });
   return xp;
 }
 
-void AddWater(int water) async {
+void AddWater(double water) async {
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;
   final current_uid = user?.uid;
-  int? previous_water = 0;
+  double? previous_water = 0.0;
 
   //**********************Retrieve exisiting water**********************
   DatabaseReference ref =
       FirebaseDatabase.instance.ref("USERS/$current_uid/WATER");
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
-      previous_water = element.value as int?;
+      previous_water = double.parse(element.value.toString());
       print(previous_water);
     });
   });
@@ -83,17 +97,17 @@ void AddWater(int water) async {
       .set({"water": water});
 }
 
-Future<int?> showWater() async {
+Future<double?> showWater() async {
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;
   final current_uid = user?.uid;
-  late int? water;
+  late double? water;
 
   DatabaseReference ref =
       FirebaseDatabase.instance.ref("USERS/$current_uid/WATER");
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
-      water = element.value as int?;
+      water = double.parse(element.value.toString());
     });
   });
 
@@ -111,7 +125,7 @@ void AddLevel(int level) async {
       FirebaseDatabase.instance.ref("USERS/$current_uid/LEVEL");
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
-      previous_level = element.value as int?;
+      previous_level = int.parse(element.value.toString());
       print(previous_level);
     });
   });
@@ -137,11 +151,6 @@ Future<int?> showLevel() async {
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
       level = int.parse(element.value.toString());
-      /*element.children.forEach(
-        (element) {
-          
-        },
-      );*/
     });
   });
 

@@ -20,7 +20,7 @@ class _ExercisesOfSetPageState extends State<ExercisesOfSetPage> {
   String url =
       "https://firebasestorage.googleapis.com/v0/b/heartbeat-cbae0.appspot.com/o/assets%2Ficons%2FDodawnie%20i%20odejmowanie%20do%2010%20by%20beat_tom%20on%20Genially.png?alt=media&token=ff8a8366-0ae7-4dcf-a0c6-ca114c3708a2";
   List<isDoneExercise> isDoneExercises = [];
-
+  int counter = 0;
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
@@ -36,7 +36,9 @@ class _ExercisesOfSetPageState extends State<ExercisesOfSetPage> {
         title: Text("Exercises "),
         backgroundColor: Colors.lightBlueAccent,
       ),
-      body: ListView.builder(
+      body: isDoneExercises.length==0?
+      Center(child: CircularProgressIndicator()):
+      ListView.builder(
           padding: EdgeInsets.symmetric(vertical: 20),
           itemCount: this.widget.exercises.length,
           itemBuilder: (context, index) {

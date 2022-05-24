@@ -12,7 +12,7 @@ class ULEVEL{
   ULEVEL.fromJson(Map<dynamic, dynamic> json) : level = json['level'] as String;
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-    'level': level,
+    'count': level,
   };
 }
 
@@ -107,19 +107,20 @@ class _SignUpState extends State<SignUp> {
       }
       //***********SET XP NODE FOR THE NEW USER***********
       final user_xp = UXP("0");
-      DatabaseReference ref1 = FirebaseDatabase.instance.ref()
+      FirebaseDatabase.instance.ref()
           .child("USERS")
           .child("${userCredential.user?.uid}")
-          .child("XP");
-      ref1.push().set(user_xp.toJson());
+          .child("XP")
+          .set({"xp":"0"});
 
       //***********SET LEVEL NODE FOR THE NEW USER***********
       final user_level = ULEVEL("0");
-      DatabaseReference ref2 = FirebaseDatabase.instance.ref()
+      FirebaseDatabase.instance.ref()
           .child("USERS")
           .child("${userCredential.user?.uid}")
-          .child("LEVEL");
-      ref2.push().set(user_level.toJson());
+          .child("LEVEL")
+          .set({"count":"0"});
+
 
       //***********SET USERS_TO_VIEW NODE FOR THE NEW USER***********
       final user_data = UDATA(user?.uid,user?.displayName,user?.photoURL);
@@ -128,11 +129,13 @@ class _SignUpState extends State<SignUp> {
 
       //***********SET WATER NODE FOR THE NEW USER***********
       final user_water = UWATER("0");
-      DatabaseReference ref4 = FirebaseDatabase.instance.ref()
+      FirebaseDatabase.instance.ref()
           .child("USERS")
           .child("${userCredential.user?.uid}")
-          .child("WATER");
-      ref4.push().set(user_water.toJson());
+          .child("WATER")
+          .set({"water": "0"});
+      //ref4.push().set(user_water.toJson());
+      //ref4.update(value);
 
       DatabaseReference ref5 = FirebaseDatabase.instance.ref()
           .child("USERS").child("${userCredential.user?.uid}").child("EXERCISES");

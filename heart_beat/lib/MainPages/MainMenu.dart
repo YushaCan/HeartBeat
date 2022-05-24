@@ -112,22 +112,26 @@ class _MainMenuState extends State<MainMenu> {
     super.initState();
     timer = Timer.periodic(Duration(hours: 24), (Timer t) => MarkAsNotDone());
     initController();
-    if (Gamification.levelCongratulations) {
-      confettiController.play();
-    }
   }
 
-  // Each level's experience points & numbers
-  double levelExp = Gamification.experiencePoint;
   int? currentLevel = 0;
-  late double expForOtherLevel =
-      (currentLevel! * currentLevel!) * (3 / 2) * 100;
-  int nextLevel = 0;
+  int? nextLevel = 0;
+  int? currentXp = 0;
+  double expForOtherLevel=0.0;
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
     currentLevel = await showLevel();
     nextLevel = currentLevel! + 1;
+    currentXp = await showXP();
+    expForOtherLevel = currentXp! / 500;
+    if(currentXp!>=500 || expForOtherLevel>=1.0){
+      AddLevel(1);
+      XpSifirla();
+      currentXp=0;
+      confettiController.play();
+    }
+    print("current xp is $currentXp");
     super.setState(() {});
   }
 
@@ -184,7 +188,7 @@ class _MainMenuState extends State<MainMenu> {
                             fontSize: 20,
                           ),
                         ),
-                        percent: Gamification.LevelUp(),
+                        percent: expForOtherLevel,
                         linearStrokeCap: LinearStrokeCap.butt,
                         progressColor: Colors.yellow,
                       )

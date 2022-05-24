@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Gamification/Gamification.dart';
+import 'package:heart_beat/XP/actions.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -42,17 +43,18 @@ class _WaterPageContentState extends State<WaterPageContent>
   late AnimationController animationController;
 
   // Water amount should consumed
-  static double waterAmount = 0;
+  double? waterAmount = 0.0;
   //////////////////////////////
   // User can click button when it is not %100
   static bool canClick = true;
 
-  void GainExperiencePoint() {
+  void GainExperiencePoint() async{
     // GAIN EXPERIENCE POINTS
-    Gamification.experiencePoint += 100;
+
+    waterAmount = await showWater();
     /////////////////////////
     // Disable button when water management reached %100
-    if (waterAmount >= 0.8) {
+    if (waterAmount! > 0.8) {
       setState(() {
         canClick = false;
       });
@@ -62,27 +64,38 @@ class _WaterPageContentState extends State<WaterPageContent>
       });
     }
     ////////////////////////////////////////////////////
-    setState(() {
-      waterAmount += 0.1;
-      animationController.animateTo(waterAmount);
+    setState((){
+      print("i am setstate from gain function");
+      EarnXp(100);
+      AddWater(0.1);
+      animationController.addListener(() => setState(() {}));
+      animationController.animateTo(waterAmount!);
+      if (animationController.value <= waterAmount!) {
+        animationController.animateTo(waterAmount!);
+      }
     });
   }
 
+  @override void didChangeDependencies() async{
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    print("i am did changes");
+    waterAmount = await showWater();
+    print(waterAmount);
+    animationController.addListener(() => setState(() {}));
+    if (animationController.value <= waterAmount!) {
+      animationController.animateTo(waterAmount!);
+    }
+    super.setState(() {});
+  }
   @override
   void initState() {
     super.initState();
+    print("i am initstate");
     animationController = AnimationController(
       vsync: this,
       duration: Duration(seconds: 2),
     );
-
-    animationController.addListener(() => setState(() {}));
-    // CHANGE THE VALUE IN THE animeteTo dynamically with respect to consumed water
-    if (animationController.value <= waterAmount) {
-      animationController.animateTo(waterAmount);
-    }
-
-    //////////////////////////////////////////////////////////////////////////////
   }
 
   @override
