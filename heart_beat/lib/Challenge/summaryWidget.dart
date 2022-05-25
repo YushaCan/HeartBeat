@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../FriendShip/FriendShipActions.dart';
+import 'ChallengeActions.dart';
 import 'ChallengeFirebaseData.dart';
 
 
@@ -150,7 +151,6 @@ class _summaryState extends State<summary> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                   padding: EdgeInsets.all(0.0),
                   onPressed: () {
-                    DateTime timer = DateTime.now().add(const Duration(hours: 24));
                     var isDone = SendChallengeRequest(widget.selectedUserData.uid.toString(),widget.selectedChallengeData.id.toString(),sender_repeat);
                     if(isDone){
                       show_True(context);

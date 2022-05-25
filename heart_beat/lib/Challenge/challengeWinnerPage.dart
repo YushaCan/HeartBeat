@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/MainPages/MainMenu.dart';
+import 'ChallengeActions.dart';
 import 'ChallengeFirebaseData.dart';
 
 class challengeWinnerPage extends StatefulWidget {
-  final challenge_node_id;
-  final sender_node_id;
-  final sender_id;
-  const challengeWinnerPage({Key? key,required this.challenge_node_id,required this.sender_node_id,required this.sender_id}) : super(key: key);
+  final ChallengeListDetails challengeListDetails;
+  const challengeWinnerPage({Key? key,required this.challengeListDetails}) : super(key: key);
 
   @override
   _challengeWinnerPageState createState() => _challengeWinnerPageState();
@@ -15,12 +14,31 @@ class challengeWinnerPage extends StatefulWidget {
 
 class _challengeWinnerPageState extends State<challengeWinnerPage> {
 
-  challengeList result = new challengeList("","","","","");
+  String sender_name="";
+  String receiver_name="";
+  String id = "";
+  int sender_points=0;
+  int receiver_points=0;
+  String the_winner="";
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    result = await showChallengeResultList(widget.challenge_node_id);
+    id = widget.challengeListDetails.receivedSentChallenge.challengeDetails.sender_id;
+    sender_name=await getUserName(id);
+    id = widget.challengeListDetails.receiver_id;
+    receiver_name = await getUserName(id);
+    sender_points = int.parse(widget.challengeListDetails.receivedSentChallenge.challengeDetails.sender_repeat);
+    receiver_points = int.parse(widget.challengeListDetails.receiver_repeat);
     super.setState(() {
+      if(sender_points>receiver_points){
+        the_winner=sender_name;
+      }
+      else if(sender_points<receiver_points){
+        the_winner=receiver_name;
+      }
+      else if(sender_points==receiver_points){
+        the_winner=receiver_name+sender_name;
+      }
     });
   }
   @override
@@ -34,12 +52,82 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
       ),
       body: Column(
         children: [
-          Text("${result.RECEIVER_NAME}"),
-          Text("${result.SENDER_NAME}"),
-          Text("${result.RECEIVER_REPEAT}"),
-          Text("${result.SENDER_REPEAT}"),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(100, 100, 0, 0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text("${sender_name}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple
+                        ),),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text("${widget.challengeListDetails.receivedSentChallenge.challengeDetails.sender_repeat}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple
+                          ),)
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(50, 100, 50, 0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text("VS")
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 100, 100, 0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text("${receiver_name}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple
+                        ),),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text("${widget.challengeListDetails.receiver_repeat}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple
+                          ),)
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(80, 30, 30, 0),
+            padding: const EdgeInsets.fromLTRB(120, 30, 0, 0),
+            child: Row(
+              children: [
+                Text("THE WINNER IS $the_winner"
+                  ,style: TextStyle(
+                fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple
+            ),)
+              ],
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(80, 50, 100, 0),
             child:SizedBox(
                 width: 200,
                 child: Container(
@@ -48,7 +136,6 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                     padding: EdgeInsets.all(0.0),
                     onPressed: () {
-                      deleteChallenge(widget.sender_id,widget.sender_node_id,widget.challenge_node_id);
                       Navigator.push(
                           context,
                           MaterialPageRoute(

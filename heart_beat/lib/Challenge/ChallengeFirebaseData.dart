@@ -84,7 +84,6 @@ class challengeSummary{
   };
 }
 
-//bu listeleme için
 class challengeSummary2{
   late var LIST_CHALLENGE_NODE_ID;
   late var SENDER_CHALLENGE_NODE_ID;
@@ -349,105 +348,6 @@ Future<List<challengeSummary2>> showAllSentChallenge() async{
   }
 
   return sentChallenges;
-}
-
-bool SendChallengeRequest(String uid,String challengeId,String sender_repeat){
-  bool isDone;
-  FirebaseAuth auth = FirebaseAuth.instance;
-  User? user = auth.currentUser;
-  final current_uid = user?.uid;
-  String ACCEPT_TIME = "";
-  challengeSummary hedef_user = new challengeSummary(uid,challengeId,ACCEPT_TIME,sender_repeat,"");
-  challengeSummary asil_user = new challengeSummary(current_uid,challengeId,ACCEPT_TIME,sender_repeat,"");
-  try
-  {
-    //**********************SentRequests*******************************
-    DatabaseReference ref1 = FirebaseDatabase.instance.ref()
-        .child("USERS")
-        .child("$current_uid")
-        .child("SentChallenges");
-    ref1.push().set(hedef_user.toJson());
-
-    //***********************ReceivedRequests**************************
-    DatabaseReference ref2 = FirebaseDatabase.instance.ref()
-        .child("USERS")
-        .child("${hedef_user.USER_ID}")
-        .child("ReceivedChallenges");
-    ref2.push().set(asil_user.toJson());
-    isDone= true;
-  }
-  catch(e){
-    isDone=false;
-    print(e);
-  }
-  return isDone;
-}
-
-void AcceptChallenge(String sender_node_id,String challenge_node_id,String sender_id,String sender_name,String sender_repeat,String receiver_repeat){
-
-  FirebaseAuth auth = FirebaseAuth.instance;
-  User? user = auth.currentUser;
-  final current_uid = user?.uid;
-  final receiver_name= user!.displayName;
-  //**********************SentRequests*******************************
-  DatabaseReference ref1 = FirebaseDatabase.instance.ref()
-      .child("USERS")
-      .child("$current_uid")
-      .child("ChallengeList");
-  ref1.push().set({
-    'SENDER_NAME':sender_name,
-    'RECEIVER_NAME':receiver_name,
-    'SENDER_REPEAT':sender_repeat,
-    'RECEIVER_REPEAT':receiver_repeat,
-    'RECEIVER_CHALLENGE_NODE_ID':challenge_node_id
-  });
-
-  //***********************ReceivedRequests**************************
-  DatabaseReference ref2 = FirebaseDatabase.instance.ref()
-      .child("USERS")
-      .child("${sender_id}")
-      .child("ChallengeList");
-  ref2.push().set({
-    'SENDER_NAME':sender_name,
-    'RECEIVER_NAME':receiver_name,
-    'SENDER_REPEAT':sender_repeat,
-    'RECEIVER_REPEAT':receiver_repeat,
-    'SENDER_CHALLENGE_NODE_ID':sender_node_id
-  });
-
-}
-
-void ChallengeStarted(String ACCEPT_TIME) async{
-  FirebaseAuth auth = FirebaseAuth.instance;
-  User? user = auth.currentUser;
-  final current_uid = user?.uid;
-  String childToUpdate = "";
-  String CHALLENGE_ID = "";
-  String USER_ID = "";
-
-  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/ReceivedChallenges");
-  await ref.once().then((value) {
-    value.snapshot.children.forEach((element) {
-      element.children.forEach((element) {
-        if(element.key.toString()=="CHALLENGE_ID"){
-          CHALLENGE_ID = element.value.toString();
-        }
-        else if(element.key.toString() == "USER_ID"){
-          USER_ID = element.value.toString();
-        }
-      });
-    });
-  });
-
-  await ref.once().then((value){
-    value.snapshot.children.forEach((element) {
-      childToUpdate = element.key.toString();
-      FirebaseDatabase.instance.ref("USERS/${current_uid}/ReceivedChallenges/${childToUpdate}").update({
-        'CHALLENGE_ID': CHALLENGE_ID,
-        'USER_ID':USER_ID,
-        'ACCEPT_TIME': ACCEPT_TIME});
-    });
-  });
 }
 
 void deleteChallenge(String sender_id,String sender_node_id,String receiver_node_id){

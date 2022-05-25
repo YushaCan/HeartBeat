@@ -1,9 +1,6 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Challenge/receivedChallengeWidget.dart';
-import '../FriendShip/FriendShipActions.dart';
-import 'ChallengeFirebaseData.dart';
-import 'challengeWidget.dart';
+import 'ChallengeActions.dart';
 
 class AllReceivedChallenges extends StatefulWidget {
   const AllReceivedChallenges({Key? key}) : super(key: key);
@@ -13,12 +10,18 @@ class AllReceivedChallenges extends StatefulWidget {
 }
 
 class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
-  List<challengeSummary2> challlengesSet = [];
+  List<ReceivedSentChallenge> challlengesSet = [];
+  List<String> senderNames = [];
+  String name = "";
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    challlengesSet = await showAllReceivedChallenge();
+    challlengesSet = await showAllReceivedChallenges();
+    for(int i=0; i<challlengesSet.length; i++){
+      name = await getUserName(challlengesSet[i].challengeDetails.sender_id);
+      senderNames.add(name);
+    }
     super.setState(() {});
   }
 
@@ -33,7 +36,8 @@ class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
           fontWeight: FontWeight.w600,
         ),
       ),
-      body: Column(
+      body:
+      Column(
         children: <Widget>[
           // LIST PART
           ListView.builder(
@@ -46,9 +50,9 @@ class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
                 onTap: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => receivedChallengeWidget(challenge_node_id: challlengesSet[index].RECEIVER_CHALLENGE_NODE_ID, sender_node_id: challlengesSet[index].SENDER_CHALLENGE_NODE_ID, sender_id: challlengesSet[index].USER_ID,),
-                      ));
+                    MaterialPageRoute(
+                       builder: (context) => receivedChallengeWidget(receivedSentChallenge: challlengesSet[index]),
+                       ));
                 },
                 //color: Colors.white,
                 child: Card(
@@ -61,7 +65,7 @@ class _AllReceivedChallengesState extends State<AllReceivedChallenges> {
                       Padding(padding: EdgeInsets.only(top: 40, left: 7)),
                       // User Names
                       Text(
-                          "From ${challlengesSet[index].USER_NAME}"), // Usernames
+                          "From ${senderNames[index]}"), // Usernames
                       Spacer(),
                     ],
                   ),

@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Challenge/receivedChallengeWidget.dart';
 import '../FriendShip/FriendShipActions.dart';
+import 'ChallengeActions.dart';
 import 'ChallengeFirebaseData.dart';
 import 'challengeWidget.dart';
 
@@ -13,12 +14,18 @@ class AllSentChallenges extends StatefulWidget {
 }
 
 class _AllSentChallengesState extends State<AllSentChallenges> {
-  List<challengeSummary2> challlengesSet = [];
+  List<ReceivedSentChallenge> challlengesSet = [];
+  List<String> receiverNames = [];
+  String name = "";
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    challlengesSet = await showAllReceivedChallenge();
+    challlengesSet = await showAllSentChallenges();
+    for(int i=0; i<challlengesSet.length; i++){
+      name = await getUserName(challlengesSet[i].challengeDetails.sender_id);
+      receiverNames.add(name);
+    }
     super.setState(() {});
   }
 
@@ -47,7 +54,7 @@ class _AllSentChallengesState extends State<AllSentChallenges> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => receivedChallengeWidget(challenge_node_id: challlengesSet[index].RECEIVER_CHALLENGE_NODE_ID, sender_node_id: challlengesSet[index].SENDER_CHALLENGE_NODE_ID, sender_id: challlengesSet[index].USER_ID,),
+                        builder: (context) => receivedChallengeWidget(receivedSentChallenge: challlengesSet[index]),
                       ));
                 },
                 //color: Colors.white,
@@ -61,7 +68,7 @@ class _AllSentChallengesState extends State<AllSentChallenges> {
                       Padding(padding: EdgeInsets.only(top: 40, left: 7)),
                       // User Names
                       Text(
-                          "From ${challlengesSet[index].USER_NAME}"), // Usernames
+                          "To ${receiverNames[index]}"), // Usernames
                       Spacer(),
                     ],
                   ),
