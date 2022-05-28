@@ -35,8 +35,6 @@ class ChallengeListDetails{
   late String receiver_id;
   late String receiver_repeat;
 
-  //ChallengeListDetails(this.receivedSentChallenge,this.receiver_id,this.receiver_repeat);
-
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
     'challenge_id': receivedSentChallenge.challengeDetails.challenge_id,
     'sender_id': receivedSentChallenge.challengeDetails.sender_id,
@@ -271,5 +269,32 @@ Future<String> getUrl(String challenge_id)async{
     });
   });
   return url;
+}
+
+void deleteChallenge(String node_id){
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+  String ChildToDelete="";
+  FirebaseDatabase.instance.ref()
+      .child("USERS")
+      .child("$current_uid")
+      .child("ChallengeList")
+      .once()
+      .then((snapshot){
+    snapshot.snapshot.children.forEach((element1) {
+      element1.children.forEach((element2) {
+        ChildToDelete = element1.key.toString();
+        if(element2.key.toString()=="receiver_node_id" && element2.value.toString()==node_id){
+          FirebaseDatabase.instance.ref().child("USERS").child("$current_uid").child("ChallengeList").child("$ChildToDelete").remove();
+        }
+        else{
+          print(ChildToDelete);
+        }
+      });
+    });
+  });
+  FirebaseDatabase.instance.ref().child("USERS").child("$current_uid").child("ReceivedChallenges").child("$node_id").remove();
 }
 

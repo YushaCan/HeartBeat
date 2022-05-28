@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/MainPages/MainMenu.dart';
 import 'ChallengeActions.dart';
-import 'ChallengeFirebaseData.dart';
 
 class challengeWinnerPage extends StatefulWidget {
   final ChallengeListDetails challengeListDetails;
@@ -136,6 +135,7 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                     padding: EdgeInsets.all(0.0),
                     onPressed: () {
+                      deleteChallenge(widget.challengeListDetails.receivedSentChallenge.node_id);
                       Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_beat/Challenge/receivedChallengeWidget.dart';
+import 'package:heart_beat/Challenge/sentChallengeWidget.dart';
 import '../FriendShip/FriendShipActions.dart';
 import 'ChallengeActions.dart';
 import 'ChallengeFirebaseData.dart';
@@ -54,7 +55,7 @@ class _AllSentChallengesState extends State<AllSentChallenges> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => receivedChallengeWidget(receivedSentChallenge: challlengesSet[index]),
+                        builder: (context) => sentChallengeWidget(receivedSentChallenge: challlengesSet[index]),
                       ));
                 },
                 //color: Colors.white,

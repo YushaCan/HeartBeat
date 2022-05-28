@@ -12,6 +12,7 @@ import 'package:heart_beat/XP/actions.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../Antreman2/ExerciseCounter/Counter.dart';
 import '../Antreman2/Pages/ExerciseHomePage.dart';
+import '../Challenge/senderReviewPage.dart';
 import '../FriendShip/FriendRequestsWidget.dart';
 import 'FriendsList.dart';
 import 'dart:math' as math;
@@ -415,7 +416,7 @@ class _MainMenuState extends State<MainMenu> {
                           print("CHALLENGE PAGE OPENED");
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Friends()),
+                            MaterialPageRoute(builder: (context) => senderReviewPage()),
                           );
                         },
                       ),

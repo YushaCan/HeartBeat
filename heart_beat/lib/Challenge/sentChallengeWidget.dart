@@ -77,7 +77,7 @@ class _sentChallengeWidgetState extends State<sentChallengeWidget> {
           Padding(
               padding: const EdgeInsets.fromLTRB(80, 30, 30, 0),
               child: SizedBox(
-                  width: 50,
+                  width: 100,
                   child: Container(
                     height: 50.0,
                     child: RaisedButton(
@@ -103,7 +103,7 @@ class _sentChallengeWidgetState extends State<sentChallengeWidget> {
                           BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
                           alignment: Alignment.center,
                           child: Text(
-                            "done",
+                            "See Result",
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.white, fontSize: 15),
                           ),

@@ -203,7 +203,8 @@ class _FriendsState extends State<Friends> {
                   builder: (context) => challenges(
                     selectedUserData: friendsSet[selectedIndex],
                   ),
-                ));
+                )
+            );
           }
         },
         child: const Icon(Icons.navigate_next),
