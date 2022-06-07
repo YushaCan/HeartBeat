@@ -156,7 +156,10 @@ class _senderReviewPageState extends State<senderReviewPage> {
                     icon: Icon(Icons.add_box_outlined),
                     text: "New",
                   ),
-        ],),
+                ],
+            indicatorColor: Colors.lightBlue[100],
+
+          ),
           backgroundColor: Colors.lightBlueAccent,
         ),
         body: TabBarView(

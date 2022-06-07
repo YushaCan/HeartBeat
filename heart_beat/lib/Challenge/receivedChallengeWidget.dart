@@ -10,6 +10,9 @@ class receivedChallengeWidget extends StatefulWidget {
   @override
   State<receivedChallengeWidget> createState() => _receivedChallengeWidgetState();
 }
+FirebaseAuth auth = FirebaseAuth.instance;
+User? user = auth.currentUser;
+final current_uid = user?.uid;
 
 class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
 
@@ -41,9 +44,7 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
     name = await getUserName(widget.receivedSentChallenge.challengeDetails.sender_id);
     url = await getUrl(widget.receivedSentChallenge.challengeDetails.challenge_id);
 
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user = auth.currentUser;
-    final current_uid = user?.uid;
+
 
     super.setState(() {
       challengeListDetails.receivedSentChallenge = widget.receivedSentChallenge;
@@ -198,6 +199,9 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
                             acceptButtonClicked = true;
                             challengeListDetails.receiver_repeat = receiver_repeat;
                           }
+                          challengeListDetails.receivedSentChallenge = widget.receivedSentChallenge;
+                          challengeListDetails.receiver_repeat = receiver_repeat;
+                          challengeListDetails.receiver_id = current_uid.toString();
                           //ChallengeStarted(widget.receivedSentChallenge);
                         });
                       },

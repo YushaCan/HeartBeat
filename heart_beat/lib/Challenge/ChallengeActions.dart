@@ -84,31 +84,36 @@ Future<ChallengeListDetails> showResult(ChallengeListDetails challengeListDetail
   User? user = auth.currentUser;
   final current_uid = user?.uid;
 
-  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/challengeList");
+  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/ChallengeList");
+
   ChallengeListDetails result = new ChallengeListDetails();
+
   await ref.once().then((value){
     value.snapshot.children.forEach((element) {
-      if(element.key.toString()=="challenge_id" && challengeListDetails.receivedSentChallenge.challengeDetails.challenge_id==element.value.toString()){
-        result.receivedSentChallenge.challengeDetails.challenge_id = element.value.toString();
-      }
-      else if(element.key.toString()=="sender_id" && challengeListDetails.receivedSentChallenge.challengeDetails.sender_id==element.value.toString()){
-        result.receivedSentChallenge.challengeDetails.sender_id = element.value.toString();
-      }
-      else if(element.key.toString()=="sender_repeat" && challengeListDetails.receivedSentChallenge.challengeDetails.sender_repeat==element.value.toString()){
-        result.receivedSentChallenge.challengeDetails.sender_repeat = element.value.toString();
-      }
-      else if(element.key.toString()=="receiver_id" && challengeListDetails.receiver_id==element.value.toString()){
-        result.receiver_id = element.value.toString();
-      }
-      else if(element.key.toString()=="receiver_repeat" && challengeListDetails.receiver_repeat==element.value.toString()){
-        result.receiver_repeat = element.value.toString();
-      }
-      else if(element.key.toString()=="receiver_node_id" && challengeListDetails.receivedSentChallenge.node_id==element.value.toString()){
-        result.receivedSentChallenge.node_id = element.value.toString();
-      }
-      else if(element.key.toString()=="receiver_accept_time" && challengeListDetails.receivedSentChallenge.challengeDetails.accept_time==element.value.toString()){
-        result.receivedSentChallenge.challengeDetails.accept_time = element.value.toString();
-      }
+      element.children.forEach((element) {
+        if(element.key.toString()=="challenge_id" && challengeListDetails.receivedSentChallenge.challengeDetails.challenge_id==element.value.toString()){
+          result.receivedSentChallenge.challengeDetails.challenge_id = element.value.toString();
+        }
+        else if(element.key.toString()=="sender_id"){
+          result.receivedSentChallenge.challengeDetails.sender_id = element.value.toString();
+        }
+        else if(element.key.toString()=="sender_repeat"){
+          result.receivedSentChallenge.challengeDetails.sender_repeat = element.value.toString();
+        }
+        else if(element.key.toString()=="receiver_id"){
+          result.receiver_id = element.value.toString();
+        }
+        else if(element.key.toString()=="receiver_repeat"){
+          result.receiver_repeat = element.value.toString();
+        }
+        else if(element.key.toString()=="receiver_node_id" && challengeListDetails.receivedSentChallenge.node_id==element.value.toString()){
+          result.receivedSentChallenge.node_id = element.value.toString();
+        }
+        else if(element.key.toString()=="receiver_accept_time" && challengeListDetails.receivedSentChallenge.challengeDetails.accept_time==element.value.toString()){
+          result.receivedSentChallenge.challengeDetails.accept_time = element.value.toString();
+        }
+      });
+
     });
   });
   return result;
@@ -256,6 +261,7 @@ void ChallengeStarted(ReceivedSentChallenge receivedSentChallenge) async{
 
 void AcceptChallenge(ChallengeListDetails challengeListDetails){
 
+  print(challengeListDetails.receivedSentChallenge.challengeDetails.sender_id);
   DatabaseReference ref1 = FirebaseDatabase.instance.ref()
       .child("USERS")
       .child("${challengeListDetails.receiver_id}")
