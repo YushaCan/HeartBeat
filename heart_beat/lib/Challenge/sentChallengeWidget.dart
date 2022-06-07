@@ -32,6 +32,7 @@ class _sentChallengeWidgetState extends State<sentChallengeWidget> {
 
     super.setState(() {
       challengeListDetails.receivedSentChallenge = widget.receivedSentChallenge;
+      challengeListDetails.receiver_repeat = "100";
       challengeListDetails.receiver_id = current_uid.toString();
     });
   }

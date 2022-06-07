@@ -7,6 +7,8 @@ import 'ChallengeActions.dart';
 import 'ChallengeFirebaseData.dart';
 import 'challengeWidget.dart';
 
+
+// silinebilir
 class AllSentChallenges extends StatefulWidget {
   const AllSentChallenges({Key? key}) : super(key: key);
 

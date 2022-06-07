@@ -19,15 +19,26 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
   int sender_points=0;
   int receiver_points=0;
   String the_winner="";
+  ChallengeListDetails win = new ChallengeListDetails();
   @override
   void didChangeDependencies() async {
+    print("i am in did ${win.receiver_id}");
     super.didChangeDependencies();
+
+    win = await showResult(widget.challengeListDetails);
+
     id = widget.challengeListDetails.receivedSentChallenge.challengeDetails.sender_id;
-    sender_name=await getUserName(id);
+
+    print(id);
+    sender_name = await getUserName(id);
+
     id = widget.challengeListDetails.receiver_id;
+
     receiver_name = await getUserName(id);
-    sender_points = int.parse(widget.challengeListDetails.receivedSentChallenge.challengeDetails.sender_repeat);
-    receiver_points = int.parse(widget.challengeListDetails.receiver_repeat);
+
+    sender_points = int.parse(win.receivedSentChallenge.challengeDetails.sender_repeat);
+    receiver_points = int.parse(win.receiver_repeat);
+
     super.setState(() {
       if(sender_points>receiver_points){
         the_winner=sender_name;

@@ -78,6 +78,42 @@ bool SendChallengeRequest(String sender_id,String challenge_id,String sender_rep
   return isDone;
 }
 
+Future<ChallengeListDetails> showResult(ChallengeListDetails challengeListDetails)async{
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = auth.currentUser;
+  final current_uid = user?.uid;
+
+  DatabaseReference ref = FirebaseDatabase.instance.ref("USERS/${current_uid}/challengeList");
+  ChallengeListDetails result = new ChallengeListDetails();
+  await ref.once().then((value){
+    value.snapshot.children.forEach((element) {
+      if(element.key.toString()=="challenge_id" && challengeListDetails.receivedSentChallenge.challengeDetails.challenge_id==element.value.toString()){
+        result.receivedSentChallenge.challengeDetails.challenge_id = element.value.toString();
+      }
+      else if(element.key.toString()=="sender_id" && challengeListDetails.receivedSentChallenge.challengeDetails.sender_id==element.value.toString()){
+        result.receivedSentChallenge.challengeDetails.sender_id = element.value.toString();
+      }
+      else if(element.key.toString()=="sender_repeat" && challengeListDetails.receivedSentChallenge.challengeDetails.sender_repeat==element.value.toString()){
+        result.receivedSentChallenge.challengeDetails.sender_repeat = element.value.toString();
+      }
+      else if(element.key.toString()=="receiver_id" && challengeListDetails.receiver_id==element.value.toString()){
+        result.receiver_id = element.value.toString();
+      }
+      else if(element.key.toString()=="receiver_repeat" && challengeListDetails.receiver_repeat==element.value.toString()){
+        result.receiver_repeat = element.value.toString();
+      }
+      else if(element.key.toString()=="receiver_node_id" && challengeListDetails.receivedSentChallenge.node_id==element.value.toString()){
+        result.receivedSentChallenge.node_id = element.value.toString();
+      }
+      else if(element.key.toString()=="receiver_accept_time" && challengeListDetails.receivedSentChallenge.challengeDetails.accept_time==element.value.toString()){
+        result.receivedSentChallenge.challengeDetails.accept_time = element.value.toString();
+      }
+    });
+  });
+  return result;
+}
+
 Future<List<ReceivedSentChallenge>> showAllReceivedChallenges()async{
 
   List<ReceivedSentChallenge> allChallenges = [];
@@ -209,7 +245,6 @@ void ChallengeStarted(ReceivedSentChallenge receivedSentChallenge) async{
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = auth.currentUser;
   final current_uid = user?.uid;
-  print(receivedSentChallenge.node_id);
   FirebaseDatabase.instance
       .ref("USERS/${current_uid}/ReceivedChallenges/${receivedSentChallenge.node_id}")
       .update({
@@ -257,7 +292,7 @@ Future<String> getUrl(String challenge_id)async{
   else if(challenge_id=="2"){
     challenge_id="TWO";
   }
-  else if(challenge_id=="1"){
+  else if(challenge_id=="3"){
     challenge_id="THREE";
   }
   DatabaseReference ref = FirebaseDatabase.instance.ref("CHALLENGES/${challenge_id}");

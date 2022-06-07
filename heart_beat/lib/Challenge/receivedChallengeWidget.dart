@@ -22,14 +22,16 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
 
   ChallengeListDetails challengeListDetails = new ChallengeListDetails();
 
+
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
+
     //receivedSentChallenge = await showReceivedChallenges(widget.receivedSentChallenge.node_id);
     if(widget.receivedSentChallenge.challengeDetails.accept_time==""){
       acceptButtonClicked = false;
     }
-    else{
+    else if(widget.receivedSentChallenge.challengeDetails.accept_time!=""){
     remainedTime =  DateTime.parse(widget.receivedSentChallenge.challengeDetails.accept_time);
     remainedTime = remainedTime.add(Duration(hours: 24));
     DateTime today = DateTime.now();
@@ -45,6 +47,7 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
 
     super.setState(() {
       challengeListDetails.receivedSentChallenge = widget.receivedSentChallenge;
+      challengeListDetails.receiver_repeat = receiver_repeat;
       challengeListDetails.receiver_id = current_uid.toString();
     });
   }
@@ -135,7 +138,7 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                         padding: EdgeInsets.all(0.0),
                         onPressed: () {
-                          print(challengeListDetails.receiver_id);
+                          AcceptChallenge(challengeListDetails);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -167,7 +170,8 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(80, 0, 30, 0),
-              child: acceptButtonClicked? null
+              child:
+              acceptButtonClicked? null
                   :
               SizedBox(
                   width: 200,
@@ -180,10 +184,21 @@ class _receivedChallengeWidgetState extends State<receivedChallengeWidget> {
                         var accepted_time = new DateTime.now();
                         widget.receivedSentChallenge.challengeDetails.accept_time=accepted_time.toString();
                         ChallengeStarted(widget.receivedSentChallenge);
-                        AcceptChallenge(challengeListDetails);
+
                         setState(() {
                           acceptButtonClicked = true;
-                          ChallengeStarted(widget.receivedSentChallenge);
+                          if(widget.receivedSentChallenge.challengeDetails.accept_time==""){
+                            acceptButtonClicked = false;
+                          }
+                          else if(widget.receivedSentChallenge.challengeDetails.accept_time!=""){
+                            remainedTime =  DateTime.parse(widget.receivedSentChallenge.challengeDetails.accept_time);
+                            remainedTime = remainedTime.add(Duration(hours: 24));
+                            DateTime today = DateTime.now();
+                            diff = remainedTime.difference(today);
+                            acceptButtonClicked = true;
+                            challengeListDetails.receiver_repeat = receiver_repeat;
+                          }
+                          //ChallengeStarted(widget.receivedSentChallenge);
                         });
                       },
                       child: Ink(
