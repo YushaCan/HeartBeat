@@ -32,7 +32,6 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
 
     sender_id = win.receivedSentChallenge.challengeDetails.sender_id;
 
-    print(sender_id);
     receiver_id = win.receiver_id;
 
     sender_name = await getUserName(sender_id);
@@ -40,9 +39,9 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
     receiver_name = await getUserName(receiver_id);
 
     sender_points = int.parse(win.receivedSentChallenge.challengeDetails.sender_repeat);
-    print(sender_points);
-    receiver_points = int.parse(win.receiver_repeat);
 
+    receiver_points = int.parse(win.receiver_repeat);
+    print(receiver_points);
     super.setState(() {
       if(sender_points>receiver_points){
         the_winner=sender_name;
@@ -82,7 +81,7 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
                     ),
                     Row(
                       children: [
-                        Text("${widget.challengeListDetails.receivedSentChallenge.challengeDetails.sender_repeat}",
+                        Text("${sender_points}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple
                           ),)
@@ -117,7 +116,7 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
                     ),
                     Row(
                       children: [
-                        Text("${widget.challengeListDetails.receiver_repeat}",
+                        Text("${receiver_points}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple
                           ),)
@@ -132,7 +131,7 @@ class _challengeWinnerPageState extends State<challengeWinnerPage> {
             padding: const EdgeInsets.fromLTRB(120, 30, 0, 0),
             child: Row(
               children: [
-                Text("THE WINNER IS $the_winner"
+                Text("THE WINNER IS  $the_winner"
                   ,style: TextStyle(
                 fontWeight: FontWeight.bold,fontSize: 18,color: Colors.deepPurple
             ),)

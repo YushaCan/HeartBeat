@@ -88,6 +88,7 @@ Future<ChallengeListDetails> showResult(ChallengeListDetails challengeListDetail
 
   ChallengeListDetails result = new ChallengeListDetails();
 
+  print(current_uid);
   await ref.once().then((value){
     value.snapshot.children.forEach((element) {
       element.children.forEach((element) {
@@ -103,17 +104,17 @@ Future<ChallengeListDetails> showResult(ChallengeListDetails challengeListDetail
         else if(element.key.toString()=="receiver_id"){
           result.receiver_id = element.value.toString();
         }
-        else if(element.key.toString()=="receiver_repeat"){
+        else if(element.key.toString()=="receiver_repeat" ){
+          print(element.value);
           result.receiver_repeat = element.value.toString();
         }
-        else if(element.key.toString()=="receiver_node_id" && challengeListDetails.receivedSentChallenge.node_id==element.value.toString()){
+        else if(element.key.toString()=="receiver_node_id" ){
           result.receivedSentChallenge.node_id = element.value.toString();
         }
-        else if(element.key.toString()=="receiver_accept_time" && challengeListDetails.receivedSentChallenge.challengeDetails.accept_time==element.value.toString()){
+        else if(element.key.toString()=="receiver_accept_time" ){
           result.receivedSentChallenge.challengeDetails.accept_time = element.value.toString();
         }
       });
-
     });
   });
   return result;
