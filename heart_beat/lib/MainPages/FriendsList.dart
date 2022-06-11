@@ -81,8 +81,6 @@ class _SideBarState extends State<SideBar> {
             title: Text(
               // Replace with real time online persons.
               "Friends (" +
-                  OnlineCount().toString() +
-                  "/" +
                   TotalCount().toString() +
                   ")",
               style: TextStyle(
@@ -105,7 +103,8 @@ class _SideBarState extends State<SideBar> {
                           builder: (context) => challenges(
                             selectedUserData: friendsSet[selectedIndex],
                           ),
-                        ));
+                        )
+                    );
                   },
                   child: Container(
                     margin: EdgeInsets.only(

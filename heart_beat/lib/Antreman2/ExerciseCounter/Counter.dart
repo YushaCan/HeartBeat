@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_beat/XP/actions.dart';
 import '../../FriendShip/FriendShipActions.dart';
 import '../../FriendShip/GetUsersFireBase.dart';
 import '../models/exercise.dart';
@@ -303,6 +304,7 @@ class _CounterWidgetState extends State<CounterWidget> {
   Widget buildTime(){
     if(seconds == 0){
       markAsDone(widget.exercises);
+      EarnXp(300);
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => CongratulationsWidget(exercises: widget.exercises,)));
       });

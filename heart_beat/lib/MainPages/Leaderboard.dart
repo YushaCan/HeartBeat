@@ -1,7 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
+import 'package:heart_beat/MainPages/MainMenu.dart';
 import 'ProfilePage.dart';
 
 class LeaderBoardPage extends StatelessWidget {
@@ -81,96 +80,107 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 20),
-            child: Center(
-              child: Image(
-                width: 200,
-                height: 175,
-                image: AssetImage("assets/leaderboard.png"),
+    return WillPopScope(
+      onWillPop: () async{
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>MainMenuPage()
+            )
+        );
+        return true;
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 20),
+              child: Center(
+                child: Image(
+                  width: 200,
+                  height: 175,
+                  image: AssetImage("assets/leaderboard.png"),
+                ),
               ),
             ),
-          ),
-          // LEVEL AND XP TEXTS
-          Padding(
-            padding: EdgeInsets.only(left: 275),
-            child: Row(
-              children: <Widget>[
-                Text("Level"),
-                Padding(padding: EdgeInsets.only(left: 25)),
-                Text("XP"),
-              ],
+            // LEVEL AND XP TEXTS
+            Padding(
+              padding: EdgeInsets.only(left: 275),
+              child: Row(
+                children: <Widget>[
+                  Text("Level"),
+                  Padding(padding: EdgeInsets.only(left: 25)),
+                  Text("XP"),
+                ],
+              ),
             ),
-          ),
-          //////////////////////
-          // USER LISTVIEW
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: 20,
-            itemBuilder: (BuildContext context, int index) {
-              // EVERY ELEMENT OF THE LIST
-              return Card(
-                color: (index < 3) ? Colors.green : Colors.white,
-                child: InkWell(
-                  onTap: () {
-                    // OPEN UP THE PROFILE PAGE OF SELECTED USER
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Profile()),
-                    );
-                  },
-                  child: Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        // THIS PROFILE PICTURE WILL BE PULL FROM THE DB
-                        backgroundImage: AssetImage("assets/profilephoto.jpg"),
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 40, left: 7)),
-                      // Placement Numbers
-                      Text(
-                        "${index + 1}.",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          //color: (index + 1 > 3) ? Colors.black : Colors.green,
+            //////////////////////
+            // USER LISTVIEW
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: 20,
+              itemBuilder: (BuildContext context, int index) {
+                // EVERY ELEMENT OF THE LIST
+                return Card(
+                  color: (index < 3) ? Colors.green : Colors.white,
+                  child: InkWell(
+                    onTap: () {
+                      // OPEN UP THE PROFILE PAGE OF SELECTED USER
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Profile()),
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        CircleAvatar(
+                          // THIS PROFILE PICTURE WILL BE PULL FROM THE DB
+                          backgroundImage: AssetImage("assets/profilephoto.jpg"),
                         ),
-                      ),
-                      /////////////////////
-                      Padding(padding: EdgeInsets.only(left: 20)),
-                      ////////////////////
-                      // USERNAMES
-                      // WILL SORTING BY THEIR ==>
-                      // 1. BY LEVELS
-                      // 2. BY XPs
-                      SizedBox(
-                        width: 130,
-                        height: 15,
-                        child: Text(index < 4
-                            ? "User ${index + 1}"
-                            : "User123456789101112 ${index + 1}"),
-                      ),
-                      ////////////
-                      // LEVEL DATA OF USERS
-                      Padding(
-                          padding: (index < 9)
-                              ? EdgeInsets.only(left: 70)
-                              : EdgeInsets.only(left: 60)),
-                      Text("${level[index]}"), // THIS WILL PULL FROM DATABASE
-                      // XP DATA OF USERS
-                      Padding(padding: EdgeInsets.only(left: 33)),
-                      Text("${xp[index]}"), // THIS WILL PULL FROM DATABASE
-                      //////////////////
-                    ],
+                        Padding(padding: EdgeInsets.only(top: 40, left: 7)),
+                        // Placement Numbers
+                        Text(
+                          "${index + 1}.",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            //color: (index + 1 > 3) ? Colors.black : Colors.green,
+                          ),
+                        ),
+                        /////////////////////
+                        Padding(padding: EdgeInsets.only(left: 20)),
+                        ////////////////////
+                        // USERNAMES
+                        // WILL SORTING BY THEIR ==>
+                        // 1. BY LEVELS
+                        // 2. BY XPs
+                        SizedBox(
+                          width: 130,
+                          height: 15,
+                          child: Text(index < 4
+                              ? "User ${index + 1}"
+                              : "User123456789101112 ${index + 1}"),
+                        ),
+                        ////////////
+                        // LEVEL DATA OF USERS
+                        Padding(
+                            padding: (index < 9)
+                                ? EdgeInsets.only(left: 70)
+                                : EdgeInsets.only(left: 60)),
+                        Text("${level[index]}"), // THIS WILL PULL FROM DATABASE
+                        // XP DATA OF USERS
+                        Padding(padding: EdgeInsets.only(left: 33)),
+                        Text("${xp[index]}"), // THIS WILL PULL FROM DATABASE
+                        //////////////////
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

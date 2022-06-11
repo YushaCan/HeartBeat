@@ -46,7 +46,7 @@ class _sentChallengeWidgetState extends State<sentChallengeWidget> {
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: url==""?
-      CircularProgressIndicator()
+      Center(child: CircularProgressIndicator())
           :Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -69,8 +69,8 @@ class _sentChallengeWidgetState extends State<sentChallengeWidget> {
             child: Card(
               child: Image.network(
                 url,
-                height: 100,
-                width: 100,
+                height: 200,
+                width: 200,
                 fit: BoxFit.cover,
               ),
             ),
@@ -78,7 +78,7 @@ class _sentChallengeWidgetState extends State<sentChallengeWidget> {
           Padding(
               padding: const EdgeInsets.fromLTRB(80, 30, 30, 0),
               child: SizedBox(
-                  width: 100,
+                  width: 150,
                   child: Container(
                     height: 50.0,
                     child: RaisedButton(

@@ -28,13 +28,14 @@ void EarnXp(int xp) async {
   await ref.once().then((value) {
     value.snapshot.children.forEach((element) {
       previous_xp = int.parse(element.value.toString());
-      print(previous_xp);
+
     });
   });
 
   print("earn xp is called");
   //**********************SentRequests*******************************
-  xp += previous_xp!;
+  xp = xp+previous_xp!;
+  print(xp);
   FirebaseDatabase.instance
       .ref()
       .child("USERS")
