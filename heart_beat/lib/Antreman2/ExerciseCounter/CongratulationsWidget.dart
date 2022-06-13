@@ -23,7 +23,7 @@ class _CongratulationsWidgetState extends State<CongratulationsWidget> {
       setState(() {
         initController();
         super.initState();
-        EarnXp(10);
+        //EarnXp(300);
       });
     }
     controllerTopCenter.play();
