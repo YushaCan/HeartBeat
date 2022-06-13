@@ -118,7 +118,7 @@ class _MainMenuState extends State<MainMenu> {
   int? currentLevel = 0;
   int? nextLevel = 0;
   int? currentXp = 0;
-  double expForOtherLevel=0.0;
+  double expForOtherLevel = 0.0;
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
@@ -126,10 +126,10 @@ class _MainMenuState extends State<MainMenu> {
     nextLevel = currentLevel! + 1;
     currentXp = await showXP();
     expForOtherLevel = currentXp! / 500;
-    if(currentXp!>=500 || expForOtherLevel>=1.0){
+    if (currentXp! >= 500 || expForOtherLevel >= 1.0) {
       AddLevel(1);
       XpSifirla();
-      currentXp=0;
+      currentXp = 0;
       confettiController.play();
     }
     print("current xp is $currentXp");
@@ -416,7 +416,8 @@ class _MainMenuState extends State<MainMenu> {
                           print("CHALLENGE PAGE OPENED");
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => senderReviewPage()),
+                            MaterialPageRoute(
+                                builder: (context) => senderReviewPage()),
                           );
                         },
                       ),
